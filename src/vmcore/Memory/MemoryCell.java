@@ -2,12 +2,13 @@ package vmcore.Memory;
 
 public class MemoryCell {
     
-    public MemoryCell previous;
-    public MemoryCell next;
+    private MemoryCell previous;
+    private MemoryCell next;
 
-    public Instruction inst;
-    public Operande A;
-    public Operande B;
+    private Instruction inst;
+    private Operande A;
+    private Operande B;
+    private int Owner;
 
     public MemoryCell(){
         this.previous = null; 
@@ -16,4 +17,46 @@ public class MemoryCell {
         this.A = new Operande(); 
         this.B = new Operande();
     };
+
+    public void SetNext(MemoryCell next) {
+        this.next = next;
+    }
+
+    public MemoryCell GetNext() {
+        return this.next;
+    }
+
+    public void SetPrevious(MemoryCell prev) {
+        this.previous = prev;
+    }
+
+    public MemoryCell GetPrevious() {
+        return this.previous;
+    }
+
+    public void SetValues(Instruction inst, Operande A, Operande B) {
+        this.inst = inst;
+        this.A = A; 
+        this.B = B;
+    }
+
+    public Instruction GetInstruction() {
+        return this.inst;
+    }
+
+    public Operande GetA() {
+        return this.A;
+    }
+
+    public Operande GetB() {
+        return this.B;
+    }
+
+    public void SetOwner(int newOwner) {
+        this.Owner = newOwner;
+    }
+
+    public int GetOwner() {
+        return this.Owner;
+    }
 }

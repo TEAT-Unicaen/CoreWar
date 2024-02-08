@@ -10,19 +10,20 @@ public class Memory {
         this.start = new MemoryCell();
         MemoryCell tmp = this.start;
         for (int i = 1; i < size; i++) {
-            tmp.next = new MemoryCell();
-            tmp.next.previous = tmp;
-            tmp = tmp.next;
+            MemoryCell newCell = new MemoryCell();
+            tmp.SetNext(newCell);
+            newCell.SetPrevious(tmp);
+            tmp = newCell;
         }
-        this.start.previous = tmp;
-        tmp.next = this.start;
+        this.start.SetPrevious(tmp);
+        tmp.SetNext(this.start);
     }
 
     public void Display() {
         MemoryCell current = this.start;
         for (int i = 0; i < this.size; i++) {
-            System.out.println(current.B);
-            current = current.next; 
+            System.out.println(current.GetB().GetValue() + " " + i);
+            current = current.GetNext(); 
         }
     }
 }
