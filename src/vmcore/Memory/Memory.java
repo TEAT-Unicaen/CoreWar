@@ -2,15 +2,15 @@ package vmcore.Memory;
 
 public class Memory {
 
-    public Node start;  
+    public MemoryCell start;  
     private int size; 
 
     public Memory(int size) {
         this.size = size; 
-        this.start = new Node(0);
-        Node tmp = this.start;
+        this.start = new MemoryCell();
+        MemoryCell tmp = this.start;
         for (int i = 1; i < size; i++) {
-            tmp.next = new Node(i);
+            tmp.next = new MemoryCell();
             tmp.next.previous = tmp;
             tmp = tmp.next;
         }
@@ -19,9 +19,9 @@ public class Memory {
     }
 
     public void Display() {
-        Node current = this.start;
+        MemoryCell current = this.start;
         for (int i = 0; i < this.size; i++) {
-            System.out.println(current.value);
+            System.out.println(current.B);
             current = current.next; 
         }
     }
