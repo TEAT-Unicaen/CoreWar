@@ -1,7 +1,7 @@
 package vmcore.Memory;
 
 public class Adressage {
-    
+
     private MemoryCell mem;
     private Operande op;
 
