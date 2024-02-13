@@ -69,7 +69,7 @@ public class Converter {
 
         for (int i = 0; i < 2; i++) {
             if (p.length == 1) {
-                op.SetMode(Modes.DEF);
+                op.SetMode(Modes.DIRECT);
             } else {
                 op.SetMode(StrToMode.get(p[0]));
                 op.SetValue(Integer.parseInt(p[1]));
