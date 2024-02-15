@@ -44,6 +44,10 @@ public class MemoryCell {
         return this.inst;
     }
 
+    public void SetInstruction(Instruction inst) {
+        this.inst = inst;
+    }
+
     public Operande GetA() {
         return this.A;
     }

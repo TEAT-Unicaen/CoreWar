@@ -26,4 +26,8 @@ public class Operande {
         return this.value;
     }
 
+    @Override
+    public String toString() {
+        return " " + this.mode + " " + this.value;
+    }
 }

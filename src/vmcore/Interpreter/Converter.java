@@ -24,7 +24,7 @@ public class Converter {
     
     public Converter() {}
 
-    public void RedCodeToMemory(MemoryCell memC, String path, int id) {
+    public void RedCodeToMemory(MemoryCell memC, String path, int id, boolean verbose) {
         //IO Error handling
         try {
             FileReader fr = new FileReader(new File(path));   
@@ -43,9 +43,12 @@ public class Converter {
                     throw new IllegalArgumentException("Invalid instruction: " + parts[0]);
                 }
 
+                memC.SetInstruction(inst);
                 NormalizeForOperand(parts[1], parts[2], memC, id);
+                if (verbose) {System.out.println(memC.GetInstruction() + " " + memC.GetA() +  memC.GetB());}
                 memC = memC.GetNext();
             }
+            br.close();
             fr.close(); 
         }
         catch(IOException e) { 
@@ -68,11 +71,25 @@ public class Converter {
         String[] p = opA.split("");
 
         for (int i = 0; i < 2; i++) {
-            if (p.length == 1) {
+            int l = p.length;
+            if (l == 1) {
                 op.SetMode(Modes.DEF);
+                op.SetValue(Integer.parseInt(p[0]));
             } else {
-                op.SetMode(StrToMode.get(p[0]));
-                op.SetValue(Integer.parseInt(p[1]));
+                int idx = 1;
+                try {
+                    Integer.parseInt(p[0]);
+                    op.SetMode(Modes.DEF);
+                    idx = 0;
+                } catch (Exception e) { 
+                    op.SetMode(StrToMode.get(p[0]));
+                }
+
+                try {
+                    op.SetValue(Integer.parseInt(p[idx]+p[idx+1]));
+                } catch (Exception e) {
+                    op.SetValue(Integer.parseInt(p[idx]));
+                }
             }
             op = cell.GetB();
             p = opB.split("");
