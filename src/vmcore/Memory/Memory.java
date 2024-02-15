@@ -19,6 +19,21 @@ public class Memory {
         tmp.SetNext(this.start);
     }
 
+    public void SetInstructionInMemoryAtIndex(int index, Instruction inst, Operande A, Operande B) {
+        MemoryCell tmp = this.start; 
+        if (index > 0) {
+            for (int i = 0; i < index; i++) {
+                tmp = tmp.GetNext(); 
+            }
+        } else {
+            index *= -1; 
+            for (int i = 0; i < index; i++) {
+                tmp = tmp.GetPrevious(); 
+            } 
+        }
+        tmp.SetValues(inst, A, B);
+    }
+
     public void Display() {
         MemoryCell current = this.start;
         for (int i = 0; i < this.size; i++) {

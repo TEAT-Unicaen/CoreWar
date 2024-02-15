@@ -15,7 +15,7 @@ public class Seed {
     }
 
     public Seed(String seed) {
-        String[] separated = seed.split("\\;");
+        String[] separated = seed.split("(?<=\\G.{8})");
         this.seedLines = new ArrayList<SeedLine>();
         for(String s : separated) {
             this.seedLines.add(new SeedLine(s));
@@ -26,7 +26,6 @@ public class Seed {
         StringBuilder sb = new StringBuilder();
         for(int i=0; i<seedLines.size(); i++) {
             sb.append(this.seedLines.get(i).toString());
-            sb.append(";");
         }
         return sb.toString();
     }

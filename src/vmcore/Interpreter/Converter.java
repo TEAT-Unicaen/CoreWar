@@ -73,13 +73,13 @@ public class Converter {
         for (int i = 0; i < 2; i++) {
             int l = p.length;
             if (l == 1) {
-                op.SetMode(Modes.DEF);
+                op.SetMode(Modes.DIRECT);
                 op.SetValue(Integer.parseInt(p[0]));
             } else {
                 int idx = 1;
                 try {
                     Integer.parseInt(p[0]);
-                    op.SetMode(Modes.DEF);
+                    op.SetMode(Modes.DIRECT);
                     idx = 0;
                 } catch (Exception e) { 
                     op.SetMode(StrToMode.get(p[0]));

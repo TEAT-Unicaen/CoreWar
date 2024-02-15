@@ -12,7 +12,7 @@ public class SeedLine {
     }
 
     public SeedLine(String seedLine) {
-        String[] separated = seedLine.split("\\|");
+        String[] separated = seedLine.split("(?<=\\G.{2})");
         this.instruction = Integer.valueOf(separated[0]);
         this.adressing = Integer.valueOf(separated[1]);
         this.value1 = Integer.valueOf(separated[2]);
@@ -20,7 +20,7 @@ public class SeedLine {
     }
 
     public String toString() {
-        return String.format("%d|%d|%d|%d", this.instruction, this.adressing, this.value1, this.value2);
+        return String.format("%02d%02d%02d%02d", this.instruction, this.adressing, this.value1, this.value2);
     }
 
     public int getInstruction() {
