@@ -1,4 +1,4 @@
-package vmcore.Interpreter.adressage;
+package vmcore.Supervisor;
 
 import vmcore.Memory.MemoryCell;
 
