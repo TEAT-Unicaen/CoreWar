@@ -18,6 +18,7 @@ public class CorewarGui{
     }
 
     void DisplaySupervisor(Supervisor supervisor){
-        frame.add(new JLabel("Memory: " + supervisor.memory.size));
+        // This method will display the supervisor's memory
+        
     }
 }
