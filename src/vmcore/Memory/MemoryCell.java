@@ -34,7 +34,21 @@ public class MemoryCell {
         return this.previous;
     }
 
-    public void SetValues(Instruction inst, Operande A, Operande B) {
+    public Operande CopyA() {
+        Operande temp = new Operande();
+        temp.SetMode(this.A.GetMode());
+        temp.SetValue(this.A.GetValue());
+        return temp;
+    }
+
+    public Operande CopyB() {
+        Operande temp = new Operande();
+        temp.SetMode(this.B.GetMode());
+        temp.SetValue(this.B.GetValue());
+        return temp;
+    }
+
+    public void PasteCell(Instruction inst, Operande A, Operande B) {
         this.inst = inst;
         this.A = A; 
         this.B = B;

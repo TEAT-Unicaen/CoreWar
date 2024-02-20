@@ -31,7 +31,7 @@ public class Memory {
                 tmp = tmp.GetPrevious(); 
             } 
         }
-        tmp.SetValues(inst, A, B);
+        tmp.PasteCell(inst, A, B);
     }
 
     public void Display() {

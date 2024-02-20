@@ -32,7 +32,7 @@ public class Instructions {
                 if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
                     adressObj[1].GetB().SetValue(mem.GetA().GetValue()); 
                 } else {
-                    
+                    adressObj[1].PasteCell(adressObj[0].GetInstruction(), adressObj[0].CopyA(), adressObj[0].CopyB());
                 }
             case ADD:
                 if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
