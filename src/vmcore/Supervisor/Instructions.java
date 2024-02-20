@@ -1,31 +1,15 @@
 package vmcore.Supervisor;
 
-import vmcore.Memory.Instruction;
 import vmcore.Memory.MemoryCell;
 import vmcore.Memory.Modes;
 import vmcore.Interpreter.adressage.Adressage;
 
 public class Instructions {
 
-    private void SetDataAtRelativeIndex(MemoryCell mem, int index, Instruction inst) {
-        MemoryCell prov = mem;
-        if (index > 0) {
-            for (int i = 0; i < index; i ++) {
-                prov = prov.GetNext();
-            }
-        } else {
-            index *= -1;
-            for (int i = 0; i < index; i++) {
-                prov = prov.GetPrevious();
-            }
-        }
-        prov.SetInstruction(inst);
-    }
-    
     public static void ApplyInstruction(MemoryCell mem) {
-        switch (mem.GetInstruction()) { //surement pas au bon endroit attendre discussion
-            MemoryCell[] adressObj = (MemoryCell[]) Adressage.calcul(mem, true);
-            //Integer[] adress = (Integer[]) Adressage.calcul(mem, false); 
+        MemoryCell[] adressObj = (MemoryCell[]) Adressage.calcul(mem, true);
+        //Integer[] adress = (Integer[]) Adressage.calcul(mem, false); 
+        switch (mem.GetInstruction()) {
             case DAT:
                 break;
             case MOV:
@@ -36,9 +20,9 @@ public class Instructions {
                 }
             case ADD:
                 if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
-                    
+                    adressObj[1].GetB().SetValue(adressObj[1].GetB().GetValue() + mem.GetA().GetValue());
                 } else {
-
+                    // TODO : handle cases
                 }
             case SUB:
                 break;

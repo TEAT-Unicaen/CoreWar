@@ -26,29 +26,29 @@ public class Converter {
 
     public void RedCodeToMemory(MemoryCell memC, String path, int id, boolean verbose) {
         //IO Error handling
-        try {
-            FileReader fr = new FileReader(new File(path));   
-            BufferedReader br = new BufferedReader(fr); 
-            String line;
-            int count = 0;
-            //Memory feeding from file
-            while((line = br.readLine()) != null){
-                count ++;
-                if (count > 16) {
-                    throw new IllegalArgumentException("Redcode file is too long");
-                }
-                String[] parts = line.split(" ");
-                Instruction inst = IsValidInstruction(parts[0]);
-                if (inst == null) {
-                    throw new IllegalArgumentException("Invalid instruction: " + parts[0]);
-                }
+        try (FileReader fr = new FileReader(new File(path))) {   
+            try (BufferedReader br = new BufferedReader(fr)) {
+                String line;
+                int count = 0;
+                //Memory feeding from file
+                while((line = br.readLine()) != null){
+                    count ++;
+                    if (count > 16) {
+                        throw new IllegalArgumentException("Redcode file is too long");
+                    }
+                    String[] parts = line.split(" ");
+                    Instruction inst = IsValidInstruction(parts[0]);
+                    if (inst == null) {
+                        throw new IllegalArgumentException("Invalid instruction: " + parts[0]);
+                    }
 
-                memC.SetInstruction(inst);
-                NormalizeForOperand(parts[1], parts[2], memC, id);
-                if (verbose) {System.out.println(memC.GetInstruction() + " " + memC.GetA() +  memC.GetB());}
-                memC = memC.GetNext();
+                    memC.SetInstruction(inst);
+                    NormalizeForOperand(parts[1], parts[2], memC, id);
+                    if (verbose) {System.out.println(memC.GetInstruction() + " " + memC.GetA() +  memC.GetB());}
+                    memC = memC.GetNext();
+                }
+                br.close();
             }
-            br.close();
             fr.close(); 
         }
         catch(IOException e) { 

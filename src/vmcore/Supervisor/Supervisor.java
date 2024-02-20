@@ -1,7 +1,6 @@
 package vmcore.Supervisor;
 
 import vmcore.Memory.Memory;
-import vmcore.Interpreter.Interpreter;
 
 public class Supervisor {
 
@@ -14,5 +13,4 @@ public class Supervisor {
     Memory displayMemory() {
         return this.memory;
     }
-
 }
