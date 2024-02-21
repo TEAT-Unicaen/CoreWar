@@ -36,10 +36,10 @@ public class MemoryViewer extends JPanel{
     }
 
     private Color determineCellColor(MemoryCell cell) {
-        int value = cell.GetB().GetValue();
-        if (value == 1) {
+        int owner = cell.GetOwner();
+        if (owner== 1) {
             return Color.BLUE;
-        } else if (value == 2) {
+        } else if (owner == 2) {
             return Color.RED;
         } else {
             return Color.WHITE;
