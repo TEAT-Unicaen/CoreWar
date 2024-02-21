@@ -10,7 +10,7 @@ public class Supervisor {
         this.memory = new Memory(size);
     }
 
-    Memory displayMemory() {
+    public Memory getMemory() {
         return this.memory;
     }
 }
