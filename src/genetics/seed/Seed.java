@@ -34,6 +34,22 @@ public class Seed {
         return this.seedLines;
     }
 
+    public void rmLine(int line) {
+        this.seedLines.remove(line);
+    }
+
+    public void addLine(int line, SeedLine lineDate) {
+        this.seedLines.add(line, lineDate);
+    }
+
+    public void setLine(int line, SeedLine lineData) {
+        this.seedLines.set(line, lineData);
+    }
+
+    public int getLinesCount() {
+        return this.seedLines.size();
+    }
+
     public String getRedcode() {
         return RedCode.getRecode(this);
     }

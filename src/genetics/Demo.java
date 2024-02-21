@@ -1,19 +1,18 @@
 package genetics;
 
 import genetics.seed.Seed;
-import genetics.crossover.OnePivot;
 
 public class Demo {
     public static void main(String[] args) {
         Seed seed = new Seed(15);
-        System.out.println(seed);
+        System.out.println(seed.getRedcode());
 
-        Seed seed2 = new Seed(10);
-        System.out.println(seed2);
+        Seed seed2 = new Seed(15);
+        System.out.println(seed2.getRedcode());
 
-        OnePivot pivot = new OnePivot(seed, seed2);
+        GeneticOperatorManager gom = new GeneticOperatorManager();
 
-        Seed child = pivot.getChild();
+        Seed child = gom.generateChild(seed, seed2);
 
         System.out.println(child.getRedcode());
     }
