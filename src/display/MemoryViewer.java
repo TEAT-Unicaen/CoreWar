@@ -31,6 +31,7 @@ public class MemoryViewer extends JPanel{
             Color cellColor = determineCellColor(cell);
             cellPanel.setBackground(cellColor);
             add(cellPanel, constraints);
+            cell = cell.GetNext();
         }
     }
 
