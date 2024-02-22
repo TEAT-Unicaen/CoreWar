@@ -1,4 +1,4 @@
-package vmcore.Interpreter;
+package vmcore.Supervisor;
 
 import java.util.ArrayList;
 import vmcore.Memory.MemoryCell;

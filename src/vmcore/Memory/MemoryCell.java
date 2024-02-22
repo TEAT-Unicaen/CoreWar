@@ -18,6 +18,14 @@ public class MemoryCell {
         this.B = new Operande();
     };
 
+    @Override
+    public boolean equals(Object mem) {
+        if (mem == this) {return true;}
+        if (!(mem instanceof MemoryCell)) {return false;}
+        MemoryCell obj = (MemoryCell) mem; 
+        return this.inst.equals(obj.GetInstruction()) && this.A.equals(obj.GetA()) && this.B.equals(obj.GetB());
+    }
+
     public void SetNext(MemoryCell next) {
         this.next = next;
     }

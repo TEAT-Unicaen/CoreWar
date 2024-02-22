@@ -6,7 +6,7 @@ import vmcore.Memory.Modes;
 public class Adressage {
 
     public static Object[] calcul(MemoryCell mem, boolean type) { //type true = obj | false = index 
-        Object[] value = new Object[] {};
+        Object[] value = new Object[] {};                         //TODO : remove value if not used 
         switch (mem.GetA().GetMode()) {
             case DIRECT:
             case INDIRECT:

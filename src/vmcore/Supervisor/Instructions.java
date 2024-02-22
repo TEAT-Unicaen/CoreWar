@@ -18,21 +18,48 @@ public class Instructions {
                 } else {
                     adressObj[1].PasteCell(adressObj[0].GetInstruction(), adressObj[0].CopyA(), adressObj[0].CopyB());
                 }
-            case ADD:
+                Supervisor.PutInQueue(mem);
+                break;
+            case ADD: 
                 if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
+                    //on prend toujours les adresse pointées et pas les locales (valable pour A & B)
                     adressObj[1].GetB().SetValue(adressObj[1].GetB().GetValue() + mem.GetA().GetValue());
                 } else {
-                    // TODO : handle cases
+                    adressObj[1].GetA().SetValue(mem.GetA().GetValue() + adressObj[1].GetA().GetValue());
+                    adressObj[1].GetB().SetValue(mem.GetB().GetValue() + adressObj[1].GetB().GetValue());
                 }
+                Supervisor.PutInQueue(mem);
+                break;
             case SUB:
+                if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
+                    adressObj[1].GetB().SetValue(adressObj[1].GetB().GetValue() - mem.GetA().GetValue());
+                } else {
+                    adressObj[1].GetA().SetValue(adressObj[1].GetA().GetValue() - mem.GetA().GetValue());
+                    adressObj[1].GetB().SetValue(adressObj[1].GetB().GetValue() - mem.GetB().GetValue());
+                }
+                Supervisor.PutInQueue(mem);
                 break;
             case JMP:
+                Supervisor.FileAppel.Enfile(adressObj[0]);
                 break;
             case JMZ:
-                break;
-            case JMN:
+                if (mem.GetB().GetValue() == 0) {
+                    Supervisor.FileAppel.Enfile(adressObj[1]);
+                }
+                Supervisor.PutInQueue(mem);
                 break;
             case CMP:
+                if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
+                    if (mem.GetA().GetValue() == adressObj[1].GetB().GetValue()) {
+                        Supervisor.PutInQueue(mem,2);
+                    } 
+                } else {
+                    if (mem.GetA().equals(mem.GetB())) {
+                        Supervisor.PutInQueue(mem, 2);
+                    }
+                }
+                break;
+            case JMN:
                 break;
             case SLT: 
                 break; 

@@ -1,6 +1,7 @@
 package vmcore.Interpreter;
 
 import vmcore.Memory.MemoryCell;
+import vmcore.Supervisor.File;
 
 public class Interpreter {
     

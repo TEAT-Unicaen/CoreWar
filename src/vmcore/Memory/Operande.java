@@ -5,6 +5,14 @@ public class Operande {
     private Modes mode;
     private int value;
 
+    @Override
+    public boolean equals(Object ope) {
+        if (ope == this) {return true;}
+        if (!(ope instanceof Operande)) {return false;}
+        Operande obj = (Operande) ope;
+        return this.value == obj.GetValue() && this.mode.equals(obj.GetMode());
+    }
+
     public Operande() {
         this.mode = Modes.IMMEDIATE;
         this.value = 0;
