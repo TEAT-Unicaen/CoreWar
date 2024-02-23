@@ -41,6 +41,10 @@ public class Supervisor {
         Supervisor.PorgramCounter ++; 
     }
 
+    public static void decrementPorgramCounter() {
+        Supervisor.PorgramCounter ++; 
+    }
+
     public static int getProgramCounter() {
         return Supervisor.PorgramCounter; 
     }

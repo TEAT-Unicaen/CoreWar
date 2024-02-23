@@ -11,6 +11,7 @@ public class Instructions {
         //Integer[] adress = (Integer[]) Adressage.calcul(mem, false); 
         switch (mem.GetInstruction()) {
             case DAT:
+                Supervisor.decrementPorgramCounter();
                 break;
             case MOV:
                 if (mem.GetA().GetMode() == Modes.IMMEDIATE) {
