@@ -7,14 +7,18 @@ import vmcore.Memory.Memory;
 import vmcore.Memory.MemoryCell;
 import vmcore.Supervisor.*;
 
-public class MemoryViewer extends JPanel{
+
+public class MemoryGrid extends JPanel{
+    
     private Memory memory;
 
-    public MemoryViewer(Supervisor supervisor) {
+
+    public MemoryGrid(Supervisor supervisor) {
         this.memory = supervisor.getMemory();
         setLayout(new GridBagLayout());
         displayMemory();
     }
+
 
     private void displayMemory() {
         GridBagConstraints constraints = new GridBagConstraints();
@@ -25,15 +29,15 @@ public class MemoryViewer extends JPanel{
         constraints.fill = GridBagConstraints.BOTH; // Permet à chaque cellule de remplir l'espace disponible
 
         MemoryCell cell = memory.start;
-
-        while (cell != memory.start.GetPrevious()) {
+        do {
             JPanel cellPanel = new JPanel();
             Color cellColor = determineCellColor(cell);
             cellPanel.setBackground(cellColor);
             add(cellPanel, constraints);
             cell = cell.GetNext();
-        }
+        } while (cell != memory.start);
     }
+
 
     private Color determineCellColor(MemoryCell cell) {
         int owner = cell.GetOwner();
@@ -46,6 +50,7 @@ public class MemoryViewer extends JPanel{
         }
     }
 
+
     public void updateMemory(Memory newMemory) {
         this.memory = newMemory;
         removeAll();
@@ -53,9 +58,4 @@ public class MemoryViewer extends JPanel{
         revalidate();
         repaint();
     }
-
-
-
-
-
 }
