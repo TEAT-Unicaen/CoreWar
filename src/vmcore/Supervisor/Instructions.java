@@ -59,14 +59,39 @@ public class Instructions {
                     }
                 }
                 break;
-            case JMN:
+            case JMN: //relire 
+                if (mem.GetB().GetValue() != 0) {
+                    Supervisor.PutInQueue(adressObj[0]);
+                }
                 break;
             case SLT: 
+                if (mem.GetA().GetMode() != Modes.IMMEDIATE) {
+                    if (adressObj[0].GetB().GetValue() < mem.GetB().GetValue()) {
+                        Supervisor.PutInQueue(mem,2);
+                    }
+                } else {
+                    if (mem.GetA().GetValue() < mem.GetB().GetValue()) {
+                        Supervisor.PutInQueue(mem,2);
+                    }
+                }
                 break; 
             case DJN: 
+                int prov = 0; 
+                if (mem.GetB().GetMode() != Modes.IMMEDIATE) {
+                    prov = adressObj[1].GetB().GetValue()-1;
+                    adressObj[1].GetB().SetValue(prov);
+                } else {
+                    prov = mem.GetB().GetValue()-1;
+                    mem.GetB().SetValue(prov);
+                }
+                if (prov != 0) {
+                    Supervisor.PutInQueue(adressObj[0]);
+                }
                 break; 
             case SPL:
-                break;
+                Supervisor.incrementPorgramCounter();
+                Supervisor.PutInQueue(mem);
+                Supervisor.PutInQueue(mem,mem.GetA().GetValue());
         }
     }
 

@@ -6,12 +6,21 @@ import vmcore.Memory.MemoryCell;
 public class Supervisor {
 
     private Memory memory; 
+    private static int PorgramCounter = 0; 
+
     public static File FileAppel = new File(); 
     
     public static void PutInQueue(MemoryCell mem, int index) {
         MemoryCell prov = mem; 
-        for (int i = 0; i < index; i++) {
-            prov = prov.GetNext();
+        if (index > 0) {
+            for (int i = 0; i < index; i++) {
+                prov = prov.GetNext();
+            }
+        } else {
+            index *= -1;
+            for (int i = 0; i < index; i++) {
+                prov = prov.GetPrevious();
+            }
         }
         Supervisor.FileAppel.Enfile(prov);
     }
@@ -26,5 +35,13 @@ public class Supervisor {
 
     public Memory getMemory() {
         return this.memory;
+    }
+
+    public static void incrementPorgramCounter() {
+        Supervisor.PorgramCounter ++; 
+    }
+
+    public static int getProgramCounter() {
+        return Supervisor.PorgramCounter; 
     }
 }
