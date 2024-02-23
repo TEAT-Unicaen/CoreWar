@@ -40,7 +40,7 @@ public class RedCode {
 
     public static String getRecode(Seed seed) {
         StringBuilder sb = new StringBuilder();
-        for(SeedLine line : seed.getLines()) {
+        for (SeedLine line : seed.getLines()) {
             sb.append(RedCode.getRedCodeLine(line));
             sb.append("\n");
         }

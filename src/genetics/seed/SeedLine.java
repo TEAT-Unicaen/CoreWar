@@ -38,4 +38,20 @@ public class SeedLine {
     public int getValue2() {
         return this.value2;
     }
+
+    public void setInstruction(int instruction) {
+        this.instruction = instruction;
+    }
+
+    public void setAdressing(int adressing) {
+        this.adressing = adressing;
+    }
+
+    public void setValue1(int value) {
+        this.value1 = value;
+    }
+
+    public void setValue2(int value) {
+        this.value2 = value;
+    }
 }

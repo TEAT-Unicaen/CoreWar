@@ -9,7 +9,7 @@ public class Seed {
     public Seed(int lines) {
         SeedMaker seedMaker = new SeedMaker();
         this.seedLines = new ArrayList<SeedLine>();
-        for(int i=0; i<lines; i++) {
+        for (int i = 0; i < lines; i++) {
             this.seedLines.add(seedMaker.generate());
         }
     }
@@ -17,14 +17,18 @@ public class Seed {
     public Seed(String seed) {
         String[] separated = seed.split("(?<=\\G.{8})");
         this.seedLines = new ArrayList<SeedLine>();
-        for(String s : separated) {
+        for (String s : separated) {
             this.seedLines.add(new SeedLine(s));
         }
     }
 
+    public int length() {
+        return this.seedLines.size();
+    }
+
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for(int i=0; i<seedLines.size(); i++) {
+        for (int i = 0; i < seedLines.size(); i++) {
             sb.append(this.seedLines.get(i).toString());
         }
         return sb.toString();

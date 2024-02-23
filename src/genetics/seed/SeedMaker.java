@@ -14,6 +14,21 @@ public class SeedMaker {
         return new SeedLine(instruction, generateMode(instruction), generateValue(), generateValue());
     }
 
+    public void regenerate(int element, SeedLine src) {
+        System.out.println(element);
+        switch (element) {
+            case 0:
+                src.setInstruction(this.generateInstruction());
+            case 1:
+                src.setAdressing(this.generateMode(src.getInstruction()));
+                break;
+            case 2:
+            case 3:
+                src.setValue1(this.generateValue());
+                break;
+        }
+    }
+
     public int generateInstruction() {
         return (this.randomSeed.nextInt(11));
     }
@@ -28,6 +43,6 @@ public class SeedMaker {
     }
 
     public int generateValue() {
-        return this.randomSeed.nextInt(17);
+        return this.randomSeed.nextInt(26)-9;//Don't ask only me can know it
     }
 }
