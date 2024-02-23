@@ -36,7 +36,7 @@ public class MemoryGrid extends JPanel{
             JPanel cellPanel = new JPanel();
             Color cellColor = determineCellColor(cell);
             cellPanel.setBackground(cellColor);
-            cellPanel.setBorder(new EmptyBorder(10, 10, 10, 10));
+            cellPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
             add(cellPanel, constraints);
             cell = cell.GetNext();
 
