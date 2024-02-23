@@ -21,9 +21,4 @@ public class CorewarGui extends JFrame {
     public void updateMemory(Memory newMemory) {
         memoryGrid.updateMemory(newMemory);
     }
-
-    public static void main(String[] args) {
-        Supervisor supervisor = new Supervisor(8000);
-        CorewarGui gui = new CorewarGui(supervisor);
-    }
 }

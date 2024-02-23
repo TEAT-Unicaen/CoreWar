@@ -40,7 +40,7 @@ public class MemoryGrid extends JPanel{
             cell = cell.GetNext();
 
             constraints.gridx++;
-            if (constraints.gridx >= this.memory.getSize()/100) { //TODO : A modifier pour que la taille de la grille soit dynamique
+            if (constraints.gridx >= Math.sqrt(this.memory.getSize())) {
                 constraints.gridx = 0;
                 constraints.gridy++;
             }
