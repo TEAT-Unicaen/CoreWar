@@ -40,7 +40,7 @@ public class MemoryGrid extends JPanel{
             cell = cell.GetNext();
 
             constraints.gridx++;
-            if (constraints.gridx >= this.memory.getSize()/10) {
+            if (constraints.gridx >= this.memory.getSize()/100) { //TODO : A modifier pour que la taille de la grille soit dynamique
                 constraints.gridx = 0;
                 constraints.gridy++;
             }
@@ -49,6 +49,7 @@ public class MemoryGrid extends JPanel{
     }
 
 
+    //TODO : A modifier pour ne plus avoir de fonction de détermination de couleur
     private Color determineCellColor(MemoryCell cell) {
         int owner = cell.GetOwner();
         if (owner== 1) {
@@ -60,7 +61,7 @@ public class MemoryGrid extends JPanel{
         }
     }
 
-
+    //TODO : trouver plus opti pour mettre a jour affichage de la mémoire
     public void updateMemory(Memory newMemory) {
         this.memory = newMemory;
         removeAll();

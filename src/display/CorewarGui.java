@@ -23,7 +23,7 @@ public class CorewarGui extends JFrame {
     }
 
     public static void main(String[] args) {
-        Supervisor supervisor = new Supervisor(100);
+        Supervisor supervisor = new Supervisor(8000);
         CorewarGui gui = new CorewarGui(supervisor);
     }
 }
