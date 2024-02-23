@@ -69,4 +69,19 @@ public class MemoryGrid extends JPanel{
         revalidate();
         repaint();
     }
+
+    public void updateMemoryToIndex(MemoryCell newMemoryCell, int index) {
+        Component[] components = getComponents();
+        JPanel cellPanel = (JPanel) components[index];
+        
+        Color newColor = determineCellColor(newMemoryCell);
+    
+        cellPanel.setBackground(newColor);
+    }
+
+    public void updateMemoryToIndexWithColor(Color newColor, int index) {
+        Component[] components = getComponents();
+        JPanel cellPanel = (JPanel) components[index];      
+        cellPanel.setBackground(newColor);
+    }
 }

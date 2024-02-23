@@ -2,7 +2,10 @@ package display;
 
 import javax.swing.*;
 
+import java.awt.Color;
+
 import vmcore.Memory.Memory;
+import vmcore.Memory.MemoryCell;
 import vmcore.Supervisor.Supervisor;
 
 public class CorewarGui extends JFrame {
@@ -18,7 +21,15 @@ public class CorewarGui extends JFrame {
         setVisible(true);
     }
 
-    public void updateMemory(Memory newMemory) {
+    public void updateCompleteMemory(Memory newMemory) {
         memoryGrid.updateMemory(newMemory);
+    }
+
+    public void updateMemoryToIndex(MemoryCell cell, int index) {
+        memoryGrid.updateMemoryToIndex(cell, index);
+    }
+
+    public void updateMemoryToIndexWithColor(Color color, int index) {
+        memoryGrid.updateMemoryToIndexWithColor(color, index);
     }
 }
