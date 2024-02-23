@@ -34,6 +34,10 @@ public class Memory {
         tmp.PasteCell(inst, A, B);
     }
 
+    public int getSize() {
+        return this.size; 
+    }
+
     public void Display() {
         MemoryCell current = this.start;
         for (int i = 0; i < this.size; i++) {
