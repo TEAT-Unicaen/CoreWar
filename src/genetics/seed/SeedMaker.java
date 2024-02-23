@@ -23,8 +23,10 @@ public class SeedMaker {
                 src.setAdressing(this.generateMode(src.getInstruction()));
                 break;
             case 2:
-            case 3:
                 src.setValue1(this.generateValue());
+                break;
+            case 3:
+                src.setValue2(this.generateValue());
                 break;
         }
     }
