@@ -92,6 +92,7 @@ public class Instructions {
                 Supervisor.incrementPorgramCounter();
                 Supervisor.PutInQueue(mem);
                 Supervisor.PutInQueue(mem,mem.GetA().GetValue());
+                break; 
         }
     }
 
