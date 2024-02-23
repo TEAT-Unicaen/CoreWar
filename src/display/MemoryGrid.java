@@ -46,7 +46,7 @@ public class MemoryGrid extends JPanel{
         } else if (owner == 2) {
             return Color.RED;
         } else {
-            return Color.WHITE;
+            return Color.BLACK;
         }
     }
 
