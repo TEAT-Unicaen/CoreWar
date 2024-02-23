@@ -1,7 +1,6 @@
 package display;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 
 import java.awt.*;
 
@@ -36,7 +35,7 @@ public class MemoryGrid extends JPanel{
             JPanel cellPanel = new JPanel();
             Color cellColor = determineCellColor(cell);
             cellPanel.setBackground(cellColor);
-            cellPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 2));
+            cellPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
             add(cellPanel, constraints);
             cell = cell.GetNext();
 
