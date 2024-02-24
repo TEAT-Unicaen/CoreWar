@@ -1,11 +1,14 @@
-package vmcore.Memory;
+package vmcore.memory;
+
+import vmcore.memory.memoryCellData.InstructionEnum;
+import vmcore.memory.memoryCellData.Operande;
 
 public class MemoryCell {
     
     private MemoryCell previous;
     private MemoryCell next;
 
-    private Instruction inst;
+    private InstructionEnum inst;
     private Operande A;
     private Operande B;
     private int Owner;
@@ -13,76 +16,78 @@ public class MemoryCell {
     public MemoryCell(){
         this.previous = null; 
         this.next = null; 
-        this.inst = Instruction.DAT;
+        this.inst = InstructionEnum.DAT;
         this.A = new Operande(); 
         this.B = new Operande();
     };
 
     @Override
     public boolean equals(Object mem) {
-        if (mem == this) {return true;}
-        if (!(mem instanceof MemoryCell)) {return false;}
+        if (mem == this) 
+            return true;
+        if (!(mem instanceof MemoryCell))
+            return false;
         MemoryCell obj = (MemoryCell) mem; 
-        return this.inst.equals(obj.GetInstruction()) && this.A.equals(obj.GetA()) && this.B.equals(obj.GetB());
+        return this.inst.equals(obj.getInstruction()) && this.A.equals(obj.getA()) && this.B.equals(obj.getB());
     }
 
-    public void SetNext(MemoryCell next) {
+    public void setNext(MemoryCell next) {
         this.next = next;
     }
 
-    public MemoryCell GetNext() {
+    public MemoryCell getNext() {
         return this.next;
     }
 
-    public void SetPrevious(MemoryCell prev) {
+    public void setPrevious(MemoryCell prev) {
         this.previous = prev;
     }
 
-    public MemoryCell GetPrevious() {
+    public MemoryCell getPrevious() {
         return this.previous;
     }
 
-    public Operande CopyA() {
+    public Operande copyA() {
         Operande temp = new Operande();
-        temp.SetMode(this.A.GetMode());
-        temp.SetValue(this.A.GetValue());
+        temp.setMode(this.A.getMode());
+        temp.setValue(this.A.getValue());
         return temp;
     }
 
-    public Operande CopyB() {
+    public Operande copyB() {
         Operande temp = new Operande();
-        temp.SetMode(this.B.GetMode());
-        temp.SetValue(this.B.GetValue());
+        temp.setMode(this.B.getMode());
+        temp.setValue(this.B.getValue());
         return temp;
     }
 
-    public void PasteCell(Instruction inst, Operande A, Operande B) {
+    public void pasteCell(InstructionEnum inst, Operande A, Operande B) {
         this.inst = inst;
         this.A = A; 
         this.B = B;
     }
 
-    public Instruction GetInstruction() {
+    public InstructionEnum getInstruction() {
         return this.inst;
     }
 
-    public void SetInstruction(Instruction inst) {
+    public void setInstruction(InstructionEnum inst) {
         this.inst = inst;
     }
 
-    public Operande GetA() {
+    public Operande getA() {
         return this.A;
     }
 
-    public Operande GetB() {
+    public Operande getB() {
         return this.B;
     }
 
-    public void SetOwner(int newOwner) {
+    public void setOwner(int newOwner) {
         this.Owner = newOwner;
     }
 
-    public int GetOwner() {
+    public int getOwner() {
         return this.Owner;
     }
 }

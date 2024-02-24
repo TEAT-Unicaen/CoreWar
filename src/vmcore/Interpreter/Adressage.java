@@ -1,13 +1,13 @@
-package vmcore.Interpreter.adressage;
+package vmcore.interpreter;
 
-import vmcore.Memory.MemoryCell;
-import vmcore.Memory.Modes;
+import vmcore.memory.MemoryCell;
+import vmcore.memory.memoryCellData.AdressingModeEnum;
 
 public class Adressage {
 
     public static Object[] calcul(MemoryCell mem, boolean type) { //type true = obj | false = index 
         Object[] value = new Object[] {};                         //TODO : remove value if not used 
-        switch (mem.GetA().GetMode()) {
+        switch (mem.getA().getMode()) {
             case DIRECT:
             case INDIRECT:
                 value[0] = Adressage.DirectA(mem, type);
@@ -19,7 +19,7 @@ public class Adressage {
                 value[0] = Adressage.PredecA(mem, type);
                 break;
         }
-        switch (mem.GetB().GetMode()) {
+        switch (mem.getB().getMode()) {
             case DIRECT:
             case INDIRECT:
                 value[1] = Adressage.DirectB(mem, type);
@@ -36,70 +36,66 @@ public class Adressage {
 
     private static Object DirectA(MemoryCell mem, boolean type) {
         MemoryCell prov = mem; 
-        int value = prov.GetA().GetValue();
+        int value = prov.getA().getValue();
         if (value > 0) {
             for (int i = 0; i < value; i++)
-                prov = prov.GetNext();
+                prov = prov.getNext();
         } else {
             value *= -1; 
             for (int i = 0; i < value; i++)
-                prov = prov.GetPrevious();
+                prov = prov.getPrevious();
         }
-        if (type) {
-            return prov.GetB();
-        } 
-        return prov.GetB().GetValue();
+        if (type)
+            return prov.getB();
+        return prov.getB().getValue();
     }
 
     private static Object DirectB(MemoryCell mem, boolean type) {
         MemoryCell prov = mem; 
-        int value = prov.GetB().GetValue();
-        if (mem.GetA().GetMode() == Modes.INDIRECT)// Maybe B mode (not A)
-            value += prov.GetA().GetValue();
+        int value = prov.getB().getValue();
+        if (mem.getA().getMode() == AdressingModeEnum.INDIRECT)// Maybe B mode (not A)
+            value += prov.getA().getValue();
         if (value > 0) {
             for (int i = 0; i < value; i++)
-                prov = prov.GetNext();
+                prov = prov.getNext();
         } else {
             value *= -1; 
             for (int i = 0; i < value; i++)
-                prov = prov.GetPrevious();
+                prov = prov.getPrevious();
         }
-        if (type) {
-            return prov.GetB();
-        }
-        return prov.GetB().GetValue();
+        if (type)
+            return prov.getB();
+        return prov.getB().getValue();
     }
 
     private static Object ImmediateA(MemoryCell mem, boolean type) {
-        if (type) {
-            return mem.GetA();
-        }
-        return mem.GetA().GetValue();    
+        if (type)
+            return mem.getA();
+        return mem.getA().getValue();
     }
 
     private static Object ImmediateB(MemoryCell mem, boolean type) {
-        if (type) {
-            return mem.GetB();
-        }
-        return mem.GetB().GetValue();
+        if (type)
+            return mem.getB();
+        return mem.getB().getValue();
     }
 
     private static Object PredecA(MemoryCell mem, boolean type) { //Maybe return direct mode here
         if (!type) {
             int prov = (Integer) Adressage.DirectA(mem, type) - 1;
-            mem.GetA().SetValue(prov);
+            mem.getA().setValue(prov);
             return prov; 
         } else {
             MemoryCell provTemp = (MemoryCell) Adressage.DirectA(mem, type);
-            mem.GetA().SetValue(provTemp.GetPrevious().GetB().GetValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
-            return provTemp.GetPrevious(); 
+            mem.getA().setValue(provTemp.getPrevious().getB().getValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
+            return provTemp.getPrevious(); 
         }
     }
 
     /*
      *  private static int PredecA(MemoryCell mem) { //Maybe return direct mode here 
         int prov =  Adressage.DirectA(mem) -1;
-        mem.GetA().SetValue(prov);
+        mem.getA().setValue(prov);
         return prov; 
     }
      */
@@ -107,19 +103,19 @@ public class Adressage {
     private static Object PredecB(MemoryCell mem, boolean type) {
         if (!type) {
             int prov = (Integer) Adressage.DirectB(mem, type) - 1;
-            mem.GetB().SetValue(prov);
+            mem.getB().setValue(prov);
             return prov; 
         } else {
             MemoryCell provTemp = (MemoryCell) Adressage.DirectB(mem, type);
-            mem.GetB().SetValue(provTemp.GetPrevious().GetB().GetValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
-            return provTemp.GetPrevious(); 
+            mem.getB().setValue(provTemp.getPrevious().getB().getValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
+            return provTemp.getPrevious(); 
         }
     }
 
     /*
      * private static int PredecB(MemoryCell mem) {
         int prov =  Adressage.DirectB(mem) -1;
-        mem.GetB().SetValue(prov);
+        mem.getB().setValue(prov);
         return prov; 
     }
      */

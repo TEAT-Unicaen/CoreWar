@@ -1,4 +1,7 @@
-package vmcore.Memory;
+package vmcore.memory;
+
+import vmcore.memory.memoryCellData.InstructionEnum;
+import vmcore.memory.memoryCellData.Operande;
 
 public class Memory {
 
@@ -11,38 +14,36 @@ public class Memory {
         MemoryCell tmp = this.start;
         for (int i = 1; i < size; i++) {
             MemoryCell newCell = new MemoryCell();
-            tmp.SetNext(newCell);
-            newCell.SetPrevious(tmp);
+            tmp.setNext(newCell);
+            newCell.setPrevious(tmp);
             tmp = newCell;
         }
-        this.start.SetPrevious(tmp);
-        tmp.SetNext(this.start);
+        this.start.setPrevious(tmp);
+        tmp.setNext(this.start);
     }
 
-    public void SetInstructionInMemoryAtIndex(int index, Instruction inst, Operande A, Operande B) {
+    public void setInstructionInMemoryAtIndex(int index, InstructionEnum inst, Operande A, Operande B) {
         MemoryCell tmp = this.start; 
         if (index > 0) {
-            for (int i = 0; i < index; i++) {
-                tmp = tmp.GetNext(); 
-            }
+            for (int i = 0; i < index; i++)
+                tmp = tmp.getNext(); 
         } else {
             index *= -1; 
-            for (int i = 0; i < index; i++) {
-                tmp = tmp.GetPrevious(); 
-            } 
+            for (int i = 0; i < index; i++)
+                tmp = tmp.getPrevious();
         }
-        tmp.PasteCell(inst, A, B);
+        tmp.pasteCell(inst, A, B);
     }
 
     public int getSize() {
         return this.size; 
     }
 
-    public void Display() {
+    public void display() {
         MemoryCell current = this.start;
         for (int i = 0; i < this.size; i++) {
-            System.out.println(current.GetB().GetValue() + " " + i);
-            current = current.GetNext(); 
+            System.out.println(current.getB().getValue() + " " + i);
+            current = current.getNext(); 
         }
     }
 }

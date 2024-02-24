@@ -4,9 +4,9 @@ import javax.swing.*;
 
 import java.awt.Color;
 
-import vmcore.Memory.Memory;
-import vmcore.Memory.MemoryCell;
-import vmcore.Supervisor.Supervisor;
+import vmcore.memory.Memory;
+import vmcore.memory.MemoryCell;
+import vmcore.supervisor.Supervisor;
 
 public class CorewarGui extends JFrame {
     

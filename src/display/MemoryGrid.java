@@ -4,9 +4,9 @@ import javax.swing.*;
 
 import java.awt.*;
 
-import vmcore.Memory.Memory;
-import vmcore.Memory.MemoryCell;
-import vmcore.Supervisor.*;
+import vmcore.memory.Memory;
+import vmcore.memory.MemoryCell;
+import vmcore.supervisor.*;
 
 
 public class MemoryGrid extends JPanel{
@@ -37,7 +37,7 @@ public class MemoryGrid extends JPanel{
             cellPanel.setBackground(cellColor);
             cellPanel.setBorder(BorderFactory.createLineBorder(Color.RED, 1));
             add(cellPanel, constraints);
-            cell = cell.GetNext();
+            cell = cell.getNext();
 
             constraints.gridx++;
             if (constraints.gridx >= Math.sqrt(this.memory.getSize())) {
@@ -51,7 +51,7 @@ public class MemoryGrid extends JPanel{
 
     //TODO : A modifier pour ne plus avoir de fonction de détermination de couleur
     private Color determineCellColor(MemoryCell cell) {
-        int owner = cell.GetOwner();
+        int owner = cell.getOwner();
         if (owner== 1) {
             return Color.BLUE;
         } else if (owner == 2) {

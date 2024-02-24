@@ -17,7 +17,6 @@ public class GeneticOperatorManager  {
     public Seed generateChild(Seed seed1, Seed seed2) {
         Seed child = this.crossover(seed1, seed2);
         this.mutation(child);
-
         return child;
     }
 

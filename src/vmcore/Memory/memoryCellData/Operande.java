@@ -1,8 +1,8 @@
-package vmcore.Memory;
+package vmcore.memory.memoryCellData;
 
 public class Operande {
     
-    private Modes mode;
+    private AdressingModeEnum mode;
     private int value;
 
     @Override
@@ -10,27 +10,27 @@ public class Operande {
         if (ope == this) {return true;}
         if (!(ope instanceof Operande)) {return false;}
         Operande obj = (Operande) ope;
-        return this.value == obj.GetValue() && this.mode.equals(obj.GetMode());
+        return this.value == obj.getValue() && this.mode.equals(obj.getMode());
     }
 
     public Operande() {
-        this.mode = Modes.IMMEDIATE;
+        this.mode = AdressingModeEnum.IMMEDIATE;
         this.value = 0;
     } 
 
-    public void SetMode(Modes newMode) {
+    public void setMode(AdressingModeEnum newMode) {
         this.mode = newMode;
     }
 
-    public Modes GetMode() {
+    public AdressingModeEnum getMode() {
         return this.mode;
     }
 
-    public void SetValue(int newVal) {
+    public void setValue(int newVal) {
         this.value = newVal;
     }
 
-    public int GetValue() {
+    public int getValue() {
         return this.value;
     }
 

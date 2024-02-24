@@ -1,4 +1,4 @@
-package vmcore.Interpreter;
+package vmcore.interpreter;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -7,45 +7,44 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
-import vmcore.Memory.Instruction;
-import vmcore.Memory.Modes;
-import vmcore.Memory.MemoryCell;
-import vmcore.Memory.Operande;
+import vmcore.memory.memoryCellData.InstructionEnum;
+import vmcore.memory.memoryCellData.AdressingModeEnum;
+import vmcore.memory.memoryCellData.Operande;
+import vmcore.memory.MemoryCell;
+
 
 public class Converter {
 
-    private static Map<String, Modes> StrToMode = new HashMap<String, Modes>(){
+    private static Map<String, AdressingModeEnum> StrToMode = new HashMap<String, AdressingModeEnum>() {
         {
-            put("#", Modes.IMMEDIATE);
-            put("@", Modes.INDIRECT);
-            put("<", Modes.PREDEC);
+            put("#", AdressingModeEnum.IMMEDIATE);
+            put("@", AdressingModeEnum.INDIRECT);
+            put("<", AdressingModeEnum.PREDEC);
         }
     };
-    
+
     public Converter() {}
 
     public void RedCodeToMemory(MemoryCell memC, String path, int id, boolean verbose) {
         //IO Error handling
-        try (FileReader fr = new FileReader(new File(path))) {   
+        try (FileReader fr = new FileReader(new File(path))) {
             try (BufferedReader br = new BufferedReader(fr)) {
                 String line;
                 int count = 0;
                 //Memory feeding from file
                 while((line = br.readLine()) != null){
                     count ++;
-                    if (count > 16) {
+                    if (count > 16)
                         throw new IllegalArgumentException("Redcode file is too long");
-                    }
                     String[] parts = line.split(" ");
-                    Instruction inst = IsValidInstruction(parts[0]);
-                    if (inst == null) {
+                    InstructionEnum inst = IsValidInstruction(parts[0]);
+                    if (inst == null)
                         throw new IllegalArgumentException("Invalid instruction: " + parts[0]);
-                    }
-
-                    memC.SetInstruction(inst);
+                    memC.setInstruction(inst);
                     NormalizeForOperand(parts[1], parts[2], memC, id);
-                    if (verbose) {System.out.println(memC.GetInstruction() + " " + memC.GetA() +  memC.GetB());}
-                    memC = memC.GetNext();
+                    if (verbose)
+                        System.out.println(memC.getInstruction() + " " + memC.getA() +  memC.getB());
+                    memC = memC.getNext();
                 }
                 br.close();
             }
@@ -56,10 +55,10 @@ public class Converter {
         }
     }
 
-    public Instruction IsValidInstruction(String instStr) {
+    public InstructionEnum IsValidInstruction(String instStr) {
         // Invalid enum case handling
         try {
-            return Instruction.valueOf(instStr);
+            return InstructionEnum.valueOf(instStr);
         } catch (IllegalArgumentException e) {
             return null;
         }
@@ -67,33 +66,33 @@ public class Converter {
 
     public void NormalizeForOperand(String opA, String opB, MemoryCell cell, int id) {
         // Operand A normalization
-        Operande op = cell.GetA();
+        Operande op = cell.getA();
         String[] p = opA.split("");
 
         for (int i = 0; i < 2; i++) {
             int l = p.length;
             if (l == 1) {
-                op.SetMode(Modes.DIRECT);
-                op.SetValue(Integer.parseInt(p[0]));
+                op.setMode(AdressingModeEnum.DIRECT);
+                op.setValue(Integer.parseInt(p[0]));
             } else {
                 int idx = 1;
                 try {
                     Integer.parseInt(p[0]);
-                    op.SetMode(Modes.DIRECT);
+                    op.setMode(AdressingModeEnum.DIRECT);
                     idx = 0;
                 } catch (Exception e) { 
-                    op.SetMode(StrToMode.get(p[0]));
+                    op.setMode(StrToMode.get(p[0]));
                 }
 
                 try {
-                    op.SetValue(Integer.parseInt(p[idx]+p[idx+1]));
+                    op.setValue(Integer.parseInt(p[idx]+p[idx+1]));
                 } catch (Exception e) {
-                    op.SetValue(Integer.parseInt(p[idx]));
+                    op.setValue(Integer.parseInt(p[idx]));
                 }
             }
-            op = cell.GetB();
+            op = cell.getB();
             p = opB.split("");
         }
-        cell.SetOwner(id);
+        cell.setOwner(id);
     }
 }

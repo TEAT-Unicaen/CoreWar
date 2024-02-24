@@ -1,32 +1,31 @@
-package vmcore.Supervisor;
+package vmcore.supervisor;
 
-import vmcore.Memory.Memory;
-import vmcore.Memory.MemoryCell;
+import vmcore.memory.Memory;
+import vmcore.memory.MemoryCell;
+import vmcore.process.ProcessQueue;
 
 public class Supervisor {
 
     private Memory memory; 
     private static int PorgramCounter = 0; 
 
-    public static File FileAppel = new File(); 
+    private static ProcessQueue callQueue = new ProcessQueue(); 
     
-    public static void PutInQueue(MemoryCell mem, int index) {
+    public static void putInQueue(MemoryCell mem, int index) {
         MemoryCell prov = mem; 
         if (index > 0) {
-            for (int i = 0; i < index; i++) {
-                prov = prov.GetNext();
-            }
+            for (int i = 0; i < index; i++)
+                prov = prov.getNext();
         } else {
             index *= -1;
-            for (int i = 0; i < index; i++) {
-                prov = prov.GetPrevious();
-            }
+            for (int i = 0; i < index; i++)
+                prov = prov.getPrevious();
         }
-        Supervisor.FileAppel.Enfile(prov);
+        Supervisor.callQueue.push(prov);
     }
 
-    public static void PutInQueue(MemoryCell mem) {
-        Supervisor.FileAppel.Enfile(mem.GetNext());
+    public static void putInQueue(MemoryCell mem) {
+        Supervisor.callQueue.push(mem);
     }
 
     public Supervisor(int size) {
@@ -38,14 +37,14 @@ public class Supervisor {
     }
 
     public static void incrementPorgramCounter() {
-        Supervisor.PorgramCounter ++; 
+        Supervisor.PorgramCounter++;
     }
 
     public static void decrementPorgramCounter() {
-        Supervisor.PorgramCounter --; 
+        Supervisor.PorgramCounter--;
     }
 
     public static int getProgramCounter() {
-        return Supervisor.PorgramCounter; 
+        return Supervisor.PorgramCounter;
     }
 }

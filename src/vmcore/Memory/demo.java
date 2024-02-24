@@ -1,10 +1,10 @@
-package vmcore.Memory;
+package vmcore.memory;
 
-public class demo {
+public class Demo {
     
     public static void main(String[] args) {
         Memory a = new Memory(6);
-        a.Display();
+        a.display();
     }
 
 }

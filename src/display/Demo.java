@@ -1,6 +1,6 @@
 package display;
 
-import vmcore.Supervisor.Supervisor;
+import vmcore.supervisor.Supervisor;
 
 public class Demo {
 
