@@ -45,6 +45,6 @@ public class SeedMaker {
     }
 
     public int generateValue() {
-        return this.randomSeed.nextInt(26)-9;//Don't ask only me can know it
+        return this.randomSeed.nextInt(26)-9;//T: Don't ask only me can know it //P: LMAOOOOOOO
     }
 }

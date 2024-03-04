@@ -45,15 +45,14 @@ public class Converter {
                     if (verbose)
                         System.out.println(memC.getInstruction() + " " + memC.getA() +  memC.getB());
                     if (count == 1)
-                        System.out.println(memC);
                         Supervisor.putInQueue(memC);
                     memC = memC.getNext();
                 }
+                Supervisor.incrementProgramCounter();
                 br.close();
             }
             fr.close(); 
-        }
-        catch(IOException e) { 
+        } catch(IOException e) { 
             e.printStackTrace();
         }
     }
@@ -73,33 +72,35 @@ public class Converter {
         String[] p = opA.split("");
 
         for (int i = 0; i < 2; i++) {
-            int l = p.length;
-            if (l == 1) {
+            boolean isNeg = false;
+            try {
+                Integer.parseInt(p[0]);
                 op.setMode(AdressingModeEnum.DIRECT);
-                op.setValue(Integer.parseInt(p[0]));
-            } else {
-                int idx = 1;
-                try {
-                    Integer.parseInt(p[0]);
+            } catch (Exception e) { 
+                op.setMode(StrToMode.get(p[0]));
+                if (op.getMode() == null) {
                     op.setMode(AdressingModeEnum.DIRECT);
-                    idx = 0;
-                } catch (Exception e) { 
-                    op.setMode(StrToMode.get(p[0]));
-                    if (op.getMode() == null) {
-                        op.setMode(AdressingModeEnum.IMMEDIATE);
-                    }
+                    isNeg = true;
                 }
-
-                int val = 0;
-                for (int j = 0; j < l; j++) {
-                    try {
-                        val += Integer.parseInt(p[j]);
-                    } catch (Exception e) {
-                        val += 0;
-                    }
-                }
-                op.setValue(val);
             }
+
+            String stringValue = "";
+            for (int j = 0; j < p.length; j++) {
+                try {
+                    Integer.parseInt(p[j]);
+                    stringValue += p[j];
+                } catch (Exception e) {
+                    if (p[j].equals("-")) {
+                        isNeg = true;
+                    }
+                }
+            }
+            int value = Integer.parseInt(stringValue);
+            if (isNeg)
+                value *= -1;
+            op.setValue(value);
+
+            //Setting the new operation
             op = cell.getB();
             p = opB.split("");
         }

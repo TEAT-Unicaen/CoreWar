@@ -6,7 +6,7 @@ import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
 public class Adressage {
 
     public static MemoryCell[] calcul(MemoryCell mem) { //type true = obj | false = index 
-        MemoryCell[] value = new MemoryCell[] {mem, mem};                         //TODO : remove value if not used 
+        MemoryCell[] value = new MemoryCell[] {mem, mem};                         
         switch (mem.getA().getMode()) {
             case DIRECT:
             case INDIRECT:

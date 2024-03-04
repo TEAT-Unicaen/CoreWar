@@ -23,6 +23,10 @@ public class MemoryCell {
         this.B = new Operande();
     };
 
+    public String toStringDebug() {
+        return this.getInstruction().toString() + " | " + this.getA().toString() + " | " + this.getB().toString();
+    }
+
     @Override
     public boolean equals(Object mem) {
         if (mem == this) 
