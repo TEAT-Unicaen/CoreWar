@@ -11,7 +11,7 @@ import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
 import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 import coreWar.vmcore.memory.memoryCellData.Operande;
-
+import coreWar.vmcore.supervisor.Supervisor;
 
 public class Converter {
 
@@ -44,6 +44,9 @@ public class Converter {
                     NormalizeForOperand(parts[1], parts[2], memC, id);
                     if (verbose)
                         System.out.println(memC.getInstruction() + " " + memC.getA() +  memC.getB());
+                    if (count == 1)
+                        System.out.println(memC);
+                        Supervisor.putInQueue(memC);
                     memC = memC.getNext();
                 }
                 br.close();
@@ -82,13 +85,20 @@ public class Converter {
                     idx = 0;
                 } catch (Exception e) { 
                     op.setMode(StrToMode.get(p[0]));
+                    if (op.getMode() == null) {
+                        op.setMode(AdressingModeEnum.IMMEDIATE);
+                    }
                 }
 
-                try {
-                    op.setValue(Integer.parseInt(p[idx]+p[idx+1]));
-                } catch (Exception e) {
-                    op.setValue(Integer.parseInt(p[idx]));
+                int val = 0;
+                for (int j = 0; j < l; j++) {
+                    try {
+                        val += Integer.parseInt(p[j]);
+                    } catch (Exception e) {
+                        val += 0;
+                    }
                 }
+                op.setValue(val);
             }
             op = cell.getB();
             p = opB.split("");

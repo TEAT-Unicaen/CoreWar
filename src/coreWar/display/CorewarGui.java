@@ -12,7 +12,7 @@ public class CorewarGui extends JFrame {
     
     private MemoryGrid memoryGrid;
 
-    CorewarGui(Supervisor supervisor) {
+    public CorewarGui(Supervisor supervisor) {
         setTitle("Corewar");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

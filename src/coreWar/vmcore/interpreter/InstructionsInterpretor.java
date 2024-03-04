@@ -7,11 +7,10 @@ import coreWar.vmcore.supervisor.Supervisor;
 public class InstructionsInterpretor {
 
     public static void ApplyInstruction(MemoryCell mem) {
-        MemoryCell[] adressObj = (MemoryCell[]) Adressage.calcul(mem, true);
-        //Integer[] adress = (Integer[]) Adressage.calcul(mem, false); 
+        MemoryCell[] adressObj = Adressage.calcul(mem);
         switch (mem.getInstruction()) {
             case DAT:
-                Supervisor.decrementPorgramCounter();
+                Supervisor.decrementProgramCounter();
                 break;
             case MOV:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
@@ -82,7 +81,7 @@ public class InstructionsInterpretor {
                     Supervisor.putInQueue(adressObj[0]);
                 break; 
             case SPL:
-                Supervisor.incrementPorgramCounter();
+                Supervisor.incrementProgramCounter();
                 Supervisor.putInQueue(mem.getNext());
                 Supervisor.putInQueue(mem, mem.getA().getValue());
                 break; 

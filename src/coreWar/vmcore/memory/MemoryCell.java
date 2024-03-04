@@ -13,6 +13,8 @@ public class MemoryCell {
     private Operande B;
     private int Owner;
 
+    public int hardIndex; //pour l'affichage
+
     public MemoryCell(){
         this.previous = null; 
         this.next = null; 

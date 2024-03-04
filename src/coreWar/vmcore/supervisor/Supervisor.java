@@ -7,7 +7,7 @@ import coreWar.vmcore.process.ProcessQueue;
 public class Supervisor {
 
     private Memory memory; 
-    private static int PorgramCounter = 0; 
+    private static int ProgramCounter = 0; 
 
     private static ProcessQueue callQueue = new ProcessQueue(); 
     
@@ -36,15 +36,23 @@ public class Supervisor {
         return this.memory;
     }
 
-    public static void incrementPorgramCounter() {
-        Supervisor.PorgramCounter++;
+    public static void incrementProgramCounter() {
+        Supervisor.ProgramCounter++;
     }
 
-    public static void decrementPorgramCounter() {
-        Supervisor.PorgramCounter--;
+    public static void decrementProgramCounter() {
+        Supervisor.ProgramCounter--;
     }
 
     public static int getProgramCounter() {
-        return Supervisor.PorgramCounter;
+        return Supervisor.ProgramCounter;
+    }
+
+    public static MemoryCell getNextInstructionCell() {
+        return Supervisor.callQueue.pop();
+    }
+
+    public static ProcessQueue getProcessQueue() {
+        return Supervisor.callQueue;
     }
 }

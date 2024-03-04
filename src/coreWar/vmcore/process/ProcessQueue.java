@@ -19,5 +19,4 @@ public class ProcessQueue extends ArrayList<MemoryCell> {
         this.remove(size);
         return value; 
     };
-
 }
