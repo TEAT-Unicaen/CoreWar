@@ -6,18 +6,25 @@ import coreWar.vmcore.supervisor.Supervisor;
 
 public class InstructionsInterpretor {
 
+    private static MemoryCell setIndexForNextCase(MemoryCell mem) {
+        MemoryCell nextCase = mem.getNext();
+        nextCase.setOwner(mem.getOwner());
+        return nextCase; 
+    }
+
     public static void ApplyInstruction(MemoryCell mem) {
         MemoryCell[] adressObj = Adressage.calcul(mem);
         switch (mem.getInstruction()) {
             case DAT:
                 Supervisor.decrementProgramCounter();
+                System.out.println("KILLED");
                 break;
             case MOV:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
                     adressObj[1].getB().setValue(mem.getA().getValue());
                 else
                     adressObj[1].pasteCell(adressObj[0].getInstruction(), adressObj[0].copyA(), adressObj[0].copyB());
-                Supervisor.putInQueue(mem.getNext());
+                Supervisor.putInQueue(setIndexForNextCase(mem));
                 break;
             case ADD: 
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
@@ -27,7 +34,7 @@ public class InstructionsInterpretor {
                     adressObj[1].getA().setValue(mem.getA().getValue() + adressObj[1].getA().getValue());
                     adressObj[1].getB().setValue(mem.getB().getValue() + adressObj[1].getB().getValue());
                 }
-                Supervisor.putInQueue(mem.getNext());
+                Supervisor.putInQueue(setIndexForNextCase(mem));
                 break;
             case SUB:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
@@ -36,7 +43,7 @@ public class InstructionsInterpretor {
                     adressObj[1].getA().setValue(adressObj[1].getA().getValue() - mem.getA().getValue());
                     adressObj[1].getB().setValue(adressObj[1].getB().getValue() - mem.getB().getValue());
                 }
-                Supervisor.putInQueue(mem.getNext());
+                Supervisor.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
                 Supervisor.putInQueue(adressObj[0]);
@@ -44,7 +51,7 @@ public class InstructionsInterpretor {
             case JMZ:
                 if (mem.getB().getValue() == 0)
                     Supervisor.putInQueue(adressObj[1]);
-                Supervisor.putInQueue(mem.getNext());
+                Supervisor.putInQueue(setIndexForNextCase(mem));
                 break;
             case CMP:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
@@ -82,7 +89,7 @@ public class InstructionsInterpretor {
                 break; 
             case SPL:
                 Supervisor.incrementProgramCounter();
-                Supervisor.putInQueue(mem.getNext());
+                Supervisor.putInQueue(setIndexForNextCase(mem));
                 Supervisor.putInQueue(mem, mem.getA().getValue());
                 break; 
         }

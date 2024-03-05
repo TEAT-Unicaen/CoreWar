@@ -33,9 +33,9 @@ public class MemoryGrid extends JPanel{
         
         do {
             JPanel cellPanel = new JPanel();
-            Color cellColor = determineCellColor(cell);
+            Color cellColor = determineCellColor(cell.getOwner());
             cellPanel.setBackground(cellColor);
-            cellPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
+            //cellPanel.setBorder(BorderFactory.createLineBorder(Color.WHITE, 1));
             add(cellPanel, constraints);
             cell = cell.getNext();
 
@@ -48,16 +48,14 @@ public class MemoryGrid extends JPanel{
         } while (cell != memory.start);
     }
 
-
-    //TODO : A modifier pour ne plus avoir de fonction de détermination de couleur
-    private Color determineCellColor(MemoryCell cell) {
-        int owner = cell.getOwner();
-        if (owner== 1) {
-            return Color.BLUE;
-        } else if (owner == 2) {
-            return Color.RED;
-        } else {
-            return Color.BLACK;
+    public static Color determineCellColor(int ownerIndex) {
+        switch (ownerIndex) {
+            case 1:
+                return Color.BLUE;
+            case 2: 
+                return Color.RED;
+            default:
+                return Color.BLACK;
         }
     }
 
@@ -70,13 +68,10 @@ public class MemoryGrid extends JPanel{
         repaint();
     }
 
-    public void updateMemoryToIndex(MemoryCell newMemoryCell, int index) {
+    public void updateMemoryToIndex(int ownerIndex, int index) {
         Component[] components = getComponents();
-        JPanel cellPanel = (JPanel) components[index];
-        
-        Color newColor = determineCellColor(newMemoryCell);
-    
-        cellPanel.setBackground(newColor);
+        JPanel cellPanel = (JPanel) components[index];      
+        cellPanel.setBackground(determineCellColor(ownerIndex));
     }
 
     public void updateMemoryToIndexWithColor(Color newColor, int index) {

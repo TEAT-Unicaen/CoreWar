@@ -11,7 +11,7 @@ public class MemoryCell {
     private InstructionEnum inst;
     private Operande A;
     private Operande B;
-    private int Owner;
+    private int Owner = -1;
 
     public int hardIndex; //pour l'affichage
 
@@ -90,6 +90,7 @@ public class MemoryCell {
     }
 
     public void setOwner(int newOwner) {
+        System.out.println("SET TO " + newOwner);
         this.Owner = newOwner;
     }
 

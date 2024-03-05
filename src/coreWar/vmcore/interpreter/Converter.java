@@ -41,6 +41,7 @@ public class Converter {
                     if (inst == null)
                         throw new IllegalArgumentException("Invalid instruction: " + parts[0]);
                     memC.setInstruction(inst);
+                    memC.setOwner(id);
                     NormalizeForOperand(parts[1], parts[2], memC, id);
                     if (verbose)
                         System.out.println(memC.getInstruction() + " " + memC.getA() +  memC.getB());

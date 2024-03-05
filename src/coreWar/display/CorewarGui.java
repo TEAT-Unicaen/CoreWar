@@ -25,8 +25,8 @@ public class CorewarGui extends JFrame {
         memoryGrid.updateMemory(newMemory);
     }
 
-    public void updateMemoryToIndex(MemoryCell cell, int index) {
-        memoryGrid.updateMemoryToIndex(cell, index);
+    public void updateMemoryToIndex(int owner, int index) {
+        memoryGrid.updateMemoryToIndex(owner, index);
     }
 
     public void updateMemoryToIndexWithColor(Color color, int index) {
