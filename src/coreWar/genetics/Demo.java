@@ -4,16 +4,15 @@ import coreWar.genetics.seed.Seed;
 
 public class Demo {
     public static void main(String[] args) {
-        Seed seed = new Seed(15);
-        System.out.println(seed.getRedcode());
-
-        Seed seed2 = new Seed(15);
-        System.out.println(seed2.getRedcode());
-
-        GeneticOperatorManager gom = new GeneticOperatorManager();
-
-        Seed child = gom.generateChild(seed, seed2);
-
-        System.out.println(child.getRedcode());
+        Population gen1 = new Population(5);
+        int x =0;
+        for (Seed seed : gen1.keySet()) {
+            if (x == 2)
+                gen1.win(seed);
+            x++;
+        }
+        Population gen2 = new Population(gen1);
+        System.out.println(gen1);
+        System.out.println(gen2);
     }
 }

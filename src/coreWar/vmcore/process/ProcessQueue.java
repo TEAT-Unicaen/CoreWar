@@ -3,7 +3,7 @@ package coreWar.vmcore.process;
 import java.util.ArrayList;
 
 import coreWar.vmcore.memory.MemoryCell;
-
+//TODO : replace by Process
 public class ProcessQueue extends ArrayList<MemoryCell> {
     public ProcessQueue() {};
 

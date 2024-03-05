@@ -6,8 +6,7 @@ import java.util.List;
 public class Seed {
     private List<SeedLine> seedLines;
 
-    public Seed(int lines) {
-        SeedMaker seedMaker = new SeedMaker();
+    public Seed(SeedMaker seedMaker, int lines) {
         this.seedLines = new ArrayList<SeedLine>();
         for (int i = 0; i < lines; i++)
             this.seedLines.add(seedMaker.generate());
