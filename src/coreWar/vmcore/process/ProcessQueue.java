@@ -19,11 +19,6 @@ public class ProcessQueue extends ArrayList<MemoryCell> {
         }
         MemoryCell value = this.get(0);//this.getFirst();
         this.remove(0);//removeFirst();
-        if (this.size() <= 10) {
-            System.out.println(value.hardIndex + " poped out\nRestant : " + this + " (Process awaiting : " + this.size()+")");
-        } else {
-            System.out.println(value.hardIndex + " poped out\nRestant : [...] (Process awaiting : " + this.size()+")");
-        }
         return value; 
     };
 }

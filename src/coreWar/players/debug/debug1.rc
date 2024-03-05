@@ -1,0 +1,12 @@
+JMP 4 0
+MOV 2 -1
+JMP -1 0
+DAT 9 0
+SPL -2 0
+SPL 4 0
+ADD #-16 -3
+MOV -4 @-16
+JMP -4 0
+SPL 2 0
+JMP -1 0
+MOV 0 1
