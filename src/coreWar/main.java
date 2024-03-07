@@ -20,7 +20,7 @@ public class main {
         while (Supervisor.getProcessQueue().size() > 1) { // >= si on veut pas kill quand il est solo
             tried++;
             System.out.println("\n----- " + tried + " -----");
-            Thread.sleep(1000);
+            //Thread.sleep(1000);
             MemoryCell nextInst = Supervisor.getNextInstructionCell();
             try {
                 System.out.println("Hard index : " + nextInst.hardIndex + " | ID process : " + nextInst.getOwner());

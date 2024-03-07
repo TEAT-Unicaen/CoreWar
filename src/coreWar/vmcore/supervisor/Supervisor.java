@@ -12,16 +12,20 @@ public class Supervisor {
     private static ProcessQueue callQueue = new ProcessQueue(); 
     
     public static void putInQueue(MemoryCell mem, int index) {
-        MemoryCell prov = mem; 
-        if (index > 0) {
-            for (int i = 0; i < index; i++)
-                prov = prov.getNext();
+        if (Supervisor.ProgramCounter < 100) {
+            MemoryCell prov = mem; 
+            if (index > 0) {
+                for (int i = 0; i < index; i++)
+                    prov = prov.getNext();
+            } else {
+                index *= -1;
+                for (int i = 0; i < index; i++)
+                    prov = prov.getPrevious();
+            }
+            Supervisor.callQueue.push(prov);
         } else {
-            index *= -1;
-            for (int i = 0; i < index; i++)
-                prov = prov.getPrevious();
+            System.out.println(mem.hardIndex + " refusé de la file (file pleine)");
         }
-        Supervisor.callQueue.push(prov);
     }
 
     public static void putInQueue(MemoryCell mem) {

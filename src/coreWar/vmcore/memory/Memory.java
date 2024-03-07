@@ -23,7 +23,6 @@ public class Memory {
         }
         this.start.setPrevious(tmp);
         tmp.setNext(this.start);
-
     }
 
     public void setInstructionInMemoryAtIndex(int index, InstructionEnum inst, Operande A, Operande B) {

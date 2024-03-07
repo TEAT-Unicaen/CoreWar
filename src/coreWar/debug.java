@@ -1,8 +1,10 @@
 package coreWar;
 
+import coreWar.vmcore.interpreter.Adressage;
 import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
+import coreWar.vmcore.memory.memoryCellData.Operande;
 import coreWar.vmcore.process.ProcessQueue;
 import coreWar.vmcore.supervisor.Supervisor;
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
@@ -32,23 +34,28 @@ public class debug {
                 Thread.sleep(sleep);
             } else {
                 String debugMemoryToDisplay = scanner.nextLine();
-                if (debugMemoryToDisplay.length() > 0) {
-                    try {
-                        int MemoryIndex = Integer.parseInt(debugMemoryToDisplay);
-                        MemoryCell prov = supervisor.getMemory().start;
-                        if (MemoryIndex > 0) {
-                            for (int i = 0; i < MemoryIndex; i++) {
-                                prov = prov.getNext(); 
+                while (debugMemoryToDisplay != "") {
+                    if (debugMemoryToDisplay.length() > 0) {
+                        try {
+                            int MemoryIndex = Integer.parseInt(debugMemoryToDisplay);
+                            MemoryCell prov = supervisor.getMemory().start;
+                            if (MemoryIndex > 0) {
+                                for (int i = 0; i < MemoryIndex; i++) {
+                                    prov = prov.getNext(); 
+                                }
+                            } else {
+                                MemoryIndex *= -1;
+                                for (int i = 0; i < MemoryIndex; i++) {
+                                    prov = prov.getPrevious(); 
+                                }
                             }
-                        } else {
-                            MemoryIndex *= -1;
-                            for (int i = 0; i < MemoryIndex; i++) {
-                                prov = prov.getPrevious(); 
-                            }
+                            MemoryCell[] adressObj = Adressage.calcul(prov);
+                            System.out.println("Details (" + prov.hardIndex + "): " + prov.toStringDebug());
+                            System.out.println("Resultat des calculs d'operandes : " + adressObj[0].hardIndex + " | " + adressObj[1].hardIndex);
+                        } catch (Exception e) {
+                            System.out.println("Pass (invalid args)");
                         }
-                        System.out.println("Details (" + prov.hardIndex + "): " + prov.toStringDebug());
-                    } catch (Exception e) {
-                        System.out.println("Pass (invalid args)");
+                        debugMemoryToDisplay = scanner.nextLine();
                     }
                 }
             }
