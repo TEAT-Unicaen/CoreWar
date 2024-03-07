@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="CoreWar" default="compile">
+    <property name="src.dir" value="src"/>
+    <property name="bin.dir" value="bin"/>
+    <target name="init">
+        <mkdir dir="${bin.dir}"/>
+    </target>
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${bin.dir}" includeantruntime="false"/>
+    </target>
+</project>

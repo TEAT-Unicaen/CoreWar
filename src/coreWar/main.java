@@ -36,9 +36,23 @@ public class main {
         System.out.println("end" + Supervisor.getProgramCounter());
     }
 
+    public static boolean isLinux() {
+        System.out.println(System.getProperty("os.name"));
+        if (System.getProperty("os.name").equals("Linux")) 
+            return true;
+        return false;
+    }
+
     private static void initPlayersRedcodes(Memory mem) {
         Converter conv = new Converter();
-        conv.RedCodeToMemory(mem.start, "src\\coreWar\\players\\oblivion.rc", 1, false);
-        conv.RedCodeToMemory(mem.getEmptySlot(), "src\\coreWar\\players\\orion.rc", 2, false);
+        String orionPath = "resources\\players\\oblivion.rc";
+        String oblivionPath = "resources\\players\\orion.rc";
+        if (isLinux()){
+            orionPath = "../resources/players/orion.rc";
+            oblivionPath = "../resources/players/oblivion.rc";
+        }
+        
+        conv.RedCodeToMemory(mem.start, orionPath, 1, false);
+        conv.RedCodeToMemory(mem.getEmptySlot(), oblivionPath, 2, false);
     }
 }
