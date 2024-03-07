@@ -3,7 +3,6 @@ package coreWar.display;
 import javax.swing.*;
 
 import coreWar.vmcore.memory.Memory;
-import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.supervisor.Supervisor;
 
 import java.awt.Color;

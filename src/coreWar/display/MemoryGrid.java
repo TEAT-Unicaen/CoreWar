@@ -59,7 +59,6 @@ public class MemoryGrid extends JPanel{
         }
     }
 
-    //TODO : trouver plus opti pour mettre a jour affichage de la mémoire
     public void updateMemory(Memory newMemory) {
         this.memory = newMemory;
         removeAll();
