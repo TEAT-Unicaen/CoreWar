@@ -4,7 +4,6 @@ import coreWar.vmcore.interpreter.Adressage;
 import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.memory.memoryCellData.Operande;
 import coreWar.vmcore.process.ProcessQueue;
 import coreWar.vmcore.supervisor.Supervisor;
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
@@ -58,6 +57,7 @@ public class debug {
                         debugMemoryToDisplay = scanner.nextLine();
                     }
                 }
+                scanner.close();
             }
 
             MemoryCell nextInst = Supervisor.getNextInstructionCell(); //instruction executée
