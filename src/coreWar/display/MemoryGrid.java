@@ -17,17 +17,17 @@ public class MemoryGrid extends JPanel{
     public MemoryGrid(Supervisor supervisor) {
         this.memory = supervisor.getMemory();
         setLayout(new GridBagLayout());
-        displayMemory();
+        createGrid();
     }
 
 
-    private void displayMemory() {
+    private void createGrid() {
         GridBagConstraints constraints = new GridBagConstraints();
         constraints.gridx = 0;
         constraints.gridy = 0;
-        constraints.weightx = 1.0; // Permet à la grille de s'étendre horizontalement
-        constraints.weighty = 1.0; // Permet à la grille de s'étendre verticalement
-        constraints.fill = GridBagConstraints.BOTH; // Permet à chaque cellule de remplir l'espace disponible
+        constraints.weightx = 1.0; 
+        constraints.weighty = 1.0;
+        constraints.fill = GridBagConstraints.BOTH;
 
         MemoryCell cell = memory.start;
         
@@ -62,7 +62,7 @@ public class MemoryGrid extends JPanel{
     public void updateMemory(Memory newMemory) {
         this.memory = newMemory;
         removeAll();
-        displayMemory();
+        createGrid();
         revalidate();
         repaint();
     }

@@ -12,7 +12,7 @@ public class Supervisor {
     private static ProcessQueue callQueue = new ProcessQueue(); 
     
     public static void putInQueue(MemoryCell mem, int index) {
-        if (Supervisor.ProgramCounter < 100) {
+        if (Supervisor.ProgramCounter < 10) {
             MemoryCell prov = mem; 
             if (index > 0) {
                 for (int i = 0; i < index; i++)
