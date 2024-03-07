@@ -21,18 +21,16 @@ public class GeneticOperatorManager  {
     }
 
     private Seed crossover(Seed seed1, Seed seed2) {
-        StringBuilder sb = new StringBuilder();
-        String stringSeed1 = seed1.toString();
-        String stringSeed2 = seed2.toString();
-        int pivot = this.random.nextInt(Math.min(seed1.length(), seed2.length()))*8;
+        Seed newSeed = new Seed();
+        int pivot = this.random.nextInt(Math.min(seed1.size(), seed2.size()));
         if (this.random.nextInt() > 0) {
-            sb.append(stringSeed1.substring(0, pivot));
-            sb.append(stringSeed2.substring(pivot, stringSeed2.length()));
+            newSeed.addToPivot(pivot, seed1);
+            newSeed.addFromPivot(pivot, seed2);
         } else {
-            sb.append(stringSeed2.substring(0, pivot));
-            sb.append(stringSeed1.substring(pivot, stringSeed1.length()));
+            newSeed.addToPivot(pivot, seed2);
+            newSeed.addFromPivot(pivot, seed1);
         }
-        return new Seed(sb.toString());
+        return newSeed;
     }
 
     private void mutation(Seed seed) {
@@ -40,24 +38,20 @@ public class GeneticOperatorManager  {
         switch (random.nextInt(4)) {
             case 1:
                 if (random.nextDouble() < this.probabilityMutation) {
-                    System.out.println("modif");
-                    int line = random.nextInt(seed.getLinesCount());
-                    System.out.println(line);
-                    sm.regenerate(random.nextInt(4), seed.getLines().get(line));
+                    int line = random.nextInt(seed.size());
+                    sm.regenerate(random.nextInt(4), seed.get(line));
                 }
                 break;
             case 2:
-                if ((seed.getLinesCount() < 15) && (random.nextDouble() < this.probabilityMutation)) {
-                    System.out.println("add");
-                    int line = random.nextInt(seed.getLinesCount());
-                    seed.addLine(line, sm.generate());
+                if ((seed.size() < 15) && (random.nextDouble() < this.probabilityMutation)) {
+                    int line = random.nextInt(seed.size());
+                    seed.add(line, sm.generate());
                 }
                 break;
             case 3:
-                if ((seed.getLinesCount() > 1) && (random.nextDouble() < this.probabilityMutation)) {
-                    System.out.println("rm");
-                    int line = random.nextInt(seed.getLinesCount());
-                    seed.rmLine(line);
+                if ((seed.size() > 1) && (random.nextDouble() < this.probabilityMutation)) {
+                    int line = random.nextInt(seed.size());
+                    seed.remove(line);
                 }
                 break;
             default:

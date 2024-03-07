@@ -3,7 +3,6 @@ package coreWar.genetics.seed;
 public class SeedLine {
     private int instruction, adressing, value1, value2;
 
-
     public SeedLine(int instruction, int adressing, int value1, int value2) {
         this.instruction = instruction;
         this.adressing = adressing;

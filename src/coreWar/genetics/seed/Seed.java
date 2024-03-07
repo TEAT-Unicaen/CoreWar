@@ -1,53 +1,43 @@
 package coreWar.genetics.seed;
 
 import java.util.ArrayList;
-import java.util.List;
 
-public class Seed {
-    private List<SeedLine> seedLines;
+public class Seed extends ArrayList<SeedLine> {
+
+    public Seed() {
+        super();
+    }
 
     public Seed(SeedMaker seedMaker, int lines) {
-        this.seedLines = new ArrayList<SeedLine>();
+        super();
         for (int i = 0; i < lines; i++)
-            this.seedLines.add(seedMaker.generate());
+            this.add(seedMaker.generate());
     }
 
     public Seed(String seed) {
+        super();
         String[] separated = seed.split("(?<=\\G.{8})");
-        this.seedLines = new ArrayList<SeedLine>();
         for (String s : separated)
-            this.seedLines.add(new SeedLine(s));
-    }
-
-    public int length() {
-        return this.seedLines.size();
+            this.add(new SeedLine(s));
     }
 
     public String toString() {
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < seedLines.size(); i++)
-            sb.append(this.seedLines.get(i).toString());
+        for (int i = 0; i < this.size(); i++)
+            sb.append(this.get(i).toString());
         return sb.toString();
     }
 
-    public List<SeedLine> getLines() {
-        return this.seedLines;
+    public void addToPivot(int pivot, Seed seed) {
+        for (int i = 0; i < pivot; i++) {
+            this.add(seed.get(i));
+        }
     }
 
-    public void rmLine(int line) {
-        this.seedLines.remove(line);
-    }
-
-    public void addLine(int line, SeedLine lineDate) {
-        this.seedLines.add(line, lineDate);
-    }
-
-    public void setLine(int line, SeedLine lineData) {
-        this.seedLines.set(line, lineData);
-    }
-
-    public int getLinesCount() {
-        return this.seedLines.size();
+    public void addFromPivot(int pivot, Seed seed) {
+        for (int i = pivot; i < seed.size(); i++) {
+            this.add(seed.get(i));
+        }
     }
 
     public String getRedcode() {

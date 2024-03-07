@@ -12,7 +12,7 @@ public class Population extends HashMap<Seed, Integer> {
         SeedMaker sm = new SeedMaker();
         Random rand = new Random();
         for (int i=0; i<size; i++)
-            this.put(new Seed(sm, rand.nextInt(16)));
+            this.put(new Seed(sm, rand.nextInt(15)+1));
     }
 
     public Population(Population previousGeneration) {
@@ -31,15 +31,14 @@ public class Population extends HashMap<Seed, Integer> {
         this.put(seed, 0);
     }
 
-    public void win(Seed key) {
-        if (key==null)
-            return;
-        this.replace(key, this.get(key)+1);
+    public void addPoint(Seed seed, int point) {
+        if (seed != null)
+            this.replace(seed, this.get(seed) + point);
     }
 
     public Seed getTheWinner() {
         Seed seedWin = null;
-        int winMax = 0;
+        int winMax = -1;
         for (Map.Entry<Seed, Integer> entry : this.entrySet()) {
             if (entry.getValue() > winMax)
                 seedWin = entry.getKey();

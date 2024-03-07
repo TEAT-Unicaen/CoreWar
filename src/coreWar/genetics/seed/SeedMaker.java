@@ -15,7 +15,6 @@ public class SeedMaker {
     }
 
     public void regenerate(int element, SeedLine src) {
-        System.out.println(element);
         switch (element) {
             case 0:
                 src.setInstruction(this.generateInstruction());

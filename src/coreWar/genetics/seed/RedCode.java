@@ -1,7 +1,9 @@
 package coreWar.genetics.seed;
 
 public class RedCode {
-    private static String[] instructionL = new String[] {"DAT", "MOV", "ADD", "SUB", "CMP", "SLT", "JMP", "JMZ", "JMN", "DJN", "SPL"};
+    private static String[] instructionL = new String[] { 
+        "DAT", "MOV", "ADD", "SUB", "CMP", "SLT", "JMP", "JMZ", "JMN", "DJN", "SPL"
+    };
 
     private static char[][][] adressing = new char[][][] {
         {
@@ -40,7 +42,7 @@ public class RedCode {
 
     public static String getRecode(Seed seed) {
         StringBuilder sb = new StringBuilder();
-        for (SeedLine line : seed.getLines()) {
+        for (SeedLine line : seed) {
             sb.append(RedCode.getRedCodeLine(line));
             sb.append("\n");
         }

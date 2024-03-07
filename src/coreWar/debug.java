@@ -93,6 +93,7 @@ public class debug {
 
             cache = nextInst; 
         }
+        scanner.close();
         System.out.println("end" + Supervisor.getProgramCounter());
     }
 
