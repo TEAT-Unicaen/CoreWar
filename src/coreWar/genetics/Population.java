@@ -12,24 +12,27 @@ public class Population extends HashMap<Seed, Integer> {
         SeedMaker sm = new SeedMaker();
         Random rand = new Random();
         for (int i=0; i<size; i++)
-            this.put(new Seed(sm, rand.nextInt(15)+1));
+            this.put(new Seed(sm, rand.nextInt(11)+5), 0);
     }
 
-    public Population(Population previousGeneration) {
+    public Population nexPopulation() {
+        Population newP = new Population(0);
         GeneticOperatorManager gom = new GeneticOperatorManager();
-        Seed winner = previousGeneration.getTheWinner();
-        this.put(winner);
+        Seed winner = this.getTheWinner();
 
-        for(Seed seed : previousGeneration.keySet()) {
+        newP.put(new Seed(winner), 0);
+
+        for(Seed seed : this.keySet()) {
             if(seed != winner) {
-                this.put(gom.generateChild(winner, seed));
+                Seed child = new Seed();
+                do {
+                    child = gom.generateChild(winner, seed);
+                } while(newP.put(child, 0) != null);
             }
         }
+        return newP;
     }
 
-    public void put(Seed seed) {
-        this.put(seed, 0);
-    }
 
     public void addPoint(Seed seed, int point) {
         if (seed != null)
@@ -38,10 +41,12 @@ public class Population extends HashMap<Seed, Integer> {
 
     public Seed getTheWinner() {
         Seed seedWin = null;
-        int winMax = -1;
+        int winMax = Integer.MIN_VALUE;
         for (Map.Entry<Seed, Integer> entry : this.entrySet()) {
-            if (entry.getValue() > winMax)
+            if (entry.getValue() > winMax) {
+                winMax = entry.getValue();
                 seedWin = entry.getKey();
+            }
         }
         return seedWin;
     }

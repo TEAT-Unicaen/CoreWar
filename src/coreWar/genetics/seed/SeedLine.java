@@ -10,6 +10,10 @@ public class SeedLine {
         this.value2 = value2;
     }
 
+    public SeedLine(SeedLine srcLine) {
+        this(srcLine.getInstruction(), srcLine.getAdressingMode(), srcLine.getValue1(), srcLine.getValue2());
+    }
+
     public SeedLine(String seedLine) {
         String[] separated = seedLine.split("(?<=\\G.{2})");
         this.instruction = Integer.valueOf(separated[0]);
@@ -52,5 +56,9 @@ public class SeedLine {
 
     public void setValue2(int value) {
         this.value2 = value;
+    }
+
+    public String getRedcode() {
+        return RedCode.getRedCodeLine(this);
     }
 }

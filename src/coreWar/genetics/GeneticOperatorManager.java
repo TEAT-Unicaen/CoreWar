@@ -8,13 +8,14 @@ import coreWar.genetics.seed.SeedMaker;
 
 public class GeneticOperatorManager  {
     private Random random;
+    private SeedMaker sm;
     private double probabilityMutation = 1.0/3.0;
 
-    public GeneticOperatorManager() {
-        this.random = new Random();
-    }
+    public GeneticOperatorManager() {}
 
     public Seed generateChild(Seed seed1, Seed seed2) {
+        this.random = new Random();
+        this.sm = new SeedMaker();
         Seed child = this.crossover(seed1, seed2);
         this.mutation(child);
         return child;
@@ -34,24 +35,30 @@ public class GeneticOperatorManager  {
     }
 
     private void mutation(Seed seed) {
-        SeedMaker sm = new SeedMaker();
-        switch (random.nextInt(4)) {
-            case 1:
+        switch (random.nextInt(5)) {
+            case 1:// Modified
                 if (random.nextDouble() < this.probabilityMutation) {
                     int line = random.nextInt(seed.size());
-                    sm.regenerate(random.nextInt(4), seed.get(line));
+                    this.sm.regenerate(random.nextInt(4), seed.get(line));
                 }
                 break;
-            case 2:
+            case 2:// Additional
                 if ((seed.size() < 15) && (random.nextDouble() < this.probabilityMutation)) {
                     int line = random.nextInt(seed.size());
-                    seed.add(line, sm.generate());
+                    seed.add(line, this.sm.generate());
                 }
                 break;
-            case 3:
+            case 3:// removing
                 if ((seed.size() > 1) && (random.nextDouble() < this.probabilityMutation)) {
                     int line = random.nextInt(seed.size());
                     seed.remove(line);
+                }
+                break;
+            case 4:// swapping
+                if (random.nextDouble() < this.probabilityMutation) {
+                    int line1 = random.nextInt(seed.size());
+                    int line2 = random.nextInt(seed.size());
+                    seed.swap(line1, line2);
                 }
                 break;
             default:
