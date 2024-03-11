@@ -4,7 +4,6 @@ import coreWar.vmcore.interpreter.Adressage;
 import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.memory.memoryCellData.Operande;
 import coreWar.vmcore.process.ProcessQueue;
 import coreWar.vmcore.supervisor.Supervisor;
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
@@ -21,6 +20,7 @@ public class debug {
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 
         Supervisor supervisor = new Supervisor(1024);
+        Supervisor.getProcessQueue().enbaleDebugMode(true);
         initPlayersRedcodes(supervisor.getMemory());
         CorewarGui corewarGui = new CorewarGui(supervisor);
         corewarGui.setVisible(true);

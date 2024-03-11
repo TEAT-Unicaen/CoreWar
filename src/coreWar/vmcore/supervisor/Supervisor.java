@@ -7,12 +7,13 @@ import coreWar.vmcore.process.ProcessQueue;
 public class Supervisor {
 
     private Memory memory; 
-    private static int ProgramCounter = 0; 
+
+    public static int[] playersInstance = {0,0,0};
 
     private static ProcessQueue callQueue = new ProcessQueue(); 
     
     public static void putInQueue(MemoryCell mem, int index) {
-        if (Supervisor.ProgramCounter < 100) {
+        if (Supervisor.playersInstance[0] < 100) {
             MemoryCell prov = mem; 
             if (index > 0) {
                 for (int i = 0; i < index; i++)
@@ -41,15 +42,15 @@ public class Supervisor {
     }
 
     public static void incrementProgramCounter() {
-        Supervisor.ProgramCounter++;
+        Supervisor.playersInstance[0]++;
     }
 
     public static void decrementProgramCounter() {
-        Supervisor.ProgramCounter--;
+        Supervisor.playersInstance[0]--;
     }
 
     public static int getProgramCounter() {
-        return Supervisor.ProgramCounter;
+        return Supervisor.playersInstance[0];
     }
 
     public static MemoryCell getNextInstructionCell() {

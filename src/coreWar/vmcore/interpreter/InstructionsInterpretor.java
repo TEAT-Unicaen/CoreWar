@@ -14,6 +14,7 @@ public class InstructionsInterpretor {
 
     public static void ApplyInstruction(MemoryCell mem) {
         MemoryCell[] adressObj = Adressage.calcul(mem);
+        Supervisor.playersInstance[mem.getOwner()] -= 1; 
         switch (mem.getInstruction()) {
             case DAT:
                 Supervisor.decrementProgramCounter();
