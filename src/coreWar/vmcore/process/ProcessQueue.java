@@ -3,18 +3,21 @@ package coreWar.vmcore.process;
 import java.util.ArrayList;
 
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.supervisor.Supervisor;
+import coreWar.vmcore.supervisor.Vm;
 public class ProcessQueue extends ArrayList<MemoryCell> {
 
     private boolean debug = false;  
+    private Vm vm; 
 
-    public ProcessQueue() {};
-    public ProcessQueue(boolean debug) {this.debug = true;};
+    public ProcessQueue(Vm vm) {
+        this.vm = vm; 
+    };
+    public ProcessQueue(Vm vm, boolean debug) {this.debug = true;};
 
     public void push(MemoryCell mem) {
         if (debug) { 
-            System.out.println("Process " + mem.hardIndex + " pushed. Total : " + Supervisor.playersInstance[0] + " | p1 : " +  Supervisor.playersInstance[1] + " | p2 : " + Supervisor.playersInstance[2]);
-            Supervisor.playersInstance[mem.getOwner()]++; 
+            System.out.println("Process " + mem.hardIndex + " pushed. Total : " + this.vm.playersInstance[0] + " | p1 : " +  this.vm.playersInstance[1] + " | p2 : " + this.vm.playersInstance[2]);
+            this.vm.playersInstance[mem.getOwner()]++; 
         } 
         this.add(mem); 
     };

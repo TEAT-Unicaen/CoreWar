@@ -1,11 +1,11 @@
 package coreWar.display;
 
-import coreWar.vmcore.supervisor.Supervisor;
+import coreWar.vmcore.supervisor.Vm;
 
 public class Demo {
 
     public static void main(String[] args) {
-        Supervisor supervisor = new Supervisor(1024);
+        Vm supervisor = new Vm(1024);
         CorewarGui corewarGui = new CorewarGui(supervisor);
 
 

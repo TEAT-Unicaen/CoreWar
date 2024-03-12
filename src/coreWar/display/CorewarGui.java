@@ -3,7 +3,7 @@ package coreWar.display;
 import javax.swing.*;
 
 import coreWar.vmcore.memory.Memory;
-import coreWar.vmcore.supervisor.Supervisor;
+import coreWar.vmcore.supervisor.Vm;
 
 import java.awt.Color;
 
@@ -11,7 +11,7 @@ public class CorewarGui extends JFrame {
     
     private MemoryGrid memoryGrid;
 
-    public CorewarGui(Supervisor supervisor) {
+    public CorewarGui(Vm supervisor) {
         setTitle("Corewar");
         setSize(800, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

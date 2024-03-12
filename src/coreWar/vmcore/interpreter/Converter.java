@@ -11,7 +11,7 @@ import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
 import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 import coreWar.vmcore.memory.memoryCellData.Operande;
-import coreWar.vmcore.supervisor.Supervisor;
+import coreWar.vmcore.supervisor.Vm;
 
 public class Converter {
 
@@ -25,7 +25,7 @@ public class Converter {
 
     public Converter() {}
 
-    public void RedCodeToMemory(MemoryCell memC, String path, int id, boolean verbose) {
+    public void RedCodeToMemory(MemoryCell memC, String path, int id, boolean verbose, Vm vm) {
         //IO Error handling
         try (FileReader fr = new FileReader(new File(path))) {
             try (BufferedReader br = new BufferedReader(fr)) {
@@ -46,10 +46,10 @@ public class Converter {
                     if (verbose)
                         System.out.println(memC.getInstruction() + " " + memC.getA() +  memC.getB());
                     if (count == 1)
-                        Supervisor.putInQueue(memC);
+                        vm.putInQueue(memC);
                     memC = memC.getNext();
                 }
-                Supervisor.incrementProgramCounter();
+                vm.incrementProgramCounter();
                 br.close();
             }
             fr.close(); 

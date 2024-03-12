@@ -5,7 +5,7 @@ import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.process.ProcessQueue;
-import coreWar.vmcore.supervisor.Supervisor;
+import coreWar.vmcore.supervisor.Vm;
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
 
 import java.util.Scanner;
@@ -16,17 +16,17 @@ public class debug {
 
     private static int sleep = 1000; 
     private static boolean debugMode = true; 
+    private static Vm supervisor = new Vm(1024);
     
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 
-        Supervisor supervisor = new Supervisor(1024);
-        Supervisor.getProcessQueue().enbaleDebugMode(true);
+        supervisor.getProcessQueue().enbaleDebugMode(true);
         initPlayersRedcodes(supervisor.getMemory());
         CorewarGui corewarGui = new CorewarGui(supervisor);
         corewarGui.setVisible(true);
         MemoryCell cache = new MemoryCell();
         Scanner scanner = new Scanner(System.in);
-        while (Supervisor.getProcessQueue().size() >= 1) { // >= si on veut pas kill quand il est solo
+        while (supervisor.getProcessQueue().size() >= 1) { // >= si on veut pas kill quand il est solo
             tried++;
             System.out.println("\n----- " + tried + " -----");
 
@@ -60,10 +60,10 @@ public class debug {
                 }
             }
 
-            MemoryCell nextInst = Supervisor.getNextInstructionCell(); //instruction executée
+            MemoryCell nextInst = supervisor.getNextInstructionCell(); //instruction executée
 
             try {
-                ProcessQueue file = Supervisor.getProcessQueue();
+                ProcessQueue file = supervisor.getProcessQueue();
                 String display = "[";
                 int size = file.size(); 
                 if (size > 10) {
@@ -82,7 +82,7 @@ public class debug {
                 System.out.println(display);
 
                 System.out.println("Hard index : " + nextInst.hardIndex + " | ID process : " + nextInst.getOwner());
-                InstructionsInterpretor.ApplyInstruction(nextInst);
+                InstructionsInterpretor.ApplyInstruction(nextInst,supervisor);
                 corewarGui.updateMemoryToIndex(nextInst.getOwner(), nextInst.hardIndex);
 
             } catch (Exception e) { //gestion erreur 
@@ -94,12 +94,12 @@ public class debug {
             cache = nextInst; 
         }
         scanner.close();
-        System.out.println("end" + Supervisor.getProgramCounter());
+        System.out.println("end" + supervisor.getProgramCounter());
     }
 
     private static void initPlayersRedcodes(Memory mem) {
         Converter conv = new Converter();
-        conv.RedCodeToMemory(mem.start, "src\\coreWar\\players\\debug\\debug1.rc", 1, false);
-        conv.RedCodeToMemory(mem.getEmptySlot(), "src\\coreWar\\players\\debug\\debug2.rc", 2, false);
+        conv.RedCodeToMemory(mem.start, "src\\coreWar\\players\\debug\\debug1.rc", 1, false,supervisor);
+        conv.RedCodeToMemory(mem.getEmptySlot(), "src\\coreWar\\players\\debug\\debug2.rc", 2, false,supervisor);
     }
 }

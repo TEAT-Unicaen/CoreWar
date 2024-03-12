@@ -14,7 +14,7 @@ public class MemoryGrid extends JPanel{
     private Memory memory;
 
 
-    public MemoryGrid(Supervisor supervisor) {
+    public MemoryGrid(Vm supervisor) {
         this.memory = supervisor.getMemory();
         setLayout(new GridBagLayout());
         createGrid();
