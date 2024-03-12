@@ -2,7 +2,7 @@ package coreWar.vmcore.interpreter;
 
 import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
-import coreWar.vmcore.supervisor.Vm;
+import coreWar.vmcore.virtualMachine.Vm;
 
 public class InstructionsInterpretor {
 
