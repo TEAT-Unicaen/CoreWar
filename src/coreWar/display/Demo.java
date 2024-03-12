@@ -1,6 +1,6 @@
 package coreWar.display;
 
-import coreWar.vmcore.supervisor.Vm;
+import coreWar.vmcore.virtualMachine.Vm;
 
 public class Demo {
 

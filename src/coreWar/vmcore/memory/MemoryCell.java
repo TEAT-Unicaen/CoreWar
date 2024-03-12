@@ -90,7 +90,7 @@ public class MemoryCell {
     }
 
     public void setOwner(int newOwner) {
-        System.out.println("SET TO " + newOwner);
+        //System.out.println("SET TO " + newOwner);
         this.Owner = newOwner;
     }
 

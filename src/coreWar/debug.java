@@ -5,7 +5,7 @@ import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.process.ProcessQueue;
-import coreWar.vmcore.supervisor.Vm;
+import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
 
 import java.util.Scanner;
@@ -98,8 +98,7 @@ public class debug {
     }
 
     private static void initPlayersRedcodes(Memory mem) {
-        Converter conv = new Converter();
-        conv.RedCodeToMemory(mem.start, "src\\coreWar\\players\\debug\\debug1.rc", 1, false,supervisor);
-        conv.RedCodeToMemory(mem.getEmptySlot(), "src\\coreWar\\players\\debug\\debug2.rc", 2, false,supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.start, "src\\coreWar\\players\\debug\\debug1.rc", 1, false,supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.getEmptySlot(), "src\\coreWar\\players\\debug\\debug2.rc", 2, false,supervisor);
     }
 }

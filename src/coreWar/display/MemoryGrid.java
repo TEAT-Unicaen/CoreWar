@@ -4,7 +4,7 @@ import javax.swing.*;
 
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.supervisor.*;
+import coreWar.vmcore.virtualMachine.*;
 
 import java.awt.*;
 

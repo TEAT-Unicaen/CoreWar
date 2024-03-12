@@ -3,7 +3,8 @@ package coreWar.vmcore.process;
 import java.util.ArrayList;
 
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.supervisor.Vm;
+import coreWar.vmcore.virtualMachine.Vm;
+
 public class ProcessQueue extends ArrayList<MemoryCell> {
 
     private boolean debug = false;  
@@ -12,6 +13,7 @@ public class ProcessQueue extends ArrayList<MemoryCell> {
     public ProcessQueue(Vm vm) {
         this.vm = vm; 
     };
+    
     public ProcessQueue(Vm vm, boolean debug) {this.debug = true;};
 
     public void push(MemoryCell mem) {

@@ -3,7 +3,7 @@ package coreWar;
 import coreWar.vmcore.interpreter.Converter;
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.supervisor.Vm;
+import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.interpreter.InstructionsInterpretor; 
 import coreWar.display.CorewarGui;
 
@@ -46,7 +46,6 @@ public class run {
     }
 
     private static void initPlayersRedcodes(Memory mem) {
-        Converter conv = new Converter();
         String orionPath = "resources\\players\\oblivion.rc";
         String oblivionPath = "resources\\players\\orion.rc";
         if (isLinux()){
@@ -54,7 +53,7 @@ public class run {
             oblivionPath = "../resources/players/oblivion.rc";
         }
         
-        conv.RedCodeToMemory(mem.start, orionPath, 1, false, supervisor);
-        conv.RedCodeToMemory(mem.getEmptySlot(), oblivionPath, 2, false, supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.start, orionPath, 1, false, supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.getEmptySlot(), oblivionPath, 2, false, supervisor);
     }
 }

@@ -1,4 +1,4 @@
-package coreWar.vmcore.supervisor;
+package coreWar.vmcore.virtualMachine;
 
 import coreWar.vmcore.memory.Memory;
 import coreWar.vmcore.memory.MemoryCell;
@@ -9,8 +9,13 @@ public class Vm {
     private Memory memory; 
 
     public int[] playersInstance = {0,0,0};
+    public int winner = -1;  
 
     private ProcessQueue callQueue = new ProcessQueue(this); 
+
+    public Vm(int size) {
+        this.memory = new Memory(size);
+    }
     
     public void putInQueue(MemoryCell mem, int index) {
         if (this.playersInstance[0] < 100) {
@@ -31,10 +36,6 @@ public class Vm {
 
     public void putInQueue(MemoryCell mem) {
         this.callQueue.push(mem);
-    }
-
-    public Vm(int size) {
-        this.memory = new Memory(size);
     }
 
     public Memory getMemory() {
