@@ -1,9 +1,6 @@
 package coreWar;
 
 import coreWar.vmcore.virtualMachine.Vm;
-import coreWar.vmcore.virtualMachine.ThreadVm;
-
-import java.util.ArrayList;
 import java.util.List;
 
 
@@ -16,7 +13,7 @@ public class demo {
         supervisor.createVm(1058,template,template);
         System.out.println("attente ici");
         List<Vm> res = supervisor.getValues();
-        System.out.println("fin attente ici");
+        System.out.println("fin attente ici\n" + res);
     }
 
 }
