@@ -6,18 +6,16 @@ import coreWar.vmcore.memory.MemoryCell;
 public class ThreadVm extends Thread {
 
     private Vm vm;
-    private int tick;
     private MemoryCell cache;
     public ThreadVm(Vm vm) {
         this.vm = vm;
-        this.tick = 0;
         this.cache = new MemoryCell();
     }
 
     @Override
     public void run() {
         while (this.vm.getProcessQueue().size() > 1) {
-            this.tick++;
+            this.vm.tick++;
             MemoryCell nextInst = this.vm.getNextInstructionCell();
             try {
                 InstructionsInterpretor.ApplyInstruction(nextInst,this.vm);
@@ -43,7 +41,7 @@ public class ThreadVm extends Thread {
     }
 
     public int getTicks() {
-        return this.tick;
+        return this.vm.tick;
     }
 
     public int getWinner() {

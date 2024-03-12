@@ -33,7 +33,7 @@ public class Supervisor {
         for (ThreadVm current : this.threadList) {
             int waiter = 0;
             while (current.isAlive() && waiter < 10)
-                System.out.println("DATA : "+current.isAlive()+" | " + waiter++ );
+                waiter++; 
                 Thread.sleep(100);
             if (waiter >= 10) {
                 current.kill();

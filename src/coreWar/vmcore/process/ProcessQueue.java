@@ -17,10 +17,9 @@ public class ProcessQueue extends ArrayList<MemoryCell> {
     public ProcessQueue(Vm vm, boolean debug) {this.debug = true;};
 
     public void push(MemoryCell mem) {
-        if (debug) { 
+        if (debug) 
             System.out.println("Process " + mem.hardIndex + " pushed. Total : " + this.vm.playersInstance[0] + " | p1 : " +  this.vm.playersInstance[1] + " | p2 : " + this.vm.playersInstance[2]);
-            this.vm.playersInstance[mem.getOwner()]++; 
-        } 
+        this.vm.playersInstance[mem.getOwner()]++; 
         this.add(mem); 
     };
 
