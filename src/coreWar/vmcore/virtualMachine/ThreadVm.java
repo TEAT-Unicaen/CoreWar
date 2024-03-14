@@ -7,11 +7,15 @@ public class ThreadVm extends Thread {
 
     private Vm vm;
     private MemoryCell cache;
+
     public ThreadVm(Vm vm) {
         this.vm = vm;
         this.cache = new MemoryCell();
     }
 
+    /**
+     * lance l'execution de la vm
+     */
     @Override
     public void run() {
         while (this.vm.getProcessQueue().size() > 1) {

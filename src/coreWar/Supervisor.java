@@ -19,6 +19,13 @@ public class Supervisor {
         this.threadList = new ArrayList<ThreadVm>();
     }
 
+    /**
+     * Initialise et execute les vm dans des threads 
+     * 
+     * @param size taille de la mémoire 
+     * @param red1 redcode du programme 1  
+     * @param red2 redcode du programme 2 
+     */
     public void createVm(int size, String red1, String red2) {
         Vm virtualMachine = new Vm(size);
         Converter.RedCodeToMemoryFromString(virtualMachine.getMemory().start, red1, 1, false, virtualMachine);
@@ -28,16 +35,19 @@ public class Supervisor {
         thread.start();
     }
 
+    /**
+     * @return renvoie une liste de vm executée
+     * @throws InterruptedException attend la fin d'execution des programmes (3s max)
+     */
     public List<Vm> getValues() throws InterruptedException {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
             int waiter = 0;
-            while (current.isAlive() && waiter < 10)
-                waiter++; 
-                Thread.sleep(100);
-            if (waiter >= 10) {
-                current.kill();
+            while (current.getVm().tick < 10000 && current.isAlive() && waiter < 10) {
+                waiter++;  
+                Thread.sleep(10);
             }
+            current.kill();
             results.add(current.getVm());
         }
         return results; 

@@ -15,13 +15,24 @@ public class Vm {
     /* end */
 
     private ProcessQueue callQueue = new ProcessQueue(this); 
+    private int maxInstance; 
+
+    /**
+     * @param size : size of memory 
+     * @param maxInst : max process in queue (default : 100) 
+     */
+    public Vm(int size,  int maxInst) {
+        this.memory = new Memory(size);
+        this.maxInstance = maxInst;
+    }
 
     public Vm(int size) {
         this.memory = new Memory(size);
+        this.maxInstance = 100;
     }
     
     public void putInQueue(MemoryCell mem, int index) {
-        if (this.playersInstance[0] < 100) {
+        if (this.playersInstance[0] < this.maxInstance) {
             MemoryCell prov = mem; 
             if (index > 0) {
                 for (int i = 0; i < index; i++)
@@ -38,7 +49,11 @@ public class Vm {
         }
     }
 
+    /**
+     * @return int : 0 / 1 / 2 en fonction du nombre d'instances encore en file (0 = égalitée)
+     */
     public int getMVP() {
+        if (this.playersInstance[1] == this.playersInstance[2]) return 0;
         return (this.playersInstance[1] > this.playersInstance[2]) ? 1 : 2;  
     }
 

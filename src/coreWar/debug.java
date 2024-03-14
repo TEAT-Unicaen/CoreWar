@@ -16,7 +16,7 @@ public class debug {
 
     private static int sleep = 1000; 
     private static boolean debugMode = true; 
-    private static Vm supervisor = new Vm(1024);
+    private static Vm supervisor = new Vm(1024,100);
     
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 
