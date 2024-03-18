@@ -17,8 +17,7 @@ public class InstructionsInterpretor {
         vm.playersInstance[mem.getOwner()] -= 1; 
         switch (mem.getInstruction()) {
             case DAT:
-            vm.decrementProgramCounter();
-                System.out.println("KILLED");
+                vm.decrementProgramCounter();
                 break;
             case MOV:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
@@ -47,11 +46,11 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
-            vm.putInQueue(adressObj[0]);
+                vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
                 if (mem.getB().getValue() == 0)
-                    vm.putInQueue(adressObj[1]);
+                    vm.putInQueueWithOwner(adressObj[1],mem.getOwner());
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case CMP:
@@ -63,9 +62,9 @@ public class InstructionsInterpretor {
                         vm.putInQueue(mem, 2);
                 }
                 break;
-            case JMN: //relire 
+            case JMN:  
                 if (mem.getB().getValue() != 0)
-                    vm.putInQueue(adressObj[0]);
+                    vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case SLT: 
                 if (mem.getA().getMode() != AdressingModeEnum.IMMEDIATE) {
@@ -83,7 +82,7 @@ public class InstructionsInterpretor {
                 else
                     prov = mem.getB().getValue()-1;
                 if (prov != 0)
-                    vm.putInQueue(adressObj[0]);
+                    vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break; 
             case SPL:
                 vm.incrementProgramCounter();

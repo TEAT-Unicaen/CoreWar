@@ -42,10 +42,11 @@ public class Vm {
                 for (int i = 0; i < index; i++)
                     prov = prov.getPrevious();
             }
+            prov.setOwner(mem.getOwner());
             this.callQueue.push(prov);
         } else {
             this.decrementProgramCounter();
-            System.out.println(mem.hardIndex + " refusé de la file (file pleine)");
+            //System.out.println(mem.hardIndex + " refusé de la file (file pleine)");
         }
     }
 
@@ -58,6 +59,11 @@ public class Vm {
     }
 
     public void putInQueue(MemoryCell mem) {
+        this.callQueue.push(mem);
+    }
+
+    public void putInQueueWithOwner(MemoryCell mem, int owner) {
+        mem.setOwner(owner);
         this.callQueue.push(mem);
     }
 
