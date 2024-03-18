@@ -28,3 +28,11 @@ replay_pid*
 
 # MacOS
 .DS_Store
+
+#latex files
+*.aux
+*.fdb_latexmk
+*.fls
+*.out
+*.gz
+*.toc
