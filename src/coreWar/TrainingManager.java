@@ -37,6 +37,7 @@ public class TrainingManager {
                     if (++threadAlive == this.threadCount) {
                         vms.addAll(sup.getValues());
                         threadAlive = 0;
+                    }
                 }
             }
             int winnerPoint = 100;
