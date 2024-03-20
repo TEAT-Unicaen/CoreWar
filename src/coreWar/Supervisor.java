@@ -50,6 +50,7 @@ public class Supervisor {
             current.kill();
             results.add(current.getVm());
         }
+        this.threadList.clear();
         return results; 
     }
 }
