@@ -12,6 +12,7 @@ public class Vm {
     public int[] playersInstance = {0,0,0}; //global | p1 | p2
     public int winner = -1;                 //-1 init | 0 egal |1 p1 |2 p2
     public int tick = 0; 
+    public int[] uuid; 
     /* end */
 
     private ProcessQueue callQueue = new ProcessQueue(this); 
@@ -26,11 +27,11 @@ public class Vm {
         this.maxInstance = maxInst;
     }
 
-    public Vm(int size) {
-        this.memory = new Memory(size);
-        this.maxInstance = 100;
+    public Vm(int size,  int maxInst, int[] uuid) { 
+        this(size,maxInst);
+        this.uuid = uuid;
     }
-    
+
     public void putInQueue(MemoryCell mem, int index) {
         if (this.playersInstance[0] < this.maxInstance) {
             MemoryCell prov = mem; 

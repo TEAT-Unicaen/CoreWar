@@ -9,7 +9,7 @@ import coreWar.display.CorewarGui;
 
 public class run {
     
-    private static Vm supervisor = new Vm(1024);
+    private static Vm supervisor = new Vm(1024,100);
 
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 

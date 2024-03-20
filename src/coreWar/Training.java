@@ -30,7 +30,7 @@ public class Training {
                 Seed seed1 = seedList.get(j);
                 for (int k = j; k < this.individuNumber; k++) {
                     Seed seed2 = seedList.get(k);
-                    this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode());
+                    this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode(),j,k);
                 }
             }
             List<Vm> res = sup.getValues();
