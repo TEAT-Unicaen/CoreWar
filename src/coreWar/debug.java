@@ -72,12 +72,13 @@ public class debug {
                     }
                     display+= "... " + (size-10) + " others "; 
                 } else {
-                    for (int i = 0; i < size-1; i++) {
-                        display += file.get(i).hardIndex + ", "; 
+                    if (size != 0) {
+                        for (int i = 0; i < size-1; i++) {
+                            display += file.get(i).hardIndex + ", "; 
+                        }
+                        display += file.get(size-1).hardIndex; 
                     }
-                    display += file.get(size-1).hardIndex; 
                 }
-
                 display += "]"; 
                 System.out.println(display);
 
