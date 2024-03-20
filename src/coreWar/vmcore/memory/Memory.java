@@ -1,6 +1,5 @@
 package coreWar.vmcore.memory;
 
-import java.util.Random;
 import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 import coreWar.vmcore.memory.memoryCellData.Operande;
 

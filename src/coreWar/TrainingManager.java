@@ -26,18 +26,17 @@ public class TrainingManager {
             System.out.println("GENERATION : " + i);
             Population acPopulation = this.populations.get(i);
             List<Seed> seedList = new ArrayList<>(acPopulation.keySet());
+            List<Vm> vms = new ArrayList<Vm>();
             for (int j = 0; j < this.individuNumber; j++) {
                 Seed seed1 = seedList.get(j);
                 for (int k = j; k < this.individuNumber; k++) {
                     Seed seed2 = seedList.get(k);
                     this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode(),j,k);
                 }
+                vms.addAll(this.sup.getValues());
             }
             int winnerPoint = 100;
-            double deathRatio = -.15;
-            System.out.println("Waiting for finish VM");
-            List<Vm> vms = sup.getValues();
-            System.out.println("Start Scoring");
+            double deathRatio = -15;
             for (Vm virtualMachine : vms) {
                 Seed seed1 = seedList.get(virtualMachine.uuid[0]);
                 Seed seed2 = seedList.get(virtualMachine.uuid[1]);
