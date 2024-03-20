@@ -34,8 +34,9 @@ public class TrainingManager {
                 for (int k = j; k < this.individuNumber; k++) {
                     Seed seed2 = seedList.get(k);
                     this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode(),j,k);
-                    if (++threadAlive == this.threadCount)
+                    if (++threadAlive == this.threadCount) {
                         vms.addAll(sup.getValues());
+                        threadAlive = 0;
                 }
             }
             int winnerPoint = 100;
