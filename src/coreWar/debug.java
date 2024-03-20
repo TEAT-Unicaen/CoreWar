@@ -99,6 +99,6 @@ public class debug {
 
     private static void initPlayersRedcodes(Memory mem) {
         Converter.RedCodeToMemoryFromPath(mem.start, "resources\\\\players\\debug\\debug1.rc", 1, false,supervisor);
-        Converter.RedCodeToMemoryFromPath(mem.getEmptySlot(), "resources\\players\\debug\\debug2.rc", 2, false,supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.mid, "resources\\players\\debug\\debug2.rc", 2, false,supervisor);
     }
 }

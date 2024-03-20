@@ -7,6 +7,7 @@ import coreWar.vmcore.memory.memoryCellData.Operande;
 public class Memory {
 
     public MemoryCell start;  
+    public MemoryCell mid; 
     private int size; 
 
     public Memory(int size) {
@@ -20,6 +21,7 @@ public class Memory {
             tmp.setNext(newCell);
             newCell.setPrevious(tmp);
             tmp = newCell;
+            if (i == size/2) {mid = newCell;}
         }
         this.start.setPrevious(tmp);
         tmp.setNext(this.start);
@@ -48,15 +50,5 @@ public class Memory {
             System.out.println(current.getB().getValue() + " " + i);
             current = current.getNext(); 
         }
-    }
-
-    public MemoryCell getEmptySlot() {
-        Random rand = new Random();
-        int nm = rand.nextInt((this.size - 17*2) + 1) + 17;
-        MemoryCell slot = this.start;
-        for (int i = 0; i < nm; i++) {
-            slot = slot.getNext();
-        }
-        return slot; 
     }
 }

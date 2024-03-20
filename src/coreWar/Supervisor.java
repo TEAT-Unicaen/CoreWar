@@ -29,7 +29,7 @@ public class Supervisor {
     public void createVm(int size, String red1, String red2, int uuid1, int uuid2) {
         Vm virtualMachine = new Vm(size,100,new int[] {uuid1, uuid2});
         Converter.RedCodeToMemoryFromString(virtualMachine.getMemory().start, red1, 1, false, virtualMachine);
-        Converter.RedCodeToMemoryFromString(virtualMachine.getMemory().getEmptySlot(), red2, 2,false, virtualMachine); 
+        Converter.RedCodeToMemoryFromString(virtualMachine.getMemory().mid, red2, 2,false, virtualMachine); 
         ThreadVm thread = new ThreadVm(virtualMachine);
         this.threadList.add(thread);
         thread.start();

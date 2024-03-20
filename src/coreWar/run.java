@@ -54,6 +54,6 @@ public class run {
         }
         
         Converter.RedCodeToMemoryFromPath(mem.start, orionPath, 1, false, supervisor);
-        Converter.RedCodeToMemoryFromPath(mem.getEmptySlot(), oblivionPath, 2, false, supervisor);
+        Converter.RedCodeToMemoryFromPath(mem.mid, oblivionPath, 2, false, supervisor);
     }
 }
