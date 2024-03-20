@@ -50,31 +50,42 @@ public class InstructionsInterpretor {
                 vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
-                if (mem.getB().getValue() == 0)
+                if (mem.getB().getValue() == 0) {
                     vm.putInQueueWithOwner(adressObj[1],mem.getOwner());
+                    break;
+                }
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case CMP:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
                     if (mem.getA().getValue() == adressObj[1].getB().getValue())
                         vm.putInQueue(mem,2);
-                } else {
-                    if (mem.getA().equals(mem.getB()))
-                        vm.putInQueue(mem, 2);
+                    break;
                 }
+                if (mem.getA().equals(mem.getB())) {
+                    vm.putInQueue(mem, 2);
+                    break;
+                }
+                vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMN:  
-                if (mem.getB().getValue() != 0)
+                if (mem.getB().getValue() != 0) {
                     vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
+                    break;
+                }
+                vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case SLT: 
                 if (mem.getA().getMode() != AdressingModeEnum.IMMEDIATE) {
                     if (adressObj[0].getB().getValue() < mem.getB().getValue())
-                        vm.putInQueue(mem,2);
-                } else {
-                    if (mem.getA().getValue() < mem.getB().getValue())
-                        vm.putInQueue(mem,2);
+                        vm.putInQueue(mem,1);
+                    break;
                 }
+                if (mem.getA().getValue() < mem.getB().getValue()) {
+                    vm.putInQueue(mem,1);
+                    break;
+                }
+                vm.putInQueue(setIndexForNextCase(mem));
                 break; 
             case DJN: 
                 int prov = 0; 

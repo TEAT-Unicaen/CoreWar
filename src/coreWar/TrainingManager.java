@@ -48,9 +48,15 @@ public class TrainingManager {
                 switch (virtualMachine.winner) {
                     case 1:
                         this.populations.get(i).addPoint(seed1, winnerPoint);
+                        if (virtualMachine.tick < 32) {
+                            this.populations.get(i).addPoint(seed2, -5);
+                        }
                         break;
                     case 2:
                         this.populations.get(i).addPoint(seed2, winnerPoint);
+                        if (virtualMachine.tick < 32) {
+                            this.populations.get(i).addPoint(seed2, -5);
+                        }
                         break;
                     default:
                         break;

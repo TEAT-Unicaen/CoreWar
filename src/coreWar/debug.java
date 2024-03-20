@@ -34,7 +34,7 @@ public class debug {
                 Thread.sleep(sleep);
             } else {
                 String debugMemoryToDisplay = scanner.nextLine();
-                while (debugMemoryToDisplay != "") {
+                while (debugMemoryToDisplay.length() != 0) {
                     if (debugMemoryToDisplay.length() > 0) {
                         try {
                             int MemoryIndex = Integer.parseInt(debugMemoryToDisplay);
