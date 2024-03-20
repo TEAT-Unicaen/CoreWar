@@ -18,6 +18,7 @@ public class InstructionsInterpretor {
         switch (mem.getInstruction()) {
             case DAT:
                 vm.decrementProgramCounter();
+                vm.death[mem.getOwner()]++;
                 break;
             case MOV:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)

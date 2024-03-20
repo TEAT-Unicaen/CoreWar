@@ -12,7 +12,8 @@ public class Vm {
     public int[] playersInstance = {0,0,0}; //global | p1 | p2
     public int winner = -1;                 //-1 init | 0 egal |1 p1 |2 p2
     public int tick = 0; 
-    public int[] uuid; 
+    public int[] uuid;                      // tracçabilité du redcode
+    public int[] death = {0,0,0}; 
     /* end */
 
     private ProcessQueue callQueue = new ProcessQueue(this); 
@@ -78,6 +79,7 @@ public class Vm {
 
     public void decrementProgramCounter() {
         this.playersInstance[0]--;
+        this.death[0]++;
     }
 
     public int getProgramCounter() {
