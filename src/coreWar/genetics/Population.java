@@ -15,7 +15,7 @@ public class Population extends HashMap<Seed, Integer> {
             this.put(new Seed(sm, rand.nextInt(11)+5), 0);
     }
 
-    public Population nexPopulation() {
+    public Population nextPopulation() {
         Population newP = new Population(0);
         GeneticOperatorManager gom = new GeneticOperatorManager();
         Seed winner = this.getTheWinner();

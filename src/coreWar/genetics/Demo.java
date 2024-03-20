@@ -31,7 +31,7 @@ public class Demo {
             System.out.println(winner.getRedcode());
             System.out.println("");
     
-            p.add(p.get(i).nexPopulation());
+            p.add(p.get(i).nextPopulation());
         }
     System.out.println(p.get(998));
     }
