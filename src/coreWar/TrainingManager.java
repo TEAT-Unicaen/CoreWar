@@ -10,30 +10,33 @@ import coreWar.vmcore.virtualMachine.Vm;
 public class TrainingManager {
     private List<Population> populations;
     private Supervisor sup;
-    private int vmSize, populationNumber, individuNumber;
+    private int vmSize, genNumber, individuNumber, threadCount;
 
-    public TrainingManager(int vmSize, int populationNumber, int individuNumber) {
+    public TrainingManager(int vmSize, int genNumber, int individuNumber, int threadCount) {
         this.sup = new Supervisor();
         this.vmSize = vmSize;
-        this.populationNumber = populationNumber;
+        this.genNumber = genNumber;
         this.individuNumber = individuNumber;
-        this.populations = new ArrayList<Population>(populationNumber);
+        this.threadCount = threadCount;
+        this.populations = new ArrayList<Population>(genNumber);
         this.populations.add(new Population(this.individuNumber));
     }
 
     public void run() throws InterruptedException {
-        for (int i = 0; i < this.populationNumber; i++) {
+        for (int i = 0; i < this.genNumber; i++) {
             System.out.println("GENERATION : " + i);
             Population acPopulation = this.populations.get(i);
             List<Seed> seedList = new ArrayList<>(acPopulation.keySet());
             List<Vm> vms = new ArrayList<Vm>();
+            int threadAlive = 0;
             for (int j = 0; j < this.individuNumber; j++) {
                 Seed seed1 = seedList.get(j);
                 for (int k = j; k < this.individuNumber; k++) {
                     Seed seed2 = seedList.get(k);
                     this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode(),j,k);
+                    if (++threadAlive == this.threadCount)
+                        vms.addAll(sup.getValues());
                 }
-                vms.addAll(this.sup.getValues());
             }
             int winnerPoint = 100;
             double deathRatio = -15;
