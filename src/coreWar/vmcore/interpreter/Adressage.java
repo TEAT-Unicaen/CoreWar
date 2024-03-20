@@ -1,7 +1,6 @@
 package coreWar.vmcore.interpreter;
 
 import coreWar.vmcore.memory.MemoryCell;
-import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
 
 public class Adressage {
 

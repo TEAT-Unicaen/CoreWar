@@ -66,6 +66,8 @@ public class TrainingManager {
     }
 
     public void export() {
-        System.out.println(this.populations.get(this.populations.size()-1).getTheWinner().getRedcode());
+        Population lastPopulation = this.populations.get(this.populations.size()-1);
+        System.out.println(lastPopulation.getTheWinner().getRedcode());
+        System.out.println("Score of the best durring the trainning : " + lastPopulation.get(lastPopulation.getTheWinner()));
     }
 }
