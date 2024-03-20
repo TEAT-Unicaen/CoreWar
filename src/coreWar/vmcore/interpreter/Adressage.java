@@ -9,8 +9,10 @@ public class Adressage {
         MemoryCell[] value = new MemoryCell[] {mem, mem};                         
         switch (mem.getA().getMode()) {
             case DIRECT:
-            case INDIRECT:
                 value[0] = Adressage.DirectA(mem);
+                break;
+            case INDIRECT:
+                value[0] = Adressage.InDirectA(mem);
                 break;
             case IMMEDIATE:
                 value[0] = Adressage.ImmediateA(mem);
@@ -21,8 +23,10 @@ public class Adressage {
         }
         switch (mem.getB().getMode()) {
             case DIRECT:
-            case INDIRECT:
                 value[1] = Adressage.DirectB(mem);
+                break;
+            case INDIRECT:
+                value[1] = Adressage.InDirectB(mem);
                 break;
             case IMMEDIATE:
                 value[1] = Adressage.ImmediateB(mem);
@@ -48,11 +52,15 @@ public class Adressage {
         return prov; //.getB();
     }
 
+    private static MemoryCell InDirectA(MemoryCell mem) {
+        return DirectB(DirectA(mem));
+    }
+
     private static MemoryCell DirectB(MemoryCell mem) {
         MemoryCell prov = mem; 
         int value = prov.getB().getValue();
-        if (mem.getA().getMode() == AdressingModeEnum.INDIRECT)// Maybe B mode (not A)
-            value += prov.getA().getValue();
+        //if (mem.getA().getMode() == AdressingModeEnum.INDIRECT)// Maybe B mode (not A)
+        //   value += prov.getA().getValue();
         if (value > 0) {
             for (int i = 0; i < value; i++)
                 prov = prov.getNext();
@@ -62,6 +70,10 @@ public class Adressage {
                 prov = prov.getPrevious();
         }
         return prov; //.getB();
+    }
+
+    private static MemoryCell InDirectB(MemoryCell mem) {
+        return DirectB(DirectB(mem));
     }
 
     private static MemoryCell ImmediateA(MemoryCell mem) {
