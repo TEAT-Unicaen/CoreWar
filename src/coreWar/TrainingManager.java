@@ -25,7 +25,7 @@ public class TrainingManager {
         this.threadCount = threadCount;
     }
 
-    public TrainingManager(int vmSize, int genCount, String populationsPath, int threadCount) {
+    public TrainingManager(int vmSize, int genCount, String populationsPath, int threadCount) throws IOException {
         this(vmSize, genCount, threadCount);
         this.importPopulation(populationsPath);
         this.individualCount = populations.get(0).size();
@@ -48,15 +48,13 @@ public class TrainingManager {
             List<Vm> vms = new ArrayList<Vm>();
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {
-                Seed seed1 = seedList.get(i);
+                String red1 = seedList.get(i).getRedcode();
                 for (int j = 0; j < this.individualCount; j++) {
-                    if (i != j) {
-                        Seed seed2 = seedList.get(j);
-                        this.sup.createVm(vmSize, seed1.getRedcode(), seed2.getRedcode(), i, j);
-                        if (++threadAlive == this.threadCount) {
-                            vms.addAll(sup.getValues());
-                            threadAlive = 0;
-                        }
+                    String red2 = seedList.get(j).getRedcode();
+                    this.sup.createVm(vmSize, red1, red2, i, j);
+                    if (++threadAlive == this.threadCount) {
+                        vms.addAll(sup.getValues());
+                        threadAlive = 0;
                     }
                 }
             }
@@ -101,14 +99,14 @@ public class TrainingManager {
     }
 
     @SuppressWarnings("unchecked")
-    private void importPopulation(String populationsPath) {
+    private void importPopulation(String populationsPath) throws IOException {
         this.populations = new ArrayList<Population>();
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(populationsPath))) {
             this.populations = (ArrayList<Population>) inputStream.readObject();
             System.out.println("List of Population imported from file successfully.");
         } catch (IOException | ClassNotFoundException e) {
             System.err.println("Error importing List of Population: " + e.getMessage());
-            System.exit(1);
+            throw new IOException("File not found");
         }
     }
 }
