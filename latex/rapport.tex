@@ -9,7 +9,7 @@
 
 %Variables
 \title{Rapport de CoreWar}
-\author{Amand Henry\and{}Théo Sicot\and{}Etienne Bossy\and{}Tom Rousée}
+\author{Amand Henry\and{}Théo Sicot\and{}Etienne Bossu\and{}Tom Rousée}
 \date{\today{}}
 
 %Document
@@ -20,12 +20,19 @@
     \newpage{}
 
     % Introduction
-    \begin{section}{Introduction}\label{sec:introduction}
-        Dans cette partie, nous abordons le thème central de notre rapport : le CoreWar. Nous détaillons ici l'essence de ce jeu de programmation, retraçons brièvement son historique depuis sa création jusqu'à son évolution actuelle, et exposons les finalités spécifiques de notre projet en lien avec ce contexte.
+    \begin{section}{Introduction} \label{sec:introduction}
+        \par
+            Le CoreWar est un jeu de programmation où deux programmes sont opposés pour prendre le contrôle d'une machine virtuelle appelée MARS (Memory Array Redcode Simulator). Ces programmes sont écrits dans un langage proche de l'assembleur appelé RedCode qui a ses commandes et sa syntaxe spécifique. Ces programmes, appelés "Guerriers" ont pour objectif d'être les derniers à s'exécuter en faisant se terminer toutes les instances du programme adverse.
+            \medskip
+        \par
+            Au début les joueurs concevaient leurs programmes par eux mêmes mais, depuis l'apparition des algorithmes génétiques, les joueurs n'essaient plus de créer leurs guerriers. L'ordinateur optimise les meilleurs programmes possible pour gagner la partie.
+            \bigskip
+        \par
+            Dans ce projet nous avons créé tout ce qu'il y a besoin pour faire une partie de CoreWar : la machine MARS, l'interpréteur pour le RedCode ainsi qu'un algorithme génétique qui permet de créer des guerriers et de quoi afficher la partie. 
     \end{section}
 
     % Méthodologie
-    \begin{section}{Méthodologie}\label{sec:methodologie}
+    \begin{section}{Les Parties du projet} \label{sec:methodologie}
         Décrivez ici comment vous avez abordé le projet, les outils et langages de programmation utilisés, ainsi que les différentes étapes de votre développement.
     \end{section}
 
