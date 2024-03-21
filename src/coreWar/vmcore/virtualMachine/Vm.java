@@ -61,7 +61,7 @@ public class Vm {
     }
 
     public void putInQueue(MemoryCell mem) {
-        this.callQueue.push(mem);
+        this.putInQueue(mem, 1);
     }
 
     public void putInQueueWithOwner(MemoryCell mem, int owner) {

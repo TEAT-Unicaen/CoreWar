@@ -24,8 +24,13 @@ public class ThreadVm extends Thread {
             try {
                 InstructionsInterpretor.ApplyInstruction(nextInst,this.vm);
             } catch (Exception e) {
-                System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");
-                break;
+                if (e.getMessage() == "SPL") {
+                    System.out.println("Removed !");
+                    this.kill();
+                } else {
+                    System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");
+                    break;
+                }
             }
             this.cache = nextInst; 
 

@@ -42,10 +42,8 @@ public class Supervisor {
     public List<Vm> getValues() throws InterruptedException {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
-            int waiter = 0;
-            while (current.getVm().tick < 10000 && current.isAlive() && waiter < 10) {
-                waiter++;  
-                Thread.sleep(10);
+            while (current.getVm().tick < 10000 && current.isAlive()) {
+                Thread.sleep(1);
             }
             current.kill();
             results.add(current.getVm());
