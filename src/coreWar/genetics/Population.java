@@ -8,6 +8,7 @@ import coreWar.genetics.seed.Seed;
 import coreWar.genetics.seed.SeedMaker;
 
 public class Population extends HashMap<Seed, Integer> {
+
     public Population(int size) {
         SeedMaker sm = new SeedMaker();
         Random rand = new Random();

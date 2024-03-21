@@ -1,6 +1,8 @@
 package coreWar.genetics.seed;
 
-public class SeedLine {
+import java.io.Serializable;
+
+public class SeedLine implements Serializable {
     private int instruction, adressing, value1, value2;
 
     public SeedLine(int instruction, int adressing, int value1, int value2) {
