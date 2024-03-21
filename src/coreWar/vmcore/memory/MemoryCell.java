@@ -24,7 +24,13 @@ public class MemoryCell {
     };
 
     public String toStringDebug() {
-        return this.getInstruction().toString() + " | " + this.getA().toString() + " | " + this.getB().toString();
+        StringBuilder sB = new StringBuilder();
+        sB.append(this.getInstruction().toString());
+        sB.append(" | ");
+        sB.append(this.getA().toString());
+        sB.append(" | ");
+        sB.append(this.getB().toString());
+        return sB.toString();
     }
 
     @Override

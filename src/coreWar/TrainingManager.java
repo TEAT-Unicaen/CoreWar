@@ -49,7 +49,7 @@ public class TrainingManager {
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {
                 String red1 = seedList.get(i).getRedcode();
-                for (int j = 0; j < this.individualCount; j++) {
+                for (int j = i; j < this.individualCount; j++) {
                     String red2 = seedList.get(j).getRedcode();
                     this.sup.createVm(vmSize, red1, red2, i, j);
                     if (++threadAlive == this.threadCount) {
@@ -63,7 +63,7 @@ public class TrainingManager {
             for (Vm virtualMachine : vms) {
                 Seed seed1 = seedList.get(virtualMachine.uuid[0]);
                 Seed seed2 = seedList.get(virtualMachine.uuid[1]);
-                switch (virtualMachine.winner) {
+                switch (virtualMachine.getMVP()) {
                     case 1:
                         actualPopulation.addPoint(seed1, winnerPoint);
                         if (virtualMachine.tick < 32) {

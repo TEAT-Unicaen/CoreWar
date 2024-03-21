@@ -10,7 +10,7 @@ public class Training {
         
         try {
             tr = new TrainingManager(1024, 100, nameFile, 100);
-        } catch (IOException e ) {
+        } catch (IOException e) {
             tr = new TrainingManager(1024, 100, 100, 100);
         }
 

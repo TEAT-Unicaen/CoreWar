@@ -2,6 +2,7 @@ package coreWar.vmcore.virtualMachine;
 
 import coreWar.vmcore.interpreter.InstructionsInterpretor;
 import coreWar.vmcore.memory.MemoryCell;
+import coreWar.vmcore.interpreter.LoopException;
 
 public class ThreadVm extends Thread {
 
@@ -18,24 +19,21 @@ public class ThreadVm extends Thread {
      */
     @Override
     public void run() {
-        while (this.vm.getProcessQueue().size() > 1) {
+        while (this.vm.getProcessQueue().size() > 1 && this.vm.tick < 10000) {
             this.vm.tick++;
             MemoryCell nextInst = this.vm.getNextInstructionCell();
             try {
                 InstructionsInterpretor.ApplyInstruction(nextInst,this.vm);
+            } catch (LoopException e) {
+                this.kill();
+                this.vm.winner = 0;  //TODO : faire winner bien hein pcq la wtf
             } catch (Exception e) {
-                if (e.getMessage() == "SPL") {
-                    System.out.println("Removed !");
-                    this.kill();
-                } else {
-                    System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");
-                    break;
-                }
+                System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");
+                this.kill();
             }
             this.cache = nextInst; 
 
             if (Thread.interrupted()) {
-                this.vm.winner = 0; 
                 break;
             }
         }

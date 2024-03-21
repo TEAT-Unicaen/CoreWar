@@ -3,6 +3,7 @@ package coreWar;
 import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.virtualMachine.ThreadVm;
 import coreWar.vmcore.interpreter.Converter;
+import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,8 +43,22 @@ public class Supervisor {
     public List<Vm> getValues() throws InterruptedException {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
-            while (current.getVm().tick < 10000 && current.isAlive()) {
-                Thread.sleep(1);
+            long time = System.currentTimeMillis();
+            while (current.isAlive()) { //TODO : Find infinite loops without breaking optimisation
+                // if (System.currentTimeMillis() - time > 1000) {
+                //     InstructionEnum inst = current.getLastMemCell().getInstruction();
+                //     int incrementThreshold = 0;
+
+                //     while (current.getLastMemCell().getInstruction() == inst) {
+                //         incrementThreshold++;
+                //         if (incrementThreshold > 40) {
+                //             System.out.println("YEEEEET");
+                //             current.kill();
+                //             break;
+                //         }
+                //         Thread.sleep(2);
+                //     }
+                // }
             }
             current.kill();
             results.add(current.getVm());

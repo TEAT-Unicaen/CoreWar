@@ -29,7 +29,7 @@ public class InstructionsInterpretor {
                     adressObj[1].getB().setValue(mem.getA().getValue());
                 else
                     adressObj[1].pasteCell(adressObj[0].getInstruction(), adressObj[0].copyA(), adressObj[0].copyB());
-                    vm.putInQueue(setIndexForNextCase(mem));
+                vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case ADD: 
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) 
@@ -51,10 +51,16 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
+                if (adressObj[1] == mem) {
+                    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                }
                 vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
                 if (mem.getB().getValue() == 0) {
+                    if (adressObj[1] == mem) {
+                        throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                    }
                     vm.putInQueueWithOwner(adressObj[1],mem.getOwner());
                     break;
                 }
@@ -62,9 +68,10 @@ public class InstructionsInterpretor {
                 break;
             case CMP:
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
-                    if (mem.getA().getValue() == adressObj[1].getB().getValue())
+                    if (mem.getA().getValue() == adressObj[1].getB().getValue()) {
                         vm.putInQueue(mem,2);
-                    break;
+                        break;
+                    }
                 }
                 if (mem.getA().equals(mem.getB())) {
                     vm.putInQueue(mem, 2);
@@ -81,16 +88,17 @@ public class InstructionsInterpretor {
                 break;
             case SLT: 
                 if (mem.getA().getMode() != AdressingModeEnum.IMMEDIATE) {
-                    if (adressObj[0].getB().getValue() < mem.getB().getValue())
+                    if (adressObj[0].getB().getValue() < mem.getB().getValue()) {
                         vm.putInQueue(mem,2);
-                    break;
+                        break;
+                    }
                 }
-                if (mem.getA().getValue() < mem.getB().getValue()) {
+                else if (mem.getA().getValue() < mem.getB().getValue()) {
                     vm.putInQueue(mem,2);
                     break;
                 }
                 vm.putInQueue(setIndexForNextCase(mem));
-                break; 
+                break;
             case DJN: 
                 int prov = 0; 
                 if (mem.getB().getMode() != AdressingModeEnum.IMMEDIATE)
@@ -104,7 +112,7 @@ public class InstructionsInterpretor {
                 int owner = mem.getOwner()-1;
                 splLoopProtector[owner] = ++temp[owner];
                 if (splLoopProtector[owner] >= 5) {
-                    throw new Exception("SPL");
+                    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
                 }
                 vm.incrementProgramCounter();
                 vm.putInQueue(setIndexForNextCase(mem));
