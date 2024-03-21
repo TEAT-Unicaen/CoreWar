@@ -20,6 +20,7 @@ public class debug {
     
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 
+        InstructionsInterpretor interpretor = new InstructionsInterpretor();
         supervisor.getProcessQueue().enbaleDebugMode(true);
         initPlayersRedcodes(supervisor.getMemory());
         CorewarGui corewarGui = new CorewarGui(supervisor);
@@ -83,7 +84,7 @@ public class debug {
                 System.out.println(display);
 
                 System.out.println("Hard index : " + nextInst.hardIndex + " | ID process : " + nextInst.getOwner());
-                InstructionsInterpretor.ApplyInstruction(nextInst,supervisor);
+                interpretor.ApplyInstruction(nextInst,supervisor);
                 corewarGui.updateMemoryToIndex(nextInst.getOwner(), nextInst.hardIndex);
 
             } catch (Exception e) { //gestion erreur 

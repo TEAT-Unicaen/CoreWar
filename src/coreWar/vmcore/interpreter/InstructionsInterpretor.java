@@ -2,24 +2,54 @@ package coreWar.vmcore.interpreter;
 
 import coreWar.vmcore.memory.MemoryCell;
 import coreWar.vmcore.memory.memoryCellData.AdressingModeEnum;
+import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 import coreWar.vmcore.virtualMachine.Vm;
 
 public class InstructionsInterpretor {
 
-    private static int[] splLoopProtector = {0,0};
+    public int[] LoopProtector = {0,0};
+    private InstructionEnum lastP1;
+    private InstructionEnum lastP2;
 
-    private static MemoryCell setIndexForNextCase(MemoryCell mem) {
+    private MemoryCell setIndexForNextCase(MemoryCell mem) {
         MemoryCell nextCase = mem.getNext();
         nextCase.setOwner(mem.getOwner());
         return nextCase; 
     }
+    
 
-    public static void ApplyInstruction(MemoryCell mem, Vm vm) throws Exception {
+    public void ApplyInstruction(MemoryCell mem, Vm vm) throws Exception {
         MemoryCell[] adressObj = Adressage.calcul(mem);
         vm.playersInstance[mem.getOwner()] -= 1;
-        int[] temp = splLoopProtector; 
-        splLoopProtector[0] = 0; splLoopProtector[1] = 0;
-        switch (mem.getInstruction()) {
+        InstructionEnum instruction = mem.getInstruction();
+        System.out.println(instruction);
+        if (mem.getOwner() == 1) {
+            if (lastP1 == null) {
+                lastP1 = instruction;
+            } else {
+                if (lastP1 == instruction) {
+                    this.LoopProtector[0] += 1;
+                } else {
+                    this.LoopProtector[0] = 0; 
+                }
+            }
+        } else {
+            if (lastP2 == null) {
+                lastP2 = instruction;
+            } else {
+                if (lastP2 == instruction) {
+                    this.LoopProtector[1] += 1;
+                } else {
+                    this.LoopProtector[1] = 0;
+                }
+            }
+        }
+        if (LoopProtector[0] >= 5 || LoopProtector[1] >= 5) {
+            System.out.println("Loop protection");
+            throw new LoopException("Infinite loop detected / Wrong REDCODE value"); 
+        }
+
+        switch (instruction) {
             case DAT:
                 vm.decrementProgramCounter();
                 vm.death[mem.getOwner()]++;
@@ -51,16 +81,16 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
-                if (adressObj[1] == mem) {
-                    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
-                }
+                //if (adressObj[1] == mem) {
+                //    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                //}
                 vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
                 if (mem.getB().getValue() == 0) {
-                    if (adressObj[1] == mem) {
-                        throw new LoopException("Infinite loop detected / Wrong REDCODE value");
-                    }
+                    //if (adressObj[1] == mem) {
+                    //    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                    //}
                     vm.putInQueueWithOwner(adressObj[1],mem.getOwner());
                     break;
                 }
@@ -109,11 +139,6 @@ public class InstructionsInterpretor {
                     vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break; 
             case SPL:
-                int owner = mem.getOwner()-1;
-                splLoopProtector[owner] = ++temp[owner];
-                if (splLoopProtector[owner] >= 5) {
-                    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
-                }
                 vm.incrementProgramCounter();
                 vm.putInQueue(setIndexForNextCase(mem));
                 vm.putInQueue(mem, mem.getA().getValue());

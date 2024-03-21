@@ -8,6 +8,7 @@ public class ThreadVm extends Thread {
 
     private Vm vm;
     private MemoryCell cache;
+    public InstructionsInterpretor interpretor;
 
     public ThreadVm(Vm vm) {
         this.vm = vm;
@@ -19,11 +20,12 @@ public class ThreadVm extends Thread {
      */
     @Override
     public void run() {
+        this.interpretor = new InstructionsInterpretor();
         while (this.vm.getProcessQueue().size() > 1 && this.vm.tick < 10000) {
             this.vm.tick++;
             MemoryCell nextInst = this.vm.getNextInstructionCell();
             try {
-                InstructionsInterpretor.ApplyInstruction(nextInst,this.vm);
+                interpretor.ApplyInstruction(nextInst,this.vm);
             } catch (LoopException e) {
                 this.kill();
                 this.vm.winner = 0;  //TODO : faire winner bien hein pcq la wtf

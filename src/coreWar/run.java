@@ -13,7 +13,7 @@ public class run {
 
     public static void main(String args[]) throws InterruptedException {
         int tried = 0; 
-        
+        InstructionsInterpretor interpretor = new InstructionsInterpretor();
         initPlayersRedcodes(supervisor.getMemory());
         CorewarGui corewarGui = new CorewarGui(supervisor);
         corewarGui.setVisible(true);
@@ -26,7 +26,7 @@ public class run {
             MemoryCell nextInst = supervisor.getNextInstructionCell();
             try {
                 System.out.println("Hard index : " + nextInst.hardIndex + " | ID process : " + nextInst.getOwner());
-                InstructionsInterpretor.ApplyInstruction(nextInst,supervisor);
+                interpretor.ApplyInstruction(nextInst,supervisor);
                 corewarGui.updateMemoryToIndex(nextInst.getOwner(), nextInst.hardIndex);
             } catch (Exception e) {
                 System.out.println(e);

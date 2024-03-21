@@ -43,22 +43,22 @@ public class Supervisor {
     public List<Vm> getValues() throws InterruptedException {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
-            long time = System.currentTimeMillis();
+            //long time = System.currentTimeMillis();
             while (current.isAlive()) { //TODO : Find infinite loops without breaking optimisation
-                // if (System.currentTimeMillis() - time > 1000) {
-                //     InstructionEnum inst = current.getLastMemCell().getInstruction();
-                //     int incrementThreshold = 0;
+                 /*if (System.currentTimeMillis() - time > 1000) {
+                    InstructionEnum inst = current.getLastMemCell().getInstruction();
+                    int incrementThreshold = 0;
+                    while (current.getLastMemCell().getInstruction() == inst) {
+                        incrementThreshold++;
+                        if (incrementThreshold > 40) {
+                            System.err.println(inst + " | " + current + " | " + current.interpretor.LoopProtector[0] + " " + current.interpretor.LoopProtector[1]);
 
-                //     while (current.getLastMemCell().getInstruction() == inst) {
-                //         incrementThreshold++;
-                //         if (incrementThreshold > 40) {
-                //             System.out.println("YEEEEET");
-                //             current.kill();
-                //             break;
-                //         }
-                //         Thread.sleep(2);
-                //     }
-                // }
+                            current.kill();
+                            break;
+                        }
+                        Thread.sleep(2);
+                    }
+                 }*/
             }
             current.kill();
             results.add(current.getVm());
