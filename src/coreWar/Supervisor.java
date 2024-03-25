@@ -51,12 +51,14 @@ public class Supervisor {
                     while (current.getLastMemCell().getInstruction() == inst) {
                         incrementThreshold++;
                         if (incrementThreshold > 10) {
-                            System.err.println(current.getLastMemCell().toStringDebug() + " | " + current + " | " + current.interpretor.LoopProtector[0] + " " + current.interpretor.LoopProtector[1]);
+                            System.err.println(current.getLastMemCell().toStringDebug() + " | " + current + " | " + current.getVm().tick);
 
                             current.kill();
                             break;
                         }
-                        Thread.sleep(2);
+                        System.out.print("before -- ");
+                        Thread.sleep(200);
+                        System.out.println("after");
                     }
                 }
             }
