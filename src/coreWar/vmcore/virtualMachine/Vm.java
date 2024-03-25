@@ -56,8 +56,11 @@ public class Vm {
      * @return int : 0 / 1 / 2 en fonction du nombre d'instances encore en file (0 = égalitée)
      */
     public int getMVP() {
-        if (this.playersInstance[1] == this.playersInstance[2]) return 0;
-        return (this.playersInstance[1] > this.playersInstance[2]) ? 1 : 2;  
+        if (winner == -1) {
+            if (this.playersInstance[1] == this.playersInstance[2]) return 0;
+            return (this.playersInstance[1] > this.playersInstance[2]) ? 1 : 2;  
+        }
+        return winner;
     }
 
     public void putInQueue(MemoryCell mem) {
