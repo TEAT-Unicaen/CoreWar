@@ -1,7 +1,9 @@
 package coreWar.vmcore.memory;
 
+import coreWar.vmcore.interpreter.Adressage;
 import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 import coreWar.vmcore.memory.memoryCellData.Operande;
+
 
 public class Memory {
 
@@ -11,6 +13,7 @@ public class Memory {
 
     public Memory(int size) {
         this.size = size; 
+        Adressage.memorySize = size;
         this.start = new MemoryCell();
         MemoryCell tmp = this.start;
         tmp.hardIndex = 0; 

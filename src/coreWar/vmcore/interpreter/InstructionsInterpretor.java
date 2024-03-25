@@ -22,7 +22,7 @@ public class InstructionsInterpretor {
         MemoryCell[] adressObj = Adressage.calcul(mem);
         vm.playersInstance[mem.getOwner()] -= 1;
         InstructionEnum instruction = mem.getInstruction();
-        System.out.println(instruction);
+        //System.out.println(instruction);
         if (mem.getOwner() == 1) {
             if (lastP1 == null) {
                 lastP1 = instruction;
@@ -30,7 +30,8 @@ public class InstructionsInterpretor {
                 if (lastP1 == instruction) {
                     this.LoopProtector[0] += 1;
                 } else {
-                    this.LoopProtector[0] = 0; 
+                    this.LoopProtector[0] = 0;
+                    lastP1 = instruction;
                 }
             }
         } else {
@@ -41,11 +42,12 @@ public class InstructionsInterpretor {
                     this.LoopProtector[1] += 1;
                 } else {
                     this.LoopProtector[1] = 0;
+                    lastP2 = instruction;
                 }
             }
         }
         if (LoopProtector[0] >= 5 || LoopProtector[1] >= 5) {
-            System.out.println("Loop protection");
+            //System.out.println("Loop protection");
             throw new LoopException("Infinite loop detected / Wrong REDCODE value"); 
         }
 
@@ -81,16 +83,16 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
-                //if (adressObj[1] == mem) {
-                //    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
-                //}
+                if (adressObj[1] == mem) {
+                   throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                }
                 vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
                 if (mem.getB().getValue() == 0) {
-                    //if (adressObj[1] == mem) {
-                    //    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
-                    //}
+                    if (adressObj[1] == mem) {
+                       throw new LoopException("Infinite loop detected / Wrong REDCODE value");
+                    }
                     vm.putInQueueWithOwner(adressObj[1],mem.getOwner());
                     break;
                 }
@@ -141,7 +143,10 @@ public class InstructionsInterpretor {
             case SPL:
                 vm.incrementProgramCounter();
                 vm.putInQueue(setIndexForNextCase(mem));
-                vm.putInQueue(mem, mem.getA().getValue());
+                int tmp = mem.getA().getValue();
+                if (tmp > Adressage.memorySize) 
+                    tmp = tmp%Adressage.memorySize;
+                vm.putInQueue(mem, tmp);
                 break; 
         }
     }

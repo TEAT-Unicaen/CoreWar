@@ -4,6 +4,8 @@ import coreWar.vmcore.memory.MemoryCell;
 
 public class Adressage {
 
+    public static int memorySize = 8000;
+
     public static MemoryCell[] calcul(MemoryCell mem) { //type true = obj | false = index 
         MemoryCell[] value = new MemoryCell[] {mem, mem};                         
         switch (mem.getA().getMode()) {
@@ -39,7 +41,9 @@ public class Adressage {
 
     private static MemoryCell DirectA(MemoryCell mem) {
         MemoryCell prov = mem; 
-        int value = prov.getA().getValue();
+        int value = mem.getA().getValue();
+        if (value > Adressage.memorySize)
+            value = value%Adressage.memorySize;
         if (value > 0) {
             for (int i = 0; i < value; i++)
                 prov = prov.getNext();
@@ -57,7 +61,9 @@ public class Adressage {
 
     private static MemoryCell DirectB(MemoryCell mem) {
         MemoryCell prov = mem; 
-        int value = prov.getB().getValue();
+        int value = mem.getB().getValue();
+        if (value > Adressage.memorySize)
+            value = value%Adressage.memorySize;
         //if (mem.getA().getMode() == AdressingModeEnum.INDIRECT)// Maybe B mode (not A)
         //   value += prov.getA().getValue();
         if (value > 0) {
@@ -89,25 +95,9 @@ public class Adressage {
         return provTemp.getPrevious(); 
     }
 
-    /*
-     *  private static int PredecA(MemoryCell mem) { //Maybe return direct mode here 
-        int prov =  Adressage.DirectA(mem) -1;
-        mem.getA().setValue(prov);
-        return prov; 
-    }
-     */
-
     private static MemoryCell PredecB(MemoryCell mem) {
         MemoryCell provTemp = Adressage.DirectB(mem);
         mem.getB().setValue(provTemp.getPrevious().getB().getValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
         return provTemp.getPrevious(); 
     }
-
-    /*
-     * private static int PredecB(MemoryCell mem) {
-        int prov =  Adressage.DirectB(mem) -1;
-        mem.getB().setValue(prov);
-        return prov; 
-    }
-     */
 }

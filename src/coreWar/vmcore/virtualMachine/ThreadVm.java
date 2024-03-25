@@ -8,8 +8,8 @@ public class ThreadVm extends Thread {
 
     private Vm vm;
     private MemoryCell cache;
+    private Boolean shouldStop = false;
     public InstructionsInterpretor interpretor;
-
     public ThreadVm(Vm vm) {
         this.vm = vm;
         this.cache = new MemoryCell();
@@ -21,28 +21,25 @@ public class ThreadVm extends Thread {
     @Override
     public void run() {
         this.interpretor = new InstructionsInterpretor();
-        while (this.vm.getProcessQueue().size() > 1 && this.vm.tick < 10000) {
+        while (this.vm.getProcessQueue().size() > 1 && this.vm.tick < 10000 && !this.shouldStop) {
             this.vm.tick++;
             MemoryCell nextInst = this.vm.getNextInstructionCell();
             try {
                 interpretor.ApplyInstruction(nextInst,this.vm);
             } catch (LoopException e) {
-                this.kill();
                 this.vm.winner = 0;  
+                break;
             } catch (Exception e) {
                 System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");
-                this.kill();
-            }
-            this.cache = nextInst; 
-
-            if (Thread.interrupted()) {
                 break;
             }
+            this.cache = nextInst;
         }
+        this.interrupt();
     }
 
     public void kill() {
-        interrupt();
+        this.shouldStop = true;
     }
 
     public MemoryCell getLastMemCell() {

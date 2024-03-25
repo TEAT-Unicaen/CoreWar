@@ -3,6 +3,7 @@ package coreWar;
 import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.virtualMachine.ThreadVm;
 import coreWar.vmcore.interpreter.Converter;
+import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,25 +43,28 @@ public class Supervisor {
     public List<Vm> getValues() throws InterruptedException {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
-            //long time = System.currentTimeMillis();
-            while (current.isAlive()) { 
-                 /*if (System.currentTimeMillis() - time > 1000) {
+            long time = System.currentTimeMillis();
+            while (current.isAlive()) { //TODO : Find infinite loops without breaking optimisation
+                if (System.currentTimeMillis() - time > 1000) {
                     InstructionEnum inst = current.getLastMemCell().getInstruction();
                     int incrementThreshold = 0;
                     while (current.getLastMemCell().getInstruction() == inst) {
                         incrementThreshold++;
-                        if (incrementThreshold > 40) {
-                            System.err.println(inst + " | " + current + " | " + current.interpretor.LoopProtector[0] + " " + current.interpretor.LoopProtector[1]);
+                        if (incrementThreshold > 10) {
+                            System.err.println(current.getLastMemCell().toStringDebug() + " | " + current + " | " + current.interpretor.LoopProtector[0] + " " + current.interpretor.LoopProtector[1]);
 
                             current.kill();
                             break;
                         }
                         Thread.sleep(2);
                     }
-                 }*/
+                }
             }
             current.kill();
             results.add(current.getVm());
+            // if (System.currentTimeMillis() - time > 0)
+            //     System.out.println("Loop time took : " + (System.currentTimeMillis() - time));
+
         }
         this.threadList.clear();
         return results; 

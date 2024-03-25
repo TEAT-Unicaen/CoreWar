@@ -49,7 +49,7 @@ public class TrainingManager {
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {
                 String red1 = seedList.get(i).getRedcode();
-                for (int j = i; j < this.individualCount; j++) {
+                for (int j = 0; j < this.individualCount; j++) {
                     String red2 = seedList.get(j).getRedcode();
                     this.sup.createVm(vmSize, red1, red2, i, j);
                     if (++threadAlive == this.threadCount) {
@@ -85,7 +85,7 @@ public class TrainingManager {
                 }
             }
             this.populations.add(actualPopulation.nextPopulation());
-            System.gc();
+            //System.gc();
         }
     }
 
