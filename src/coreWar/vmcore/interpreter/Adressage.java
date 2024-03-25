@@ -91,13 +91,19 @@ public class Adressage {
 
     private static MemoryCell PredecA(MemoryCell mem) { //Maybe return direct mode here
         MemoryCell provTemp = Adressage.DirectA(mem);
-        mem.getA().setValue(provTemp.getPrevious().getB().getValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
-        return provTemp.getPrevious(); 
+        int vlaueTemp = provTemp.getB().getValue();
+        provTemp.getB().setValue(vlaueTemp-1);
+        MemoryCell res = Adressage.DirectB(provTemp);
+        provTemp.getB().setValue(vlaueTemp);
+        return res; 
     }
 
     private static MemoryCell PredecB(MemoryCell mem) {
         MemoryCell provTemp = Adressage.DirectB(mem);
-        mem.getB().setValue(provTemp.getPrevious().getB().getValue()); //pas sur (voir dans DirectA si c'est un obj (on revient 1 cran en arriere pr reprendre l'index))
-        return provTemp.getPrevious(); 
+        int vlaueTemp = provTemp.getB().getValue();
+        provTemp.getB().setValue(vlaueTemp-1);
+        MemoryCell res = Adressage.DirectB(provTemp);
+        provTemp.getB().setValue(vlaueTemp);
+        return res; 
     }
 }
