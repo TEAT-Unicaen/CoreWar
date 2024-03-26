@@ -3,7 +3,6 @@ package coreWar;
 import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.virtualMachine.ThreadVm;
 import coreWar.vmcore.interpreter.Converter;
-import coreWar.vmcore.memory.memoryCellData.InstructionEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,9 +37,8 @@ public class Supervisor {
 
     /**
      * @return renvoie une liste de vm executée
-     * @throws InterruptedException attend la fin d'execution des programmes (3s max)
      */
-    public List<Vm> getValues() throws InterruptedException {
+    public List<Vm> getValues() {
         List<Vm> results = new ArrayList<>(); 
         for (ThreadVm current : this.threadList) {
             while (current.isAlive()) {}
