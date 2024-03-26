@@ -1,4 +1,13 @@
-ADD #4, 3
-MOV 2, 2
-JMP -2, #0
-DAT #0, #0
+JMP -4, #2
+SPL <0, <2
+ADD #2, 4
+SPL <8, <16
+JMN 15, 4
+DAT <-2, #4
+MOV 13, 8
+SUB <-6, @15
+CMP <7, 9
+DAT #-4, #4
+ADD <10, 15
+ADD @-4, @14
+JMP 7, <15

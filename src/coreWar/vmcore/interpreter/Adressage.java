@@ -6,6 +6,44 @@ public class Adressage {
 
     public static int memorySize = 8000;
 
+    public static MemoryCell calculA(MemoryCell mem) {
+        MemoryCell value = mem; 
+        switch (mem.getA().getMode()) {
+            case DIRECT:
+                value = Adressage.DirectA(mem);
+                break;
+            case INDIRECT:
+                value = Adressage.InDirectA(mem);
+                break;
+            case IMMEDIATE:
+                value = Adressage.ImmediateA(mem);
+                break;
+            case PREDEC: 
+                value = Adressage.PredecA(mem);
+                break;
+        }
+        return value;
+    }
+
+    public static MemoryCell calculB(MemoryCell mem) {
+        MemoryCell value = mem;
+        switch (mem.getB().getMode()) {
+            case DIRECT:
+                value = Adressage.DirectB(mem);
+                break;
+            case INDIRECT:
+                value = Adressage.InDirectB(mem);
+                break;
+            case IMMEDIATE:
+                value = Adressage.ImmediateB(mem);
+                break;
+            case PREDEC: 
+                value = Adressage.PredecB(mem);
+                break;
+        }
+        return value; 
+    }
+
     public static MemoryCell[] calcul(MemoryCell mem) { //type true = obj | false = index 
         MemoryCell[] value = new MemoryCell[] {mem, mem};                         
         switch (mem.getA().getMode()) {
@@ -42,7 +80,7 @@ public class Adressage {
     private static MemoryCell DirectA(MemoryCell mem) {
         MemoryCell prov = mem; 
         int value = mem.getA().getValue();
-        if (value > Adressage.memorySize)
+        if (value > Adressage.memorySize || value < -Adressage.memorySize)
             value = value%Adressage.memorySize;
         if (value > 0) {
             for (int i = 0; i < value; i++)
@@ -62,10 +100,8 @@ public class Adressage {
     private static MemoryCell DirectB(MemoryCell mem) {
         MemoryCell prov = mem; 
         int value = mem.getB().getValue();
-        if (value > Adressage.memorySize)
+        if (value > Adressage.memorySize || value < -Adressage.memorySize)
             value = value%Adressage.memorySize;
-        //if (mem.getA().getMode() == AdressingModeEnum.INDIRECT)// Maybe B mode (not A)
-        //   value += prov.getA().getValue();
         if (value > 0) {
             for (int i = 0; i < value; i++)
                 prov = prov.getNext();

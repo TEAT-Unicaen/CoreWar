@@ -36,6 +36,9 @@ public class ThreadVm extends Thread {
             this.cache = nextInst;
         }
         this.interrupt();
+        if (this.shouldStop) {
+            System.err.println("Cutted while executing program " + cache.getOwner() + " (" + cache.toStringDebug() + ") ID THREAD : " + this + " | " + this.vm.tick);
+        }
     }
 
     public void kill() {

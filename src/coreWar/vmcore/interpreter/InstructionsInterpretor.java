@@ -19,10 +19,9 @@ public class InstructionsInterpretor {
     
 
     public void ApplyInstruction(MemoryCell mem, Vm vm) throws Exception {
-        MemoryCell[] adressObj = Adressage.calcul(mem);
         vm.playersInstance[mem.getOwner()] -= 1;
+        MemoryCell[] adressObj = {null, null}; 
         InstructionEnum instruction = mem.getInstruction();
-        //System.out.println(instruction);
         if (mem.getOwner() == 1) {
             if (lastP1 == null) {
                 lastP1 = instruction;
@@ -57,38 +56,46 @@ public class InstructionsInterpretor {
                 vm.death[mem.getOwner()]++;
                 break;
             case MOV:
-                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
+                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
+                    adressObj[1] = Adressage.calculB(mem);
                     adressObj[1].getB().setValue(mem.getA().getValue());
-                else
+                } else {
+                    adressObj = Adressage.calcul(mem);
                     adressObj[1].pasteCell(adressObj[0].getInstruction(), adressObj[0].copyA(), adressObj[0].copyB());
+                }
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case ADD: 
-                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) 
-                    //on prend toujours les adresse pointées et pas les locales (valable pour A & B)
+                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
+                    adressObj[1] = Adressage.calculB(mem);
                     adressObj[1].getB().setValue(adressObj[1].getB().getValue() + mem.getA().getValue());
-                else {
+                } else {
+                    adressObj = Adressage.calcul(mem);
                     adressObj[1].getA().setValue(adressObj[0].getA().getValue() + adressObj[1].getA().getValue());
                     adressObj[1].getB().setValue(adressObj[0].getB().getValue() + adressObj[1].getB().getValue());
                 }
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case SUB:
-                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE)
+                if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
+                    adressObj[1] = Adressage.calculB(mem);
                     adressObj[1].getB().setValue(adressObj[1].getB().getValue() - mem.getA().getValue());
-                else {
+                } else {
+                    adressObj = Adressage.calcul(mem);
                     adressObj[1].getA().setValue(adressObj[1].getA().getValue() - adressObj[0].getA().getValue());
                     adressObj[1].getB().setValue(adressObj[1].getB().getValue() - adressObj[0].getB().getValue());
                 }
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMP:
+                adressObj = Adressage.calcul(mem);
                 if (adressObj[1] == mem) {
                    throw new LoopException("Infinite loop detected / Wrong REDCODE value");
                 }
                 vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                 break;
             case JMZ:
+                adressObj[1] = Adressage.calculB(mem);
                 if (mem.getB().getValue() == 0) {
                     if (adressObj[1] == mem) {
                        throw new LoopException("Infinite loop detected / Wrong REDCODE value");
@@ -99,6 +106,7 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case CMP:
+                adressObj[1] = Adressage.calculB(mem);
                 if (mem.getA().getMode() == AdressingModeEnum.IMMEDIATE) {
                     if (mem.getA().getValue() == adressObj[1].getB().getValue()) {
                         vm.putInQueue(mem,2);
@@ -112,6 +120,7 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case JMN:  
+                adressObj[0] = Adressage.calculA(mem);
                 if (mem.getB().getValue() != 0) {
                     vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
                     break;
@@ -119,6 +128,7 @@ public class InstructionsInterpretor {
                 vm.putInQueue(setIndexForNextCase(mem));
                 break;
             case SLT: 
+                adressObj[0] = Adressage.calculA(mem);
                 if (mem.getA().getMode() != AdressingModeEnum.IMMEDIATE) {
                     if (adressObj[0].getB().getValue() < mem.getB().getValue()) {
                         vm.putInQueue(mem,2);
@@ -133,18 +143,21 @@ public class InstructionsInterpretor {
                 break;
             case DJN: 
                 int prov = 0; 
-                if (mem.getB().getMode() != AdressingModeEnum.IMMEDIATE)
+                if (mem.getB().getMode() != AdressingModeEnum.IMMEDIATE) {
+                    adressObj[1] = Adressage.calculB(mem);
                     prov = adressObj[1].getB().getValue()-1;
-                else
+                } else
                     prov = mem.getB().getValue()-1;
-                if (prov != 0)
+                if (prov != 0) {
+                    adressObj[0] = Adressage.calculA(mem);
                     vm.putInQueueWithOwner(adressObj[0],mem.getOwner());
+                }
                 break; 
             case SPL:
                 vm.incrementProgramCounter();
                 vm.putInQueue(setIndexForNextCase(mem));
                 int tmp = mem.getA().getValue();
-                if (tmp > Adressage.memorySize) 
+                if (tmp > Adressage.memorySize || tmp < -Adressage.memorySize) 
                     tmp = tmp%Adressage.memorySize;
                 vm.putInQueue(mem, tmp);
                 break; 
