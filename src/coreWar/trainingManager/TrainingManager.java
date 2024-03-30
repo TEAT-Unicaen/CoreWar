@@ -29,7 +29,7 @@ public class TrainingManager {
     public TrainingManager(int vmSize, int genCount, int threadCount) throws IOException {
         this.init(vmSize, genCount, threadCount);
         TrainingData data = TrainingImporter.importTraining();
-        population = data.population;
+        population = data.population.nextPopulation();
         this.individualCount = population.size();
         this.actualGen = data.gen+1;
     }
@@ -80,9 +80,12 @@ public class TrainingManager {
                 }
             }
             this.trainingScores.add(new ArrayList<Integer>(this.population.values()));
-            this.population = this.population.nextPopulation();
             this.exportPopulation();
         }
+        //System.out.println(population);
+        //System.out.println(this.trainingScores);
+        System.out.println(this.population.get(this.population.getTheWinner()));
+        System.out.println(this.population.getTheWinner().getRedcode());
     }
 
     public void exportPopulation() {
