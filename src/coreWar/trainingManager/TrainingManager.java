@@ -23,7 +23,8 @@ public class TrainingManager {
         this.genCount = genCount;
         this.individualCount = 0;
         this.threadCount = threadCount;
-        this.trainingScores = TrainingImporter.exportScores();
+        this.trainingScores = TrainingImporter.importScores();
+        System.out.println(this.trainingScores.size());
     }
 
     public TrainingManager(int vmSize, int genCount, int threadCount) throws IOException {
@@ -32,6 +33,12 @@ public class TrainingManager {
         population = data.population.nextPopulation();
         this.individualCount = population.size();
         this.actualGen = data.gen+1;
+        if (this.actualGen == genCount) {
+            System.out.println("Already reach the end of the training");
+            System.out.println(data.population.get(data.population.getTheWinner()));
+            System.out.println(data.population.getTheWinner().getRedcode());
+            System.exit(0);
+        }
     }
 
     public TrainingManager(int vmSize, int genCount, int individualCount, int threadCount) {
@@ -80,7 +87,9 @@ public class TrainingManager {
                 }
             }
             this.trainingScores.add(new ArrayList<Integer>(this.population.values()));
+            System.out.println("Saving");
             this.exportPopulation();
+            this.population = new Population(this.individualCount);
         }
         //System.out.println(population);
         //System.out.println(this.trainingScores);

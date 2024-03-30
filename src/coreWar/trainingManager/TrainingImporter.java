@@ -17,7 +17,7 @@ public class TrainingImporter {
     }
 
     @SuppressWarnings("unchecked")
-    public static List<List<Integer>> exportScores() {
+    public static List<List<Integer>> importScores() {
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream("Scores.bin"))) {
             return (List<List<Integer>>) inputStream.readObject();
         } catch (IOException | ClassNotFoundException e) {

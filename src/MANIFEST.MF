@@ -1,3 +1,0 @@
-Manifest-Version: 1.0
-Built-By: TEAT-Unicaen
-Main-Class: coreWar.run

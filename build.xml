@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="CoreWar" default="run" basedir=".">
+<project name="CoreWar" default="packaging" basedir=".">
     <property name="project.src.dir" value="src" />
     <property name="project.bin.dir" value="bin" />
     <property name="project.jar.file" value="dist/coreWar.jar"/>
@@ -7,12 +7,22 @@
 
     <target name="compile">
         <mkdir dir="${project.bin.dir}" />
-        <javac srcdir="${project.src.dir}" destdir="${project.bin.dir}" includeantruntime="false" />
+        <javac srcdir="${project.src.dir}" destdir="${project.bin.dir}" includeantruntime="false">
+            <classpath>
+                <pathelement path="lib/cxhart-3.8.7/xchart-3.8.7.jar"/>
+            </classpath>
+        </javac>
     </target>
 
     <target name="packaging">
         <antcall target="compile" />
-        <jar jarfile="${project.jar.file}" basedir="bin" manifest="${project.manifest.file}" />
+        <jar jarfile="${project.jar.file}" basedir="bin">
+            <manifest>
+                <attribute name="Manifest-Version" value="beta-0.9" />
+                <attribute name="Built-By" value="TEAT-Unicaen" />
+                <attribute name="Main-Class" value="coreWar.run" />
+            </manifest>
+        </jar>
     </target>
 
     <target name="run">
