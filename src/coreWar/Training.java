@@ -10,7 +10,7 @@ public class Training {
         TrainingManager tr;
 
         int vmSize = 1024;
-        int genCount = 10;
+        int genCount = 1000;
         int individualCount = 100;
         int threadCount = 100;
         
