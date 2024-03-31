@@ -71,14 +71,14 @@ public class TrainingManager {
                 Seed seed2 = seedList.get(virtualMachine.uuid[1]);
                 switch (virtualMachine.getMVP()) {
                     case 1:
-                        if (virtualMachine.tick < minTick) {
+                        if (virtualMachine.tick < minTick || virtualMachine.loopProtectioEnabled) {
                             this.population.addPoint(seed2, -1);
                         } else
                             this.population.addPoint(seed1, 1);
                         break;
                     case 2:
-                        if (virtualMachine.tick < minTick) {
-                            this.population.addPoint(seed2, -1);
+                        if (virtualMachine.tick < minTick || virtualMachine.loopProtectioEnabled) {
+                            this.population.addPoint(seed1, -1);
                         } else
                             this.population.addPoint(seed2, 1);
                         break;
@@ -87,7 +87,7 @@ public class TrainingManager {
                 }
             }
             this.trainingScores.add(new ArrayList<Integer>(this.population.values()));
-            System.out.println("Saving");
+            System.out.println("Saving...");
             this.exportPopulation();
             this.population = new Population(this.individualCount);
         }

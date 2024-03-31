@@ -27,7 +27,8 @@ public class ThreadVm extends Thread {
             try {
                 interpretor.ApplyInstruction(nextInst,this.vm);
             } catch (LoopException e) {
-                this.vm.winner = 0;  
+                this.vm.winner = nextInst.getOwner()==1?2:1;
+                this.vm.loopProtectioEnabled = true;
                 break;
             } catch (Exception e) {
                 System.err.println("Error while executing program " + nextInst.getOwner() + " (" + nextInst.toStringDebug() + ")");

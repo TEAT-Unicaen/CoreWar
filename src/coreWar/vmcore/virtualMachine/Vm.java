@@ -14,6 +14,7 @@ public class Vm {
     public int tick = 0; 
     public int[] uuid;                      // tracçabilité du redcode
     public int[] death = {0,0,0}; 
+    public boolean loopProtectioEnabled = false;
     /* end */
 
     private ProcessQueue callQueue = new ProcessQueue(this); 
