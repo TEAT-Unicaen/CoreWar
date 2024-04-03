@@ -26,16 +26,15 @@ public class Population extends HashMap<Seed, Integer> {
         GeneticOperatorManager gom = new GeneticOperatorManager();
 
         List<Map.Entry<Seed, Integer>> top = this.getTop();
+        //Force the winners to be in the next generation
+        for (Map.Entry<Seed, Integer> entry : top) {
+            newP.put(entry.getKey(), 0);
+        }
+
+        //Generate the childrens based on the best elements from the previous iteration
         for (Map.Entry<Seed, Integer> ind : top) {
             for (Map.Entry<Seed, Integer> ind2 : top) {
-                boolean jump = true;
-                if (ind == ind2) {
-                    jump = false;
-                    if (newP.put(ind.getKey(), 0) != null)
-                        jump = true;      
-                }
-
-                if (jump) {
+                if (ind != ind2) {
                     Seed child = new Seed();
                     do {
                         child = gom.generateChild(ind.getKey(), ind2.getKey());
