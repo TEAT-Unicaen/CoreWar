@@ -51,7 +51,6 @@ public class TrainingManager {
         for(; this.actualGen < this.genCount; this.actualGen++) {
             System.out.println("Generation : " + this.actualGen);
             List<Seed> seedList = new ArrayList<Seed>(this.population.keySet());
-            System.out.println(this.population.size());
             List<Vm> vms = new ArrayList<Vm>();
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {

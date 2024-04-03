@@ -28,9 +28,14 @@ public class Population extends HashMap<Seed, Integer> {
         List<Map.Entry<Seed, Integer>> top = this.getTop();
         for (Map.Entry<Seed, Integer> ind : top) {
             for (Map.Entry<Seed, Integer> ind2 : top) {
+                boolean jump = true;
                 if (ind == ind2) {
-                    newP.put(ind.getKey(), 0);
-                } else {
+                    jump = false;
+                    if (newP.put(ind.getKey(), 0) != null)
+                        jump = true;      
+                }
+
+                if (jump) {
                     Seed child = new Seed();
                     do {
                         child = gom.generateChild(ind.getKey(), ind2.getKey());
