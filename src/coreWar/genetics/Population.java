@@ -66,6 +66,6 @@ public class Population extends HashMap<Seed, Integer> {
         }
         Collections.sort(top, (entry1, entry2) -> entry2.getValue().compareTo(entry1.getValue()));
         
-        return top.subList(0, 5);
+        return top.subList(0, 10);
     }
 }

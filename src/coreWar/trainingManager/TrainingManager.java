@@ -52,16 +52,19 @@ public class TrainingManager {
         for(; this.actualGen < this.genCount; this.actualGen++) {
             System.out.println("Generation : " + this.actualGen);
             List<Seed> seedList = new ArrayList<Seed>(this.population.keySet());
+            System.out.println(seedList.size());
             List<Vm> vms = new ArrayList<Vm>();
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {
                 String red1 = seedList.get(i).getRedcode();
                 for (int j = 0; j < this.individualCount; j++) {
-                    String red2 = seedList.get(j).getRedcode();
-                    this.sup.createVm(vmSize, red1, red2, i, j);
-                    if (++threadAlive == this.threadCount) {
-                        vms.addAll(sup.getValues());
-                        threadAlive = 0;
+                    if (i != j) {
+                        String red2 = seedList.get(j).getRedcode();
+                        this.sup.createVm(vmSize, red1, red2, i, j);
+                        if (++threadAlive == this.threadCount) {
+                            vms.addAll(sup.getValues());
+                            threadAlive = 0;
+                        }
                     }
                 }
             }
@@ -90,7 +93,7 @@ public class TrainingManager {
             System.out.println("Saving...");
             this.exportPopulation();
             System.out.println("Fucking...");
-            this.population = new Population(this.individualCount);
+            this.population = this.population.nextPopulation();
         }
         //System.out.println(population);
         //System.out.println(this.trainingScores);
