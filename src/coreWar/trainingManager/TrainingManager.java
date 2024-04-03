@@ -89,6 +89,7 @@ public class TrainingManager {
             this.trainingScores.add(new ArrayList<Integer>(this.population.values()));
             System.out.println("Saving...");
             this.exportPopulation();
+            System.out.println("Fucking...");
             this.population = new Population(this.individualCount);
         }
         //System.out.println(population);
