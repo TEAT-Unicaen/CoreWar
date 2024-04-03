@@ -30,11 +30,12 @@ public class Population extends HashMap<Seed, Integer> {
             for (Map.Entry<Seed, Integer> ind2 : top) {
                 if (ind == ind2) {
                     newP.put(ind.getKey(), 0);
+                } else {
+                    Seed child = new Seed();
+                    do {
+                        child = gom.generateChild(ind.getKey(), ind2.getKey());
+                    } while(newP.put(child, 0) != null);
                 }
-                Seed child = new Seed();
-                do {
-                    child = gom.generateChild(ind.getKey(), ind2.getKey());
-                } while(newP.put(child, 0) != null);
             }
         }
         return newP;

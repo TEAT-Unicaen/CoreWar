@@ -24,7 +24,6 @@ public class TrainingManager {
         this.individualCount = 0;
         this.threadCount = threadCount;
         this.trainingScores = TrainingImporter.importScores();
-        System.out.println(this.trainingScores.size());
     }
 
     public TrainingManager(int vmSize, int genCount, int threadCount) throws IOException {
@@ -52,7 +51,7 @@ public class TrainingManager {
         for(; this.actualGen < this.genCount; this.actualGen++) {
             System.out.println("Generation : " + this.actualGen);
             List<Seed> seedList = new ArrayList<Seed>(this.population.keySet());
-            System.out.println(seedList.size());
+            System.out.println(this.population.size());
             List<Vm> vms = new ArrayList<Vm>();
             int threadAlive = 0;
             for (int i = 0; i < this.individualCount; i++) {
@@ -93,7 +92,8 @@ public class TrainingManager {
             System.out.println("Saving...");
             this.exportPopulation();
             System.out.println("Fucking...");
-            this.population = this.population.nextPopulation();
+            Population tmp = this.population;
+            this.population = tmp.nextPopulation();
         }
         //System.out.println(population);
         //System.out.println(this.trainingScores);
