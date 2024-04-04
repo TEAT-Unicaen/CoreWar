@@ -21,7 +21,7 @@ public class Population extends HashMap<Seed, Integer> {
             this.put(new Seed(sm, rand.nextInt(11)+5), 0);
     }
 
-    public Population nextPopulation() {
+    public Population nextPopulationTop10() {
         Population newP = new Population(0);
         GeneticOperatorManager gom = new GeneticOperatorManager();
 
@@ -45,6 +45,23 @@ public class Population extends HashMap<Seed, Integer> {
         return newP;
     }
 
+    public Population nextPopulation() {
+        Population newP = new Population(0);
+        GeneticOperatorManager gom = new GeneticOperatorManager();
+        Seed winner = this.getTheWinner();
+
+        newP.put(new Seed(winner), 0);
+
+        for(Seed seed : this.keySet()) {
+            if(seed != winner) {
+                Seed child = new Seed();
+                do {
+                    child = gom.generateChild(winner, seed);
+                } while(newP.put(child, 0) != null);
+            }
+        }
+        return newP;
+    }
 
     public void addPoint(Seed seed, int point) {
         if (seed != null)
@@ -60,7 +77,6 @@ public class Population extends HashMap<Seed, Integer> {
                 seedWin = entry.getKey();
             }
         }
-        this.remove(seedWin);
         return seedWin;
     }
 

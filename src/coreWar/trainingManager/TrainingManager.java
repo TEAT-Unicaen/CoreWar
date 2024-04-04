@@ -66,6 +66,15 @@ public class TrainingManager {
                     }
                 }
             }
+            // Make a scores for a graph to a reference Warrior
+            List<Vm> scoresVms = new ArrayList<Vm>();
+            for (int i = 1; i < this.individualCount; i++) {
+                String red1 = seedList.get(i-1).getRedcode();
+                String challenger = "MOV 0, 1";
+                this.sup.createVm(vmSize, red1, challenger, i, 0);
+                this.sup.createVm(vmSize, challenger, red1, 0, i);
+            }
+
             int minTick = 32; // minimum tick for a Vm to add Point to the winner otherwise decrese the looser
             for (Vm virtualMachine : vms) {
                 Seed seed1 = seedList.get(virtualMachine.uuid[0]);
@@ -87,7 +96,26 @@ public class TrainingManager {
                         break;
                 }
             }
-            this.trainingScores.add(new ArrayList<Integer>(this.population.values()));
+            
+            scoresVms.addAll(sup.getValues());
+            List<Integer> score = new ArrayList<Integer>(101);
+            for (int i = 0; i < this.individualCount+1; i++) {
+                score.add(0);
+            }
+            for (Vm virtualMachine : scoresVms) {
+                switch (virtualMachine.getMVP()) {
+                    case 1:
+                        score.add(virtualMachine.uuid[0], score.get(virtualMachine.uuid[0])+1);
+                        break;
+                    case 2:
+                        score.add(virtualMachine.uuid[1], score.get(virtualMachine.uuid[1])+1);
+                        break;
+                    default:
+                        break;
+                }
+            }
+            this.trainingScores.add(score);
+
             System.out.println("Saving...");
             this.exportPopulation();
             System.out.println("Fucking...");
