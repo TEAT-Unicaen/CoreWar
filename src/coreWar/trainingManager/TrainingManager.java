@@ -118,12 +118,9 @@ public class TrainingManager {
 
             System.out.println("Saving...");
             this.exportPopulation();
-            System.out.println("Fucking...");
             Population tmp = this.population;
             this.population = tmp.nextPopulation();
         }
-        //System.out.println(population);
-        //System.out.println(this.trainingScores);
         System.out.println(this.population.get(this.population.getTheWinner()));
         System.out.println(this.population.getTheWinner().getRedcode());
     }

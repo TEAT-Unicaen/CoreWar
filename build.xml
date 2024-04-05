@@ -9,7 +9,7 @@
         <mkdir dir="${project.bin.dir}" />
         <javac srcdir="${project.src.dir}" destdir="${project.bin.dir}" includeantruntime="false">
             <classpath>
-                <pathelement path="lib/cxhart-3.8.7/xchart-3.8.7.jar"/>
+                <pathelement path="lib/xchart-3.8.7/xchart-3.8.7.jar"/>
             </classpath>
         </javac>
     </target>
