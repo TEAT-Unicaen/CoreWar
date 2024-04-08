@@ -8,13 +8,15 @@ import java.util.List;
 import coreWar.genetics.Population;
 
 public class TrainingExporter {
-    public static void exportPopulation(Population population, int gen, List<List<Integer>> scores) {
+    public static void exportPopulation(Population population, int gen) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("LastPopulation.bin"))) {
             outputStream.writeObject(new TrainingData(population, gen));
         } catch (IOException e) {
             System.err.println("Error exporting Population: " + e.getMessage());
         }
+    }
 
+    public static void exportScore(List<List<Integer>> scores) {
         try (ObjectOutputStream outputStream = new ObjectOutputStream(new FileOutputStream("Scores.bin"))) {
             outputStream.writeObject(scores);
         } catch (IOException e) {

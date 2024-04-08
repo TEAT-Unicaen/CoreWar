@@ -13,6 +13,7 @@ public class TrainingManager {
     private Population population;
     private Supervisor sup;
     private int vmSize, genCount, individualCount, threadCount, actualGen;
+    private Seed challenger;
 
 
     private List<List<Integer>> trainingScores;
@@ -66,14 +67,6 @@ public class TrainingManager {
                     }
                 }
             }
-            // Make a scores for a graph to a reference Warrior
-            List<Vm> scoresVms = new ArrayList<Vm>();
-            for (int i = 1; i < this.individualCount; i++) {
-                String red1 = seedList.get(i-1).getRedcode();
-                String challenger = "MOV 0, 1";
-                this.sup.createVm(vmSize, red1, challenger, i, 0);
-                this.sup.createVm(vmSize, challenger, red1, 0, i);
-            }
 
             int minTick = 32; // minimum tick for a Vm to add Point to the winner otherwise decrese the looser
             for (Vm virtualMachine : vms) {
@@ -96,36 +89,47 @@ public class TrainingManager {
                         break;
                 }
             }
-            
-            scoresVms.addAll(sup.getValues());
-            List<Integer> score = new ArrayList<Integer>(101);
-            for (int i = 0; i < this.individualCount+1; i++) {
-                score.add(0);
-            }
-            for (Vm virtualMachine : scoresVms) {
-                switch (virtualMachine.getMVP()) {
-                    case 1:
-                        score.add(virtualMachine.uuid[0], score.get(virtualMachine.uuid[0])+1);
-                        break;
-                    case 2:
-                        score.add(virtualMachine.uuid[1], score.get(virtualMachine.uuid[1])+1);
-                        break;
-                    default:
-                        break;
+
+            // Make a scores for a graph to a reference Warrior
+            if (this.challenger != null) {
+                String challengerString = this.challenger.getRedcode();
+                List<Vm> scoresVms = new ArrayList<Vm>();
+                for (int i = 1; i < this.individualCount; i++) {
+                    String red1 = seedList.get(i-1).getRedcode();
+                    this.sup.createVm(vmSize, red1, challengerString, i, 0);
+                    this.sup.createVm(vmSize, challengerString, red1, 0, i);
                 }
+                
+                scoresVms.addAll(sup.getValues());
+                List<Integer> score = new ArrayList<Integer>(101);
+                for (int i = 0; i < this.individualCount+1; i++) {
+                    score.add(0);
+                }
+                for (Vm virtualMachine : scoresVms) {
+                    switch (virtualMachine.getMVP()) {
+                        case 1:
+                            score.add(virtualMachine.uuid[0], score.get(virtualMachine.uuid[0])+1);
+                            break;
+                        case 2:
+                            score.add(virtualMachine.uuid[1], score.get(virtualMachine.uuid[1])+1);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+                this.trainingScores.add(score);
+                TrainingExporter.exportScore(this.trainingScores);
             }
-            this.trainingScores.add(score);
 
             System.out.println("Saving...");
-            this.exportPopulation();
+            TrainingExporter.exportPopulation(this.population, this.actualGen);
             Population tmp = this.population;
+            if (this.actualGen == 99) {
+                this.challenger = this.population.getTheWinner();
+            }
             this.population = tmp.nextPopulation();
         }
         System.out.println(this.population.get(this.population.getTheWinner()));
         System.out.println(this.population.getTheWinner().getRedcode());
-    }
-
-    public void exportPopulation() {
-        TrainingExporter.exportPopulation(this.population, this.actualGen, this.trainingScores);
     }
 }
