@@ -4,7 +4,7 @@ import coreWar.vmcore.virtualMachine.Vm;
 import java.util.List;
 
 
-public class demo {
+public class DemoVm {
     
     public static void main(String[] args) throws InterruptedException {
         long time = System.currentTimeMillis();

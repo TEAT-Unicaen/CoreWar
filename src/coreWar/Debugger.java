@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 import coreWar.display.CorewarGui;
 
-public class debug {
+public class Debugger {
 
     private static int sleep = 1000; 
     private static boolean debugMode = true; 

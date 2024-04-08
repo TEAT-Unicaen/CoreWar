@@ -7,7 +7,7 @@ import coreWar.vmcore.virtualMachine.Vm;
 import coreWar.vmcore.interpreter.InstructionsInterpretor; 
 import coreWar.display.CorewarGui;
 
-public class run {
+public class RunSingle {
     
     private static Vm supervisor = new Vm(1024,100);
 
