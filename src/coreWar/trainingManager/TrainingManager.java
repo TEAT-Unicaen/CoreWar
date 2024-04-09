@@ -31,9 +31,11 @@ public class TrainingManager {
         this.init(vmSize, genCount, threadCount);
         TrainingData data = TrainingImporter.importTraining();
         population = data.population.nextPopulation();
-        this.challenger = TrainingImporter.importChallenger();
         this.individualCount = population.size();
         this.actualGen = data.gen+1;
+        if (this.actualGen > 99) {
+            this.challenger = TrainingImporter.importChallenger();
+        }
         if (this.actualGen == genCount) {
             System.out.println("Already reach the end of the training");
             System.out.println(data.population.get(data.population.getTheWinner()));
