@@ -31,6 +31,7 @@ public class TrainingManager {
         this.init(vmSize, genCount, threadCount);
         TrainingData data = TrainingImporter.importTraining();
         population = data.population.nextPopulation();
+        this.challenger = TrainingImporter.importChallenger();
         this.individualCount = population.size();
         this.actualGen = data.gen+1;
         if (this.actualGen == genCount) {
@@ -126,6 +127,7 @@ public class TrainingManager {
             Population tmp = this.population;
             if (this.actualGen == 99) {
                 this.challenger = this.population.getTheWinner();
+                TrainingExporter.exportChallenger(this.challenger);
             }
             this.population = tmp.nextPopulation();
         }
