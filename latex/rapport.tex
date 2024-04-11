@@ -39,8 +39,8 @@
                 L'objectif de ce projet était de créer un jeu de CoreWar complet. Pour cela nous avons dû identifier les points principaux qui composent notre projet et les implémenter. Nous avons donc décidé de découper notre projet en plusieurs parties :
                 \smallskip
                 \begin{enumerate}
-                    \item La machine MARS
                     \item Le RedCode
+                    \item La machine MARS
                     \item Un algorithme génétique pour créer des guerriers
                     \item Une interface graphique pour afficher le déroulement des parties
                 \end{enumerate}
@@ -130,10 +130,13 @@
             \par
                 Dans cette liste chainée chaque cellule contient \textbf{une instruction et deux Operandes}. Pour rappel, les instructions sont les commandes que les guerriers vont exécuter et les Operandes contiennent les informations sur la méthode a appliquer pour exécuter l'instruction. 
                 \medskip
-            \par
-                //TODO : Ajouter un schéma représentant la mémoire
-        \end{subsection}
 
+                \begin{figure}
+                    \includegraphics[width=10cm]{img/umlMemoire.png}\label{fig:umlMemoire}
+                    \caption{Diagramme UML de la mémoire}
+                \end{figure}
+        \end{subsection}
+        
         \begin{subsection}{Déroulement d'une partie}
             \par
                 La machine MARS doit aussi gérer le déroulement de la partie. L'idée est que chaque guerrier exécute chacun à son tour une instruction. Pour cela elle a aussi à sa disposition une liste des instructions à exécuter, qui est en fait une liste de certaines cellules de la mémoire (celles dans lesquelles un guerrier à une opération en cours). Cela permet de facilement déterminer quel guerrier doit jouer et de lui faire exécuter son instruction au bon moment.
