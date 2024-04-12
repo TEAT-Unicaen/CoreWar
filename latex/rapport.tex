@@ -51,7 +51,7 @@
     \end{section}
     
 
-    \begin{section}{Le RedCode : Détails du Langage}
+    \begin{section}{Le RedCode : Détails du Langage}\label{sec:redcode}
         \par
             Le \textbf{RedCode} est un langage proche de l'assembleur, uniquement utilisé par les joueurs de CoreWar et qui permet de programmer les guerriers. On utilise ce langage car par défaut il n'est pas compris par les ordinateurs. Cela évite que des personnes mal-intentionnées, ou simplement des erreurs, créent des bugs sur les pc des joueurs comme il n'y a pas risque qu'ils s'échappent de la machine MARS. Au fur et à mesure des années ce langage a évolué avec l'ajout de nouvelles instructions mais pour ce projet nous utilserons une de ses premières versions : la norme icw88 (créee een 1988). 
             
@@ -116,12 +116,12 @@
 
 
 
-    \begin{section}{Machine MARS : Mémoire et Déroulement de la partie}
+    \begin{section}{Machine MARS : Mémoire et Déroulement de la partie}\label{sec:machineMARS}
         \par
             La \textbf{machine MARS} est la pièce maitresse des parties de CoreWar. C'est la machine virtuelle dans laquelle les guerriers vont s'exécuter. Elle gère la mémoire, interprète le RedCode et est responsable du déroulement des parties, sans elle pas de projet c'est donc par là que nous avons commencé notre travail. 
             \medskip
         
-        \begin{subsection}{Mémoire}
+        \begin{subsection}{Mémoire}\label{sec:mem}
             
             \par
                 Une des problèmatiques de cette partie était la \textbf{représentation de la mémoire}.
@@ -130,32 +130,41 @@
             \par
                 Dans cette liste chainée chaque cellule contient \textbf{une instruction et deux Operandes}. Pour rappel, les instructions sont les commandes que les guerriers vont exécuter et les Operandes contiennent les informations sur la méthode a appliquer pour exécuter l'instruction. 
                 \medskip
-
-                \begin{figure}
-                    \includegraphics[width=10cm]{img/umlMemoire.png}\label{fig:umlMemoire}
-                    \caption{Diagramme UML de la mémoire}
-                \end{figure}
         \end{subsection}
-        
-        \begin{subsection}{Déroulement d'une partie}
+
+        \begin{figure}[h]
+            \includegraphics[width=10cm]{img/umlMemoire.png}
+            \centering
+            \label{fig:umlMemoire}
+            \caption{Diagramme UML de la mémoire}
+        \end{figure}
+
+        \begin{subsection}{Déroulement d'une partie}\label{sec:deroulement}
             \par
-                La machine MARS doit aussi gérer le déroulement de la partie. L'idée est que chaque guerrier exécute chacun à son tour une instruction. Pour cela elle a aussi à sa disposition une liste des instructions à exécuter, qui est en fait une liste de certaines cellules de la mémoire (celles dans lesquelles un guerrier à une opération en cours). Cela permet de facilement déterminer quel guerrier doit jouer et de lui faire exécuter son instruction au bon moment.
+                La machine MARS doit aussi gérer le déroulement des parties. Pour cela elle doit pouvoir exécuter les instructions des guerriers et gérer les processus.
+                \medskip
             \par
-                //TODO : Développer sur la process Queue / Différence Programme, instruction et processus ? Illustrer la process queue ?
+                A l'initialisation de la machine MARS, le RedCode est placé a l'index 0 de la mémoire pour le premier guerrier et au milieu de la mémoire pour le second. Un pointeur vers la première instruction de chacun de ses programmes est mit dans la file d'attente des processus. C'est toujours le premier guerrier qui commence a jouer c'est pourquoi on effectue 2 fois un combat, une fois où le guerrier 1 est a l'index 0 et une fois où c'est le guerrier 2 qui y est dans l'algorithme génétique (voir \ref{sec:entrainement}).
+                \medskip
+            \par
+                En général chaque programme exécute une instruction chacun a son tour. Mais certaines instructions comme SPL ou DAT permettent respectivement d'ajouter des processus dans la file d'attente ou d'en supprimer. En altérant la file on a donc des tours ou plutôt que de jouer p1 puis p2 on jouera p1-p1-p2. Ces instructions permettent des stratégies plus complexes et des parties plus intéressantes.
+                \medskip
+            \par
+                On décide que la partie est terminée lorsque tout les processus dans la file d'attente sont au même programme. Cela signifie que le programme adverse n'a plus de processus en attente et que le programme en cours d'exécution est le dernier. C'est donc lui qui a gagné la partie.
         \end{subsection}
         \bigskip
     \end{section}
 
 
 
-    \begin{section}{Algorithme Génétique}
+    \begin{section}{Algorithme Génétique}\label{sec:algoGenetique}
         \par
             Après avoir créer la machine MARS nous avons pu développer l'algorithme génétique. L'objectif étant d'avoir un algorithme qui crée des programmes en RedCode qui sont des meilleurs guerriers que les précédent. On peut dissocier le développement de cet algorithme en deux grandes parties : Le Fonctionnement de l'algo en lui même et ensuite les différentes méthodes afin de l'entrainer efficacement.
             \medskip
 
-        \begin{subsection}{Fonctionnement}
+        \begin{subsection}{Fonctionnement}\label{sec:fonctionnement}
 
-            \begin{subsubsection}{Création de guerriers aléatoires : les seeds}
+            \begin{subsubsection}{Création de guerriers aléatoires : les seeds}\label{sec:seeds}
                 \sloppypar
                     Nous avons opté pour un algorithme génétique dans lequel on retrouve une grande partie d'aléatoire. Cela permet idéalement de ne pas rester bloqué sur certains programmes et d'avoir un guerrier qui est bon contre la majeure partie de ses adversaires en explorant un maximum de possibilités.
                     \smallskip
@@ -170,7 +179,7 @@
                     \bigskip
             \end{subsubsection}
 
-            \begin{subsubsection}{L'amélioration des populations}
+            \begin{subsubsection}{L'amélioration des populations}\label{sec:amelioration}
                 \par
                     Une fois que l'on a généré une population il faut pouvoir l'améliorer. Pour ce faire nous avons travaillé sur un système de reproduction et de mutation.
                     \medskip
@@ -205,7 +214,7 @@
             \end{subsubsection}
         \end{subsection}
 
-        \begin{subsection}{Entrainement}
+        \begin{subsection}{Entrainement}\label{sec:entrainement}
             \par
                 Une fois notre algorithme génétique créé il a fallu l'entrainer. Pour cela nous avons du générer une population aléatoire puis y faire s'affronter les guerriers et les faire évoluer en conséquence. Cette opération doit être répété plusieurs miliers de fois pour que les guerriers soient performants. Afin de réduire le temps d'entrainement nous avons fait évoluer nos méthodes et développé 3 façons d'entrainer nos guerriers et de vérifier que l'algo fonctionne ont été implémentées.
 
@@ -231,22 +240,23 @@
                     \par
                         Une fois le temps d'entrainement réduit nous avons aussi eu besoin de moyen de visualiser l'amélioration de nos guerriers. Pour cela nous avons décidé de générer des graphiques nous affichant l'évolution des scores de nos guerriers.
                         \medskip
+
                     \par
-                        \textit{Cependant voici les graphiques que nous avons obtenu :}
-                        \medskip
-                    \par
+                        Comme on peut le voir, la courbe des premiers graphiques ne montrent pas d'évolution probante. Cela est du au fait que avec notre méthode d'affichage et d'entrainement nous n'avons pas un référentiel de comparaison. En effet, un programme qui a un score de 120 a la première génération n'est pas forcément meilleur qu'un programme qui a un score de 100 a la 10ème génération. Un a battu des programmes plus faibles que l'autre. C'est pour cela qu'il nous fallait revoir notre méthode de scoring et d'entrainement pour avoir des résultats plus pertinants a vous montrer.
+
+                    \begin{figure}[h]
                         \includegraphics[width=10cm]{img/graphique1.png}
-                        \bigskip
-                    \par
                         \includegraphics[width=10cm]{img/graphique2.png}
-                        \bigskip
-                    \par
-                        Comme on peut les voir les courbes de ces graphiques ne montrent pas d'évolution probante. Cela est du au fait que avec notre méthode d'affichage et d'entrainement nous n'avons pas un référentiel de comparaison. En effet, un programme qui a un score de 120 a la première génération n'est pas forcément meilleur qu'un programme qui a un score de 100 a la 10ème génération. Un a battu des programmes plus faibles que l'autre. C'est pour cela qu'il nous fallait revoir notre méthode de scoring et d'entrainement pour avoir des résultats plus pertinants a vous montrer.
+                        \centering
+                        \label{fig:graphique1_2}
+                        \caption{Premiers graphiques obtenus en utilisant le score des gagnants}
+                    \end{figure}
+                    \bigskip
                 \end{subsubsection}    
 
                 \begin{subsubsection}{Le Challenger}
                     \par
-                        Pour avoir un référentiel de comparaison nous avons décidé de créer un guerrier qui serait notre référence. Ce guerrier, appelé le \textbf{Challenger}, est un guerrier qui a été créé par un humain et qui est considéré par la communauté des joueurs de CoreWar comme performant. Il est donc notre référence pour savoir si nos guerriers sont performants ou non.
+                        Pour avoir un référentiel de comparaison nous avons décidé de créer un guerrier qui serait notre référence. Ce guerrier, appelé le \textbf{Challenger}, est un guerrier qui est toujours le même. Pour le graphique en dessous nous générons 100 population et le challenger est le meilleur programme de la centième population. Mais cela peut être un programme généré aléatoirement ou un programme trouver sur internet. L'objectif est d'avoir un programme fixe qui permet de voir l'évolution de nos guerriers face a un programme performant.
                         \medskip
                     \par
                         Chaque guerrier de notre population est donc confronté au Challenger et on peut alors voir si il est performant ou non. Cela permet de savoir si notre algorithme génétique est efficace et si nos guerriers sont de plus performants.
@@ -257,56 +267,51 @@
                     \par
                         Le score du challenger est celui que l'on affiche dans les graphiques. Cela permet de voir l'évolution de nos guerriers face à un guerrier performant et de savoir si notre algorithme génétique est efficace. L'autre score sert toujours a déterminer le guerrier le plus performant de la population pour l'amélioration de cette dernière.
                         \bigskip
-                    \par 
-                        \textit{Voici les graphiques que nous avons obtenu avec cette méthode :}
-                        \medskip
                     \par
-                        \includegraphics[width=10cm]{img/graphique3.png}
+                        On voit sur le graphique obtenu avec cette méthode que la tendance globale est descendante c'est donc bien que les algorithmes s'améliore face au Challenger. Cependant on voit aussi que les scores sont très variables. Cela est du au fait qu'une population dans laquelle la plupart des programmes se suicident ne donnent que très peu de point au Challenger car pour rappel, si un programme se suicide on ne donne pas de point au gagnant, on en enlève un au perdant. L'idée est de voir la tendance des pics de score qui sont ceux d'une génération ou peu, voir aucun programme ne se suicident. On voit bien qu'ils descendent c'est donc bien que le Challenger perd de plus en plus de combat et est donc confronté a des algorithmes de plus en plus performants.
+
                         \bigskip
-                    \par
-                        On voit sur ce graphique que la tendance globale est descendante c'est donc bien que les algorithmes s'améliore face au Challenger. Cependant on voit aussi que les scores sont très variables. Cela est du au fait qu'une population dans laquelle la plupart des programmes se suicident ne donnent que très peu de point au Challenger car pour rappel, si un programme se suicide on ne donne pas de point au gagnant, on en enlève un au perdant. L'idée est de voir la tendance des pics de score qui sont ceux d'une génération ou peu, voir aucun programme ne se suicident. On voit bien qu'ils descendent c'est donc bien que le Challenger perd de plus en plus de combat et est donc confronté a des algorithmes de plus en plus performants.
-                \end{subsubsection} 
+                        \includegraphics[width=10cm]{img/graphique3.png}
+                        \centering
+                        
+                    \bigskip
+                \end{subsubsection}  
                 
         \end{subsection}
+
     \end{section}
+
 
     \begin{section}{Interface Graphique}
         \par
             L'interface a été faite avec le package \textbf{swing}, déjà inclus dans java. Elle permet de visualiser une partie et ne se lance que si on lui demande. On ralentit le temps entre deux instructions quand elle est appelée sinon la partie se termine trop rapidement pour que ce soit lisible. Elle transforme la mémoire en une grille. Cette grille s'adapte à toute les tailles de mémoire pour d'éventuelles parties sur une mémoire a taille réduite. Elle est composée de cases qui peuvent être de 3 couleurs différentes : Bleu, Rouge et Noir. (le Bleu et le Rouge pour chacun des guerriers et le Noir pour les cases qui n'appartiennent encore a personne).
             \bigskip
-        
-            \includegraphics[width=10cm]{img/grille_interface.png}\newline
-            \textit{La grille de 8000 cases, taille la plus courante pour les parties de CoreWar.}
-            \bigskip
 
         \par
-            Pour l'affichage final on efface les bordures pour afficher uniquement les couleurs et evider de surcharger l'interface.
-            \bigskip
+            Pour actualiser l'affichage plusieurs méthodes ont été créées. Au départ la méthode consistait a prendre une nouvelle grille et à remplacer l'ancienne par la nouvelle. Mais pour éviter d'avoir trop de latence nous avons du créer une méthode qui actualise uniquement les cases qui ont changé de couleur. Chaque case est gérée comme un élément indépendant et peut être actualisée indépendamment des autres. Cela a permis d'optimiser l'affichage. 
 
-            \includegraphics[width=10cm]{img/display.jpg}\newline
-            \textit{Affichage final de l'interface graphique. Sans les bordures durant une partie.}
             \bigskip
-        
-        \par
-            Pour actualiser l'affichage plusieurs méthodes ont été créées. Au départ la méthode consistait a prendre une nouvelle grille et à remplacer l'ancienne par la nouvelle. Mais cela ralentissait énormément l'affichage. Nous avons donc décidé de créer une méthode qui actualise uniquement les cases qui ont changé de couleur. Cela a permis d'optimiser l'affichage et de ne pas ralentir le jeu.
-            Pour ce faire l'utilisation d'un GridBagLayout plutôt qu'un GridLayout simple a été nécessaire et il a fallu recréer l'interface. Dorénavant chaque case est gérée comme un élément indépendant et peut être actualisée indépendamment des autres.
+            \includegraphics[width=10cm]{img/display.jpg}
+            \centering
+
+        \bigskip
     \end{section}
 
-    \begin{section}{Conclusion : Résultats et Perspectives d'évolutions}\label{sec:resultats}
+    \begin{section}{Conclusion : Résultats et évolutions}\label{sec:resultats}
         \par
-            Les résultats obtenus sont plutôt satisfaisants. Nous avons réussi à créer un jeu de CoreWar complet avec une machine MARS, un RedCode, un algorithme génétique et une interface graphique. Nous avons pu voir que l'algorithme génétique fonctionnait et que les guerriers créés étaient performants.
+            Nous pouvons considérer que les résultats sont satisfaisants. Nous avons réussi à créer un jeu de CoreWar complet avec une machine MARS qui interprète le RedCode et gère les parties. Aussi nous avons pu développer un Algorithme génétique qui fonctionne et qui est capable de créer des guerriers performants.
             \medskip
         \par
-            Cependant il reste des points à améliorer. L'algorithme génétique pourrait être amélioré pour être plus performant. Une perspective d'évolution serait de faire en sorte que le challenger soit une population test et non un guerrier unique. Cela permettrait de voir si nos guerriers sont performants face à une population plus clairement. Il faudrait aussi améliorer l'affichage des graphiques et de l'interface pour qu'ils soient plus clairs et plus précis.
+            Cependant il reste des points à améliorer. L'algorithme génétique pourrait être amélioré pour être plus performant. Une perspective d'évolution serait de faire en sorte que le challenger soit une population test et non un guerrier unique. Cela permettrait de voir si nos guerriers sont performants face à une population plus clairement.
             Il pourrait être intéressant aussi de tester de nouveaux types de mutations et d'algorithme pour voir si certains sont plus performants que d'autres.
             \medskip
         \par
-            Une de nos principales contraintes fut aussi la contrainte matérielles. En effet générer des milliers de population prend du temps et nécessite d'avoir un ordinateur suffisament puissant a sa disposition pour le laisser tourner et générer un maximum de programme en un minimum de temps. Il serait donc intéressant de voir si l'on atteint un guerrier ultime, meilleur que tout les autres, après un certain temps de génération. Cela permettrait d'avoir une idée plus claire de ce que l'on peut obtenir avec notre algorithme génétique.
+            Une de nos principales contraintes fut aussi la contrainte matérielle. Bien que nous ayons fait un gros travail d'optimisation via l'utilisationd des threads, générer des milliers de population prend du temps et nécessite d'avoir un ordinateur suffisament puissant a sa disposition pour le laisser tourner et générer un maximum de programme. Il serait donc intéressant de voir si l'on atteint un guerrier ultime, meilleur que tout les autres, après un certain temps de génération.
             \medskip
         \par
             Enfin, il serait intéressant de tester notre algorithme génétique sur d'autres jeux de programmation pour voir si il est performant et si il peut être utilisé pour créer des programmes performants dans d'autres domaines.
         \par
-            Ces possibilités d'amélioration ne réduit en rien notre satisfaction d'avoir réussi à créer un jeu de Corewar complet et de voir que notre algorithme génétique fonctionne. Nous avons appris beaucoup de choses durant ce projet, avons appris de nouvelles manières de travailler et de nouvelles notions de programmation. C'est donc un projet que nous avons beaucoup apprécié et qui nous a permis de progresser.
+            Ces possibilités d'amélioration ne réduit en rien notre satisfaction d'avoir réussi à créer un jeu de Corewar complet et de voir que notre algorithme génétique fonctionne. Nous avons appris beaucoup de choses durant ce projet au niveau des algorithmes génétiques ou encore du fonctionnement des machines. Le RedCode étant un langage proche de l'assembleur ce fut aussi une bonne introduction a ce type de langage. Nous avons aussi progresser sur les méthodes de travail en groupe et de collaboration. C'est donc un projet que nous avons beaucoup apprécié et qui nous a permis de beaucoup progresser.
     \end{section}
 
     % Références
