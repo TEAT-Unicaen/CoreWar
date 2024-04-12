@@ -6,7 +6,7 @@
 \usepackage[T1]{fontenc}
 \usepackage{graphicx}
 \usepackage{hyperref}       % Pour les liens hypertextes
-
+\usepackage{listings}       % Pour les codes
 %Variables
 \title{Rapport de projet : CoreWar}
 \author{Amand Henry\and{}Théo Sicot\and{}Etienne Bossu\and{}Tom Rousée}
@@ -211,8 +211,28 @@
                     Enfin, pour que l'algorithme génétique soit efficace il a fallu déterminer un nombre de générations. Nous avons choisi de faire 100 . Cela permet de bien faire évoluer les guerriers et de ne pas rester bloqué sur des guerriers qui ne sont pas performants.
                     \bigskip
 
-            \end{subsubsection}
+                \end{subsubsection}
         \end{subsection}
+
+        \par
+        \textit{Voici un exemple de code pour la génération d'un nouveau guerrier :}
+        \begin{lstlisting}
+        generateChild(Seed parent1, Seed parent2) {
+            Seed enfant = new Seed();
+        
+            // Effectuer le croisement pour generer les
+                instructions de l'enfant
+            enfant = crossover(parent1, parent2);
+        
+            // Appliquer la mutation a l'enfant
+            mutation(enfant);
+        
+            // Renvoyer l'enfant
+            return enfant;
+        }
+        \end{lstlisting}
+        \bigskip
+
 
         \begin{subsection}{Entrainement}\label{sec:entrainement}
             \par
