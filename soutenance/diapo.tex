@@ -1,11 +1,15 @@
 \documentclass{beamer}
+\usepackage[utf8]{inputenc}
+\usepackage[french]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{graphicx}
 
 % Theme
 \usetheme{metropolis}
 
 % Title page
 \title{Projet : CoreWar}
-\author{Etienne BOSSU - Amand HENRY - Tom ROUSEE - Theo SICOT}
+\author{Etienne BOSSU\and{}Amand HENRY\and{}Tom ROUSEE\and{}Theo SICOT}
 \date{\today}
 
 % Slides
@@ -56,8 +60,13 @@
     C'est dans cette machine que les guerriers s'affrontent. Elle gère le déroulement de la partie, interprète le RedCode et gère la mémoire.
 \end{frame}
 
+
 \begin{frame}{Mémoire}
-    \includegraphics[width=\textwidth]{img/umlMemoire.png}
+    \begin{figure}
+        \centering
+        \includegraphics[width = 8cm]{img/umlMemoire.png}
+        \caption{Classes de la mémoire}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Le Déroulement d'une partie}
@@ -71,7 +80,9 @@
     \begin{figure}
         \centering
         \includegraphics[width = 8cm]{img/display.jpg}
+        \caption{L'interface graphique}
     \end{figure}
+\vspace{-5.5pt}
 \end{frame}
 
 \section{Algorithme génétique}
@@ -80,27 +91,34 @@
 \end{frame}
 
 \begin{frame}{Fonctionnement de la reproduction}
-    This is the main content slide.
+    \begin{figure}
+        \centering
+        \includegraphics[width = 8cm]{img/crossover.png}
+        \caption{Crossover}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{Algorithme génétique : Entrainement}
-    This is the main content slide.
+    \begin{itemize}
+        \item Le CheatCode
+        \item Entrainement à partir de la population
+        \item La méthode du Challenger
+    \end{itemize}
 \end{frame}
 
 \section{Résultats et Conclusion}
 \begin{frame}
     \frametitle{Résultats}
-    Expliquer nos résultats
-\end{frame}
-
-\begin{frame}
-    \frametitle{Conclusion}
-    This is the conclusion slide.
+    \begin{figure}
+        \centering
+        \includegraphics[width = 8cm]{img/graphique3.png}
+        \caption{Graphique résultant de l'entrainement}
+    \end{figure}
 \end{frame}
 
 \begin{frame}{}
     \begin{center}
-        \Huge Merci de votre attention
+        \Huge Conclusion
     \end{center}
 \end{frame}
 
